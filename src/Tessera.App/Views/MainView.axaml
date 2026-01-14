@@ -1,0 +1,63 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Tessera.App.Views.MainView"
+        xmlns:vm="clr-namespace:Tessera.App.ViewModels"
+        xmlns:data="clr-namespace:Tessera.App.Data"
+        xmlns:fui="using:FluentAvalonia.UI.Controls"
+        x:DataType="vm:MainViewModel"
+        Title="{Binding Title}">
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+    <Grid ColumnDefinitions="*">
+        <fui:NavigationView Grid.Row="0"
+                            IsPaneToggleButtonVisible="True"
+                            PaneDisplayMode="LeftCompact"
+                            Content="{Binding CurrentPage}"
+                            IsSettingsVisible="False"
+                            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}">
+            <fui:NavigationView.MenuItems>
+                <fui:NavigationViewItem 
+                    IsHitTestVisible="False"
+                    Margin="0 5 0 20">
+                    <fui:NavigationViewItem.Content>
+                       <WrapPanel Orientation="Horizontal" ItemSpacing="10">
+                           <Image
+                               Source="/Assets/avalonia-logo.ico"
+                               Width="32"
+                               Height="32"
+                               RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                           <TextBlock  
+                               Text="{Binding Title}"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               IsVisible="{Binding IsPaneOpen}" />
+                       </WrapPanel>
+                    </fui:NavigationViewItem.Content>
+                </fui:NavigationViewItem>
+                <fui:NavigationViewItem 
+                    Content="Home"
+                    Tag="{x:Static data:ApplicationPageNames.Home}"
+                    PointerPressed="NavigationViewItem_OnPointerPressed"/>
+                <fui:NavigationViewItem 
+                    Content="Theme settings"
+                    Tag="{x:Static data:ApplicationPageNames.ThemeSettings}" 
+                    PointerPressed="NavigationViewItem_OnPointerPressed"/>
+            </fui:NavigationView.MenuItems>
+            <fui:NavigationView.FooterMenuItems>
+                <fui:NavigationViewItem PointerPressed="ThemeButton_OnPointerPressed">
+                    <fui:NavigationViewItem.Content>
+                        <fui:SymbolIcon
+                            Name="ThemeSymbol"
+                            Symbol="WeatherSunny"
+                            Height="14"
+                            Width="14"/>
+                    </fui:NavigationViewItem.Content>
+                </fui:NavigationViewItem>
+            </fui:NavigationView.FooterMenuItems>
+        </fui:NavigationView>
+    </Grid>
+</Window>

@@ -1,10 +1,13 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Tessera.App.App"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-
+             RequestedThemeVariant="Default"
+             xmlns:fui="using:FluentAvalonia.Styling"
+             xmlns:mvvm="clr-namespace:Tessera.App.MVVM">
+    <Application.DataTemplates>
+        <mvvm:ViewLocator />
+    </Application.DataTemplates>
     <Application.Styles>
-        <FluentTheme />
+        <fui:FluentAvaloniaTheme />
     </Application.Styles>
 </Application>
