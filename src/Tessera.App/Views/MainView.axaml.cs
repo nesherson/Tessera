@@ -1,8 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Styling;
-using CommunityToolkit.Mvvm.ComponentModel;
 using FluentAvalonia.UI.Controls;
 using Tessera.App.Data;
 using Tessera.App.ViewModels;
@@ -47,6 +47,14 @@ public partial class MainView : Window
         {
             Application.Current.RequestedThemeVariant = ThemeVariant.Dark;
             ThemeSymbol.Symbol = Symbol.WeatherMoon;
+        }
+    }
+
+    private void ExitButton_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
         }
     }
 }

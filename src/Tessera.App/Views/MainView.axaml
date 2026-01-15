@@ -57,6 +57,13 @@
                             Width="14"/>
                     </fui:NavigationViewItem.Content>
                 </fui:NavigationViewItem>
+                <fui:NavigationViewItem PointerPressed="ExitButton_OnPointerPressed">
+                    <fui:NavigationViewItem.Content>
+                        <PathIcon Data="{DynamicResource PowerRegular}"
+                                  Width="14" Height="14"
+                                  ToolTip.Tip="Exit"/>
+                    </fui:NavigationViewItem.Content>
+                </fui:NavigationViewItem>
             </fui:NavigationView.FooterMenuItems>
         </fui:NavigationView>
     </Grid>
