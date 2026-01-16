@@ -27,5 +27,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<MainViewModel>();
         services.AddTransient<HomePageViewModel>();
         services.AddTransient<ThemeSettingsPageViewModel>();
+        services.AddTransient<DrawingPageViewModel>();
     }
 }
