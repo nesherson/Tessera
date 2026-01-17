@@ -4,10 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="clr-namespace:Tessera.App.ViewModels"
+             xmlns:dt="clr-namespace:Tessera.App.DataTemplates"
              x:Class="Tessera.App.Views.DrawingPageView"
              x:DataType="vm:DrawingPageViewModel">
     <Design.DataContext>
         <vm:DrawingPageViewModel />
     </Design.DataContext>
-    <Border Padding="20"></Border>
+    <Border Padding="20">
+        <Grid Background="#FFFFFF">
+             <ItemsControl
+                ItemsSource="{Binding Shapes}" >
+                <ItemsControl.Styles>
+                    <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
+                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                </ItemsControl.Styles>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas x:Name="DrawingOverlayCanvas"
+                                Background="Transparent"
+                                Initialized="Canvas_OnInitialized"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                <dt:ShapeTemplateSelector>
+                    <DataTemplate x:Key="PointShape" DataType="{x:Type vm:PointShape}">
+                        <Ellipse 
+                            Fill="{Binding Color}"
+                            Width="{Binding Size}"
+                            Height="{Binding Size}"/>
+                    </DataTemplate>
+                </dt:ShapeTemplateSelector>
+            </ItemsControl.ItemTemplate>    
+        </ItemsControl>
+        </Grid>
+    </Border>
 </UserControl>
