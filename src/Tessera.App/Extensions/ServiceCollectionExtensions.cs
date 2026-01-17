@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
                 ApplicationPageNames.Unknown => sp.GetRequiredService<HomePageViewModel>(),
                 ApplicationPageNames.Home => sp.GetRequiredService<HomePageViewModel>(),
                 ApplicationPageNames.ThemeSettings => sp.GetRequiredService<ThemeSettingsPageViewModel>(),
+                ApplicationPageNames.Drawing => sp.GetRequiredService<DrawingPageViewModel>(),
                 _ => sp.GetRequiredService<HomePageViewModel>()
             });
     }

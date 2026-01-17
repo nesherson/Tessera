@@ -23,10 +23,7 @@ public partial class MainView : Window
         if (sender is not NavigationViewItem navItem)
             return;
 
-        var applicationPageName = (ApplicationPageNames)navItem.Tag!;
-        
-        ViewModel.GoToPage(applicationPageName);
-
+        ViewModel.GoToPage((ApplicationPageNames)navItem.Tag!);
     }
 
     private void ThemeButton_OnPointerPressed(object? sender, PointerPressedEventArgs e)

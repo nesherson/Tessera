@@ -39,6 +39,10 @@
                     </fui:NavigationViewItem.Content>
                 </fui:NavigationViewItem>
                 <fui:NavigationViewItem 
+                    Content="Drawing"
+                    Tag="{x:Static data:ApplicationPageNames.Drawing}" 
+                    PointerPressed="NavigationViewItem_OnPointerPressed"/>
+                <fui:NavigationViewItem 
                     Content="Home"
                     Tag="{x:Static data:ApplicationPageNames.Home}"
                     PointerPressed="NavigationViewItem_OnPointerPressed"/>
