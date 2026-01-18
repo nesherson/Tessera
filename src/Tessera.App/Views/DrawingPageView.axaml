@@ -11,33 +11,122 @@
         <vm:DrawingPageViewModel />
     </Design.DataContext>
     <Border Padding="20">
-        <Grid Background="#FFFFFF">
-             <ItemsControl
-                ItemsSource="{Binding Shapes}" >
-                <ItemsControl.Styles>
-                    <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
-                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                    </Style>
-                </ItemsControl.Styles>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas x:Name="DrawingOverlayCanvas"
-                                Background="Transparent"
-                                Initialized="Canvas_OnInitialized"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                <dt:ShapeTemplateSelector>
-                    <DataTemplate x:Key="PointShape" DataType="{x:Type vm:PointShape}">
-                        <Ellipse 
-                            Fill="{Binding Color}"
-                            Width="{Binding Size}"
-                            Height="{Binding Size}"/>
-                    </DataTemplate>
-                </dt:ShapeTemplateSelector>
-            </ItemsControl.ItemTemplate>    
-        </ItemsControl>
+        <Grid ColumnDefinitions="*,200">
+            <Grid
+                Grid.Column="0"
+                Background="#FFFFFF"
+                RowDefinitions="48,*">
+                <Border 
+                    Grid.Row="0" 
+                    Background="#f0f0f0" 
+                    BorderBrush="#ccc" 
+                    BorderThickness="0,0,0,1" 
+                    Padding="5">
+                    <StackPanel Orientation="Horizontal">
+                        <ListBox ItemsSource="{Binding Tools}" 
+                                 SelectedItem="{Binding SelectedToolItem}"
+                                 Background="Transparent">
+                    
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="5"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel 
+                                        Orientation="Horizontal" 
+                                        Spacing="5" 
+                                        Margin="5">
+                                        <TextBlock Text="{Binding Icon}" FontWeight="Bold" />
+                                        <TextBlock 
+                                            Text="{Binding Name}" 
+                                            Foreground="#000000" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBox.Styles>
+                                <Style Selector="ListBoxItem">
+                                    <Setter Property="CornerRadius" Value="4"/>
+                                    <Setter Property="Padding" Value="10,5"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Style>
+                            </ListBox.Styles>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                <ItemsControl Grid.Row="1"
+                    ItemsSource="{Binding Shapes}" >
+                    <ItemsControl.Styles>
+                        <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
+                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                        </Style>
+                    </ItemsControl.Styles>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas x:Name="DrawingOverlayCanvas"
+                                    Background="Transparent"
+                                    Initialized="Canvas_OnInitialized"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                    <dt:ShapeTemplateSelector>
+                        <DataTemplate x:Key="PointShape" DataType="{x:Type vm:PointShape}">
+                            <Ellipse 
+                                Fill="{Binding Color}"
+                                Width="{Binding Size}"
+                                Height="{Binding Size}"/>
+                        </DataTemplate>
+                    </dt:ShapeTemplateSelector>
+                </ItemsControl.ItemTemplate>    
+            </ItemsControl>
+            </Grid>
+            <Border 
+                Grid.Column="1"
+                Background="#e6e6e6"
+                Margin="5,0,0,0"
+                Padding="5,15,5,15">
+                <StackPanel VerticalAlignment="Top" Spacing="5">
+                    <Border 
+                        BorderThickness="1" 
+                        BorderBrush="#b3b3b3"
+                        Padding="5"
+                        CornerRadius="4">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="Thickness" 
+                                FontSize="14" 
+                                VerticalAlignment="Center" />
+                            <TextBox
+                                Grid.Column="1"
+                                Text="{Binding CurrentThickness}" 
+                                MinHeight="5" />
+                        </Grid>
+                    </Border>
+                    <Border 
+                        BorderThickness="1" 
+                        BorderBrush="#b3b3b3"
+                        Padding="5"
+                        CornerRadius="4">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="Color" 
+                                FontSize="14" 
+                                VerticalAlignment="Center" />
+                            <ColorPicker 
+                                Grid.Column="1" 
+                                Color="{Binding CurrentColor}"
+                                Height="24"
+                                CornerRadius="4"/>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

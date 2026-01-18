@@ -1,7 +1,5 @@
 using System;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Tessera.App.ViewModels;
 
 namespace Tessera.App.Views;
@@ -21,5 +19,9 @@ public partial class DrawingPageView : UserControl
 
         canvas.PointerPressed += (_, pe) =>
             ViewModel?.OnPointerPressed(pe.GetCurrentPoint(canvas));
+        canvas.PointerMoved += (_, pe) =>
+            ViewModel?.OnPointerMoved(pe.GetCurrentPoint(canvas));
+        canvas.PointerReleased += (_, pe) =>
+            ViewModel?.OnPointerReleased(pe.GetCurrentPoint(canvas));
     }
 }

@@ -1,6 +1,10 @@
 using System.Collections.ObjectModel;
 using Avalonia.Input;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Interfaces;
+using Tessera.App.Models;
+using Tessera.App.ViewModels.Tools;
 
 namespace Tessera.App.ViewModels;
 
@@ -8,22 +12,43 @@ public partial class DrawingPageViewModel : PageViewModel
 {
     [ObservableProperty] 
     private ObservableCollection<ShapeBase> _shapes;
+    
+    [ObservableProperty] 
+    private ToolItem _selectedToolItem;
 
+    [ObservableProperty] 
+    private Color _currentColor;
+    
+    [ObservableProperty]
+    private double _currentThickness = 2.0;
+    
+    public ICanvasTool CurrentTool => SelectedToolItem.Tool;
+    
     public DrawingPageViewModel()
     {
-        Shapes =
+        Shapes = [];
+        Tools = 
         [
-            new PointShape(25, 25, 10, "#c3c3c3"),
-            new PointShape(50, 50, 15, "#eb4034"),
-            new PointShape(125, 125, 20, "#eb4034"),
-            new PointShape(175, 175, 40, "#43eb34")
+            new ToolItem { Name = "Point", Tool = new PointTool(this)}
         ];
+        SelectedToolItem = Tools[0];
+        CurrentColor = Colors.Black;
     }
+    
+    public ObservableCollection<ToolItem> Tools { get; }
 
-    public void OnPointerPressed(PointerPoint point)
+    public void OnPointerPressed(PointerPoint pointerPoint)
     {
-        var newShape = new PointShape(point.Position.X, point.Position.Y, 6, "#c3c3c3");
-        
-        Shapes.Add(newShape);
+        CurrentTool.OnPointerPressed(pointerPoint.Position);
+    }
+    
+    public void OnPointerMoved(PointerPoint pointerPoint)
+    {
+        CurrentTool.OnPointerMoved(pointerPoint.Position);
+    }
+    
+    public void OnPointerReleased(PointerPoint pointerPoint)
+    {
+        CurrentTool.OnPointerReleased(pointerPoint.Position);
     }
 }
