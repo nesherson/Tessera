@@ -26,27 +26,6 @@ public partial class MainView : Window
         ViewModel.GoToPage((ApplicationPageNames)navItem.Tag!);
     }
 
-    private void ThemeButton_OnPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (Application.Current is null || Application.Current.RequestedThemeVariant is null)
-        {
-            return;
-        }
-
-        var appTheme = Application.Current.RequestedThemeVariant.ToString();
-
-        if (ThemeVariant.Dark.Key.ToString() == appTheme)
-        {
-            Application.Current.RequestedThemeVariant = ThemeVariant.Light;
-            ThemeSymbol.Symbol = Symbol.WeatherSunny;
-        }
-        else if (ThemeVariant.Light.Key.ToString() == appTheme)
-        {
-            Application.Current.RequestedThemeVariant = ThemeVariant.Dark;
-            ThemeSymbol.Symbol = Symbol.WeatherMoon;
-        }
-    }
-
     private void ExitButton_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

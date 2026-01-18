@@ -29,9 +29,6 @@ public partial class App : Application
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            var theme = new ThemeSettingsPageViewModel();
-            theme.LoadSettings();
-
             desktop.MainWindow = ActivatorUtilities.CreateInstance<MainView>(_serviceProvider);
             desktop.MainWindow.DataContext = _serviceProvider.GetRequiredService<MainViewModel>();
         }

@@ -27,11 +27,4 @@
       <None Remove="Assets\avalonia-logo.ico" />
       <AvaloniaResource Include="Assets\avalonia-logo.ico" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Views\ThemeSettings.axaml.cs">
-        <DependentUpon>ThemeSettings.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
 </Project>

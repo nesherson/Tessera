@@ -46,21 +46,8 @@
                     Content="Home"
                     Tag="{x:Static data:ApplicationPageNames.Home}"
                     PointerPressed="NavigationViewItem_OnPointerPressed"/>
-                <fui:NavigationViewItem 
-                    Content="Theme settings"
-                    Tag="{x:Static data:ApplicationPageNames.ThemeSettings}" 
-                    PointerPressed="NavigationViewItem_OnPointerPressed"/>
             </fui:NavigationView.MenuItems>
             <fui:NavigationView.FooterMenuItems>
-                <fui:NavigationViewItem PointerPressed="ThemeButton_OnPointerPressed">
-                    <fui:NavigationViewItem.Content>
-                        <fui:SymbolIcon
-                            Name="ThemeSymbol"
-                            Symbol="WeatherSunny"
-                            Height="14"
-                            Width="14"/>
-                    </fui:NavigationViewItem.Content>
-                </fui:NavigationViewItem>
                 <fui:NavigationViewItem PointerPressed="ExitButton_OnPointerPressed">
                     <fui:NavigationViewItem.Content>
                         <PathIcon Data="{DynamicResource PowerRegular}"
