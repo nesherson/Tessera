@@ -31,7 +31,7 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(IPageFactory pageFactory)
     {
         _pageFactory = pageFactory;
-        CurrentPage = pageFactory.GetPageViewModel(ApplicationPageNames.Home);
+        CurrentPage = pageFactory.GetPageViewModel(ApplicationPageNames.Drawing);
         Title = "Tessera";
     }
 
