@@ -6,52 +6,67 @@
         x:Class="Tessera.App.Views.MainView"
         xmlns:vm="clr-namespace:Tessera.App.ViewModels"
         xmlns:data="clr-namespace:Tessera.App.Data"
-        xmlns:fui="using:FluentAvalonia.UI.Controls"
+        xmlns:c="clr-namespace:Tessera.App.Controls"
         x:DataType="vm:MainViewModel"
-        Title="{Binding Title}">
+        Title="{Binding Title}"
+        Width="1200"
+        Height="720">
+    <Window.Styles>
+        <Style Selector="Button.LogoWrapper:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </Window.Styles>
+        
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
-    <Grid ColumnDefinitions="*">
-        <fui:NavigationView Grid.Row="0"
-                            IsPaneToggleButtonVisible="True"
-                            PaneDisplayMode="LeftCompact"
-                            Content="{Binding CurrentPage}"
-                            IsSettingsVisible="False"
-                            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}">
-            <fui:NavigationView.MenuItems>
-                <fui:NavigationViewItem 
-                    IsHitTestVisible="False"
-                    Margin="0 5 0 20">
-                    <fui:NavigationViewItem.Content>
-                       <WrapPanel Orientation="Horizontal" ItemSpacing="10">
-                           <Image
-                               Source="/Assets/avalonia-logo.ico"
-                               Width="32"
-                               Height="32"
-                               RenderOptions.BitmapInterpolationMode="HighQuality"/>
-                           <TextBlock  
-                               Text="{Binding Title}"
-                               VerticalAlignment="Center"
-                               FontSize="18"
-                               IsVisible="{Binding IsPaneOpen}" />
-                       </WrapPanel>
-                    </fui:NavigationViewItem.Content>
-                </fui:NavigationViewItem>
-                <fui:NavigationViewItem 
-                    Content="Drawing"
-                    Tag="{x:Static data:ApplicationPageNames.Drawing}" 
-                    PointerPressed="NavigationViewItem_OnPointerPressed"/>
-            </fui:NavigationView.MenuItems>
-            <fui:NavigationView.FooterMenuItems>
-                <fui:NavigationViewItem PointerPressed="ExitButton_OnPointerPressed">
-                    <fui:NavigationViewItem.Content>
-                        <PathIcon Data="{DynamicResource PowerRegular}"
-                                  Width="14" Height="14"
-                                  ToolTip.Tip="Exit"/>
-                    </fui:NavigationViewItem.Content>
-                </fui:NavigationViewItem>
-            </fui:NavigationView.FooterMenuItems>
-        </fui:NavigationView>
+    
+    <Grid ColumnDefinitions="*, *">
+        <SplitView IsPaneOpen="{Binding IsPaneOpen}"
+                   DisplayMode="CompactInline"
+                   OpenPaneLength="250"
+                   CompactPaneLength="50"
+                   PaneBackground="White"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2">
+            <SplitView.Pane>
+                <Border Padding="0 10 0 0"
+                        BorderBrush="{DynamicResource SplitViewBorderBrush}"
+                        BorderThickness="0,0,1,0">
+                    <StackPanel Spacing="5"> 
+                        <Button Command="{Binding ToggleSideMenuCommand}"
+                                Background="Transparent"
+                                IsVisible="{Binding !IsPaneOpen}"
+                                Classes="LogoWrapper">
+                            <Image
+                                Source="{SvgImage /Assets/Images/logo-small.svg}"
+                                Width="40"/>
+                        </Button>
+                        <Button Background="Transparent"
+                                IsVisible="{Binding IsPaneOpen}"
+                                Command="{Binding ToggleSideMenuCommand}"
+                                Classes="LogoWrapper">
+                            <Image
+                                Source="{SvgImage /Assets/Images/logo-large.svg}"
+                                Width="110"/>
+                        </Button>
+                        <Border Padding="5,0">
+                            <StackPanel>
+                                <c:IconButton
+                                    Foreground="{DynamicResource NavBtnForeground}"
+                                    Classes.active="{Binding DrawingPageIsActive}"
+                                    Command="{Binding GoToPageCommand}"
+                                    CommandParameter="{x:Static data:ApplicationPageNames.Drawing}"
+                                    Content="Drawing"
+                                    IsTextVisible="{Binding IsPaneOpen}"
+                                    IconPath="/Assets/Images/pencil-simple.svg" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel> 
+                </Border>  
+            </SplitView.Pane>
+            <ContentControl
+                Content="{Binding CurrentPage}" />
+        </SplitView>
     </Grid>
 </Window>

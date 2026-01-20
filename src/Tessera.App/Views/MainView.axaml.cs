@@ -16,6 +16,8 @@ public partial class MainView : Window
     public MainView()
     {
         InitializeComponent();
+        
+        this.AttachDevTools();
     }
 
     private void NavigationViewItem_OnPointerPressed(object? sender, PointerPressedEventArgs e)
