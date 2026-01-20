@@ -25,7 +25,6 @@
 
     <ItemGroup>
       <None Remove="Assets\avalonia-logo.ico" />
-      <AvaloniaResource Include="Assets\avalonia-logo.ico" />
     </ItemGroup>
 
     <ItemGroup>
@@ -33,5 +32,10 @@
         <DependentUpon>ThemeSettings.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\app-icon.png" />
+      <AvaloniaResource Include="Assets\app-icon.png" />
     </ItemGroup>
 </Project>

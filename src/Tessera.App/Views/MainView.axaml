@@ -8,7 +8,8 @@
         xmlns:data="clr-namespace:Tessera.App.Data"
         xmlns:fui="using:FluentAvalonia.UI.Controls"
         x:DataType="vm:MainViewModel"
-        Title="{Binding Title}">
+        Title="{Binding Title}"
+        Icon="/Assets/app-icon.png">
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
@@ -26,7 +27,7 @@
                     <fui:NavigationViewItem.Content>
                        <WrapPanel Orientation="Horizontal" ItemSpacing="10">
                            <Image
-                               Source="/Assets/avalonia-logo.ico"
+                               Source="/Assets/app-icon.png"
                                Width="32"
                                Height="32"
                                RenderOptions.BitmapInterpolationMode="HighQuality"/>
