@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Data;
 using Tessera.App.Interfaces;
 using Tessera.App.Models;
 using Tessera.App.ViewModels.Tools;
@@ -26,10 +27,12 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public DrawingPageViewModel()
     {
+        PageName = ApplicationPageNames.Drawing;
         Shapes = [];
         Tools = 
         [
-            new ToolItem { Name = "Point", Tool = new PointTool(this)}
+            new ToolItem { Name = "Point", Icon = "/Assets/Images/point.svg", Tool = new PointTool(this)},
+            new ToolItem { Name = "Line", Icon = "/Assets/Images/line.svg", Tool = new PointTool(this)},
         ];
         SelectedToolItem = Tools[0];
         CurrentColor = Colors.Black;

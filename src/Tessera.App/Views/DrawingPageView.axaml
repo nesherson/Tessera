@@ -10,123 +10,168 @@
     <Design.DataContext>
         <vm:DrawingPageViewModel />
     </Design.DataContext>
-    <Border Padding="20">
-        <Grid ColumnDefinitions="*,200">
-            <Grid
-                Grid.Column="0"
-                Background="#FFFFFF"
-                RowDefinitions="48,*">
-                <Border 
-                    Grid.Row="0" 
-                    Background="#f0f0f0" 
-                    BorderBrush="#ccc" 
-                    BorderThickness="0,0,0,1" 
-                    Padding="5">
-                    <StackPanel Orientation="Horizontal">
-                        <ListBox ItemsSource="{Binding Tools}" 
-                                 SelectedItem="{Binding SelectedToolItem}"
-                                 Background="Transparent">
-                    
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" Spacing="5"/>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel 
-                                        Orientation="Horizontal" 
-                                        Spacing="5" 
-                                        Margin="5">
-                                        <TextBlock Text="{Binding Icon}" FontWeight="Bold" />
-                                        <TextBlock 
-                                            Text="{Binding Name}" 
-                                            Foreground="#000000" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-
-                            <ListBox.Styles>
-                                <Style Selector="ListBoxItem">
-                                    <Setter Property="CornerRadius" Value="4"/>
-                                    <Setter Property="Padding" Value="10,5"/>
-                                    <Setter Property="Cursor" Value="Hand"/>
-                                </Style>
-                            </ListBox.Styles>
-                        </ListBox>
-                    </StackPanel>
-                </Border>
-                <ItemsControl Grid.Row="1"
-                    ItemsSource="{Binding Shapes}" >
-                    <ItemsControl.Styles>
-                        <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
-                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                        </Style>
-                    </ItemsControl.Styles>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas x:Name="DrawingOverlayCanvas"
-                                    Background="Transparent"
-                                    Initialized="Canvas_OnInitialized"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
+    <UserControl.Styles>
+        <Style Selector="Border.Tool">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E5E7EB"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="Button.Tool:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#F3F4F6"/>
+            <Setter Property="BorderBrush" Value="#D1D5DB"/>
+        </Style>
+        <Style Selector="TextBlock.Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#374151"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Styles>
+    
+    <Grid 
+        Background="#f9f9f9" 
+        RowDefinitions="Auto, *"
+        ColumnDefinitions="*, 300">
+        <Border 
+            Grid.Row="0"
+            Grid.Column="0"
+            Background="White"
+            BorderBrush="#E5E7EB"
+            BorderThickness="1"
+            Padding="16,12"
+            Margin="5, 5, 0,5"
+            CornerRadius="8"
+            BoxShadow="0 1 3 0 #10000000">
+            <Grid ColumnDefinitions="Auto, *">
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <ListBox 
+                        ItemsSource="{Binding Tools}" 
+                        SelectedItem="{Binding SelectedToolItem}"
+                        Background="Transparent">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Classes="Tool" ToolTip.Tip="{Binding Name}">
+                                    <Svg Path="{Binding Icon}" Width="30" />
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.Styles>
+                            <Style Selector="ListBoxItem">
+                                <Setter Property="CornerRadius" Value="4"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Margin" Value="0,0,5,0"/>
+                            </Style>
+                            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                                <Setter Property="Background" Value="Transparent"/>	
+                                <Setter Property="BorderThickness" Value="0"/>	
+                            </Style>
+                            <Style Selector="ListBoxItem:selected Border">
+                                <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>	
+                            </Style>
+                            <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
+                            </Style>
+                        </ListBox.Styles>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border 
+            Grid.Row="1"
+            Grid.Column="0"
+            CornerRadius="8"
+            Margin="5,0,0,5"
+            Background="White"
+            BorderBrush="#E5E7EB"
+            BorderThickness="1"
+            BoxShadow="0 1 3 0 #10000000">
+            <ItemsControl ItemsSource="{Binding Shapes}" >
+                <ItemsControl.Styles>
+                    <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
+                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                </ItemsControl.Styles>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas x:Name="DrawingOverlayCanvas"
+                                Background="Transparent"
+                                Initialized="Canvas_OnInitialized"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
                     <dt:ShapeTemplateSelector>
                         <DataTemplate x:Key="PointShape" DataType="{x:Type vm:PointShape}">
-                            <Ellipse 
+                            <Ellipse
                                 Fill="{Binding Color}"
                                 Width="{Binding Size}"
                                 Height="{Binding Size}"/>
                         </DataTemplate>
                     </dt:ShapeTemplateSelector>
-                </ItemsControl.ItemTemplate>    
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
+        </Border>
+        <Border 
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1" 
+            Background="White" 
+            BorderBrush="#E5E7EB"
+            BorderThickness="1"
+            Margin="5"
+            CornerRadius="8"
+            BoxShadow="0 1 3 0 #10000000">
+            <Grid RowDefinitions="Auto, *">
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="20, 20, 20, 15">
+                    <TextBlock 
+                        Text="Configuration" 
+                        FontSize="16" 
+                        VerticalAlignment="Center"/>
+                </Grid>
+                <ScrollViewer Grid.Row="1" >
+                    <StackPanel>
+                        <Border 
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="0,1"
+                            Padding="20, 7">
+                            <Grid ColumnDefinitions="*,*"
+                                  Margin="0">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Classes="Label"
+                                    Text="Thickness" />
+                                <NumericUpDown
+                                    Grid.Column="1"
+                                    Value="{Binding CurrentThickness}"
+                                    BorderBrush="#E5E7EB"
+                                    CornerRadius="5"
+                                    ShowButtonSpinner="False"
+                                    Padding="8,8,0,0"/>
+                            </Grid>
+                        </Border>
+                        <Border 
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="0,0, 0, 1"
+                            Padding="20, 7">
+                            <Grid ColumnDefinitions="*,*"
+                                  Margin="0">
+                                <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                <ColorPicker 
+                                    Grid.Column="1" 
+                                    Color="{Binding CurrentColor}"
+                                    HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
-            <Border 
-                Grid.Column="1"
-                Background="#e6e6e6"
-                Margin="5,0,0,0"
-                Padding="5,15,5,15">
-                <StackPanel VerticalAlignment="Top" Spacing="5">
-                    <Border 
-                        BorderThickness="1" 
-                        BorderBrush="#b3b3b3"
-                        Padding="5"
-                        CornerRadius="4">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
-                            <TextBlock
-                                Grid.Column="0"
-                                Text="Thickness" 
-                                FontSize="14" 
-                                VerticalAlignment="Center" />
-                            <TextBox
-                                Grid.Column="1"
-                                Text="{Binding CurrentThickness}" 
-                                MinHeight="5" />
-                        </Grid>
-                    </Border>
-                    <Border 
-                        BorderThickness="1" 
-                        BorderBrush="#b3b3b3"
-                        Padding="5"
-                        CornerRadius="4">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
-                            <TextBlock
-                                Grid.Column="0"
-                                Text="Color" 
-                                FontSize="14" 
-                                VerticalAlignment="Center" />
-                            <ColorPicker 
-                                Grid.Column="1" 
-                                Color="{Binding CurrentColor}"
-                                Height="24"
-                                CornerRadius="4"/>
-                        </Grid>
-                    </Border>
-                </StackPanel>
-            </Border>
-        </Grid>
-    </Border>
+        </Border>
+    </Grid>
 </UserControl>
