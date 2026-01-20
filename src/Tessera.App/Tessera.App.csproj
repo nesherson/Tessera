@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.3.11" />
+        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.3.11" />
         <PackageReference Include="Avalonia.Desktop" Version="11.3.11" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.11" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.11" />
@@ -21,10 +22,25 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
         <PackageReference Include="FluentAvaloniaUI" Version="2.4.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.12" />
+        <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.9.2" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Assets\avalonia-logo.ico" />
       <AvaloniaResource Include="Assets\avalonia-logo.ico" />
+      <None Remove="Assets\Fonts\Phosphor.ttf" />
+      <AvaloniaResource Include="Assets\Fonts\Phosphor.ttf" />
+      <None Remove="Assets\Fonts\Phosphor-Fill.ttf" />
+      <AvaloniaResource Include="Assets\Fonts\Phosphor-Fill.ttf" />
+      <None Remove="Assets\Images\logo.svg" />
+      <AvaloniaResource Include="Assets\Images\logo-large.svg" />
+      <None Remove="Assets\Images\logo-small.svg" />
+      <AvaloniaResource Include="Assets\Images\logo-small.svg" />
+      <None Remove="Assets\Images\dot-outline.svg" />
+      <AvaloniaResource Include="Assets\Images\point.svg" />
+      <None Remove="Assets\Images\line.svg" />
+      <AvaloniaResource Include="Assets\Images\line.svg" />
+      <None Remove="Assets\Images\pencil-simple.svg" />
+      <AvaloniaResource Include="Assets\Images\pencil-simple.svg" />
     </ItemGroup>
 </Project>

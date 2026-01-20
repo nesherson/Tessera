@@ -1,0 +1,47 @@
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Media;
+
+namespace Tessera.App.Controls;
+
+public class IconButton : Button
+{
+    public static readonly StyledProperty<string> IconPathProperty = AvaloniaProperty.Register<IconButton, string>(
+        nameof(IconPath));
+    
+    public static readonly StyledProperty<IBrush> IconColorProperty = AvaloniaProperty.Register<IconButton, IBrush>(
+        nameof(IconColor), SolidColorBrush.Parse("#384247"));
+
+    public static readonly StyledProperty<bool> IsTextVisibleProperty = AvaloniaProperty.Register<IconButton, bool>(
+        nameof(IsTextVisible), true);
+
+    public string IconPath
+    {
+        get => GetValue(IconPathProperty);
+        set => SetValue(IconPathProperty, value);
+    }
+    
+    public IBrush IconColor
+    {
+        get => GetValue(IconColorProperty);
+        set => SetValue(IconColorProperty, value);
+    }
+    
+    public bool IsTextVisible
+    {
+        get => GetValue(IsTextVisibleProperty);
+        set => SetValue(IsTextVisibleProperty, value);
+    }
+
+    protected override void OnPointerEntered(PointerEventArgs e)
+    {
+        Cursor = new Cursor(StandardCursorType.Hand);
+    }
+
+    protected override void OnPointerExited(PointerEventArgs e)
+    {
+        Cursor = new Cursor(StandardCursorType.Arrow);
+
+    }
+}
