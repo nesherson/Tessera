@@ -31,8 +31,8 @@ public partial class DrawingPageViewModel : PageViewModel
         Shapes = [];
         Tools = 
         [
-            new ToolItem { Name = "Point", Icon = "/Assets/Images/point.svg", Tool = new PointTool(this)},
-            new ToolItem { Name = "Line", Icon = "/Assets/Images/line.svg", Tool = new PointTool(this)},
+            new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointTool(this)},
+            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new PointTool(this)},
         ];
         SelectedToolItem = Tools[0];
         CurrentColor = Colors.Black;

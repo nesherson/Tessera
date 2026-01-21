@@ -5,10 +5,10 @@
   <Design.PreviewWith>
     <Border Padding="20">
       <StackPanel Spacing="20">
-        <c:IconButton Content="Click Me!" IconPath="/Assets/Images/point.svg" IsTextVisible="True" />
-        <c:IconButton Classes="accent" Content="Click Me!" IconPath="/Assets/Images/point.svg" />
-        <c:IconButton Classes="accent" Content="Click Me!" IconPath="/Assets/Images/point.svg" Height="100" />
-        <c:IconButton Classes="accent" Content="Click!" IconPath="/Assets/Images/point.svg" IsTextVisible="False" />
+        <c:IconButton Content="Click Me!" IconPath="/Assets/Icons/point.svg" IsTextVisible="True" />
+        <c:IconButton Classes="accent" Content="Click Me!" IconPath="/Assets/Icons/point.svg" />
+        <c:IconButton Classes="accent" Content="Click Me!" IconPath="/Assets/Icons/point.svg" Height="100" />
+        <c:IconButton Classes="accent" Content="Click!" IconPath="/Assets/Icons/point.svg" IsTextVisible="False" />
         <Button Content="Click Me!" />
         <Button Classes="accent" Content="Click Me!" />
       </StackPanel>
@@ -49,11 +49,6 @@
                   Path="{Binding $parent[c:IconButton].IconPath}" 
                   VerticalAlignment="Center"
                   Width="20"/>
-                <!-- <Label  -->
-                <!--   FontFamily="{DynamicResource PhosphorFill}" -->
-                <!--   Content="{Binding $parent[c:IconButton].IconText}" -->
-                <!--   Foreground="{Binding $parent[c:IconButton].IconColor}" -->
-                <!--   VerticalAlignment="Center" /> -->
                 <ContentPresenter 
                   Content="{Binding}" 
                   VerticalAlignment="Center" 

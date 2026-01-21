@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tessera.App.Data;
@@ -49,5 +51,14 @@ public partial class MainViewModel : ViewModelBase
     private void ToggleSideMenu()
     {
         IsPaneOpen = !IsPaneOpen;
+    }
+    
+    [RelayCommand]
+    private void ExitApplication()
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
     }
 }

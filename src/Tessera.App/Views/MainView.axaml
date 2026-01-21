@@ -33,36 +33,48 @@
                 <Border Padding="0 10 0 0"
                         BorderBrush="{DynamicResource SplitViewBorderBrush}"
                         BorderThickness="0,0,1,0">
-                    <StackPanel Spacing="5"> 
-                        <Button Command="{Binding ToggleSideMenuCommand}"
-                                Background="Transparent"
-                                IsVisible="{Binding !IsPaneOpen}"
-                                Classes="LogoWrapper">
-                            <Image
-                                Source="{SvgImage /Assets/Images/logo-small.svg}"
-                                Width="40"/>
-                        </Button>
-                        <Button Background="Transparent"
-                                IsVisible="{Binding IsPaneOpen}"
-                                Command="{Binding ToggleSideMenuCommand}"
-                                Classes="LogoWrapper">
-                            <Image
-                                Source="{SvgImage /Assets/Images/logo-large.svg}"
-                                Width="110"/>
-                        </Button>
-                        <Border Padding="5,0">
-                            <StackPanel>
-                                <c:IconButton
-                                    Foreground="{DynamicResource NavBtnForeground}"
-                                    Classes.active="{Binding DrawingPageIsActive}"
-                                    Command="{Binding GoToPageCommand}"
-                                    CommandParameter="{x:Static data:ApplicationPageNames.Drawing}"
-                                    Content="Drawing"
-                                    IsTextVisible="{Binding IsPaneOpen}"
-                                    IconPath="/Assets/Images/pencil-simple.svg" />
-                            </StackPanel>
+                   <Grid RowDefinitions="*,Auto">
+                        <StackPanel Spacing="5"> 
+                            <Button Command="{Binding ToggleSideMenuCommand}"
+                                    Background="Transparent"
+                                    IsVisible="{Binding !IsPaneOpen}"
+                                    Classes="LogoWrapper">
+                                <Image
+                                    Source="{SvgImage /Assets/Logo/logo-small.svg}"
+                                    Width="40"/>
+                            </Button>
+                            <Button Background="Transparent"
+                                    IsVisible="{Binding IsPaneOpen}"
+                                    Command="{Binding ToggleSideMenuCommand}"
+                                    Classes="LogoWrapper">
+                                <Image
+                                    Source="{SvgImage /Assets/Logo/logo-large.svg}"
+                                    Width="110"/>
+                            </Button>
+                            <Border Padding="5,0">
+                                <StackPanel>
+                                    <c:IconButton
+                                        Foreground="{DynamicResource NavBtnForeground}"
+                                        Classes.active="{Binding DrawingPageIsActive}"
+                                        Command="{Binding GoToPageCommand}"
+                                        CommandParameter="{x:Static data:ApplicationPageNames.Drawing}"
+                                        Content="Drawing"
+                                        IsTextVisible="{Binding IsPaneOpen}"
+                                        IconPath="/Assets/Icons/pencil-simple.svg" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <Border
+                            Grid.Row="1"
+                            Padding="5,0,5,10">
+                            <c:IconButton
+                                Foreground="{DynamicResource NavBtnForeground}"
+                                Command="{Binding ExitApplicationCommand}"
+                                Content="Exit"
+                                IsTextVisible="{Binding IsPaneOpen}"
+                                IconPath="/Assets/Icons/exit.svg" />
                         </Border>
-                    </StackPanel> 
+                   </Grid>
                 </Border>  
             </SplitView.Pane>
             <ContentControl
