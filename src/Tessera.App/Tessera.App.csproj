@@ -25,7 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AvaloniaResource Include="Assets\Icons\avalonia-logo.ico" />
       <AvaloniaResource Include="Assets\Logo\logo-large.svg" />
       <AvaloniaResource Include="Assets\Logo\logo-small.svg" />
       <None Remove="Assets\avalonia-logo.ico" />
@@ -41,5 +40,10 @@
       <AvaloniaResource Include="Assets\Icons\pencil-simple.svg" />
       <None Remove="Assets\Images\sign-out.svg" />
       <AvaloniaResource Include="Assets\Icons\exit.svg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\app-icon.png" />
+      <AvaloniaResource Include="Assets\app-icon.png" />
     </ItemGroup>
 </Project>
