@@ -5,6 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="clr-namespace:Tessera.App.ViewModels"
              xmlns:dt="clr-namespace:Tessera.App.DataTemplates"
+             xmlns:c="clr-namespace:Tessera.App.Controls"
              x:Class="Tessera.App.Views.DrawingPageView"
              x:DataType="vm:DrawingPageViewModel">
     <Design.DataContext>
@@ -92,31 +93,37 @@
             BorderBrush="#E5E7EB"
             BorderThickness="1"
             BoxShadow="0 1 3 0 #10000000">
-            <ItemsControl ItemsSource="{Binding Shapes}" >
-                <ItemsControl.Styles>
-                    <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
-                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                    </Style>
-                </ItemsControl.Styles>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas x:Name="DrawingOverlayCanvas"
-                                Background="Transparent"
-                                Initialized="Canvas_OnInitialized"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <dt:ShapeTemplateSelector>
-                        <DataTemplate x:Key="PointShape" DataType="{x:Type vm:PointShape}">
-                            <Ellipse
-                                Fill="{Binding Color}"
-                                Width="{Binding Size}"
-                                Height="{Binding Size}"/>
-                        </DataTemplate>
-                    </dt:ShapeTemplateSelector>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+           <Grid ClipToBounds="True">
+               <c:DotGridControl 
+                   IsHitTestVisible="False" />
+               <ItemsControl ItemsSource="{Binding Shapes}" >
+                   <ItemsControl.Styles>
+                       <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
+                           <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                           <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                       </Style>
+                   </ItemsControl.Styles>
+                   <ItemsControl.ItemsPanel>
+                       <ItemsPanelTemplate>
+                           <Canvas x:Name="DrawingOverlayCanvas"
+                                   Background="Transparent"
+                                   Initialized="Canvas_OnInitialized">
+                               <Rectangle Fill="red" Width="150" Height="150" Canvas.Left="150" Canvas.Right="150"></Rectangle>
+                           </Canvas>
+                       </ItemsPanelTemplate>
+                   </ItemsControl.ItemsPanel>
+                   <ItemsControl.ItemTemplate>
+                       <dt:ShapeTemplateSelector>
+                           <DataTemplate x:Key="PointShape" DataType="{x:Type vm:PointShape}">
+                               <Ellipse
+                                   Fill="{Binding Color}"
+                                   Width="{Binding Size}"
+                                   Height="{Binding Size}"/>
+                           </DataTemplate>
+                       </dt:ShapeTemplateSelector>
+                   </ItemsControl.ItemTemplate>
+               </ItemsControl>
+           </Grid>
         </Border>
         <Border 
             Grid.Row="0"
