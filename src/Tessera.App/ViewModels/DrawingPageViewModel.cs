@@ -13,15 +13,22 @@ public partial class DrawingPageViewModel : PageViewModel
 {
     [ObservableProperty] 
     private ObservableCollection<ShapeBase> _shapes;
-    
     [ObservableProperty] 
     private ToolItem _selectedToolItem;
-
     [ObservableProperty] 
     private Color _currentColor;
-    
     [ObservableProperty]
     private double _currentThickness = 4.0;
+    [ObservableProperty] 
+    private bool _isSelectionVisible;
+    [ObservableProperty] 
+    private double _selectionX;
+    [ObservableProperty] 
+    private double _selectionY;
+    [ObservableProperty] 
+    private double _selectionWidth;
+    [ObservableProperty] 
+    private double _selectionHeight;
     
     public ICanvasTool CurrentTool => SelectedToolItem.Tool;
     
@@ -32,7 +39,8 @@ public partial class DrawingPageViewModel : PageViewModel
         Tools = 
         [
             new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointTool(this)},
-            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineTool(this)}
+            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineTool(this)},
+            new ToolItem { Name = "Eraser", Icon = "/Assets/Icons/eraser.svg", Tool = new EraserTool(this)},
         ];
         SelectedToolItem = Tools[0];
         CurrentColor = Colors.Black;

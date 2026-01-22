@@ -112,6 +112,14 @@
             BorderThickness="1"
             BoxShadow="0 1 3 0 #10000000">
            <Grid ClipToBounds="True">
+               <Canvas IsHitTestVisible="False"> 
+                   <Rectangle Canvas.Left="{Binding SelectionX}"
+                              Canvas.Top="{Binding SelectionY}"
+                              Width="{Binding SelectionWidth}"
+                              Height="{Binding SelectionHeight}"
+                              IsVisible="{Binding IsSelectionVisible}"
+                              Stroke="Red" StrokeThickness="1" Fill="#33FF0000"/>
+               </Canvas>
                <c:DotGridControl 
                    IsHitTestVisible="False" />
                <ItemsControl ItemsSource="{Binding Shapes}" >
@@ -143,6 +151,13 @@
                                    EndPoint="{Binding EndPoint}"
                                    Stroke="{Binding Color}"
                                    StrokeThickness="{Binding Thickness}" />
+                           </DataTemplate> 
+                           <DataTemplate x:Key="RectangleShape" DataType="{x:Type vm:RectangleShape}">
+                               <Rectangle
+                                   Width="{Binding Width}"
+                                   Height="{Binding Height}"
+                                   Stroke="{Binding StrokeColor}"
+                                   StrokeThickness="{Binding StrokeThickness}" />
                            </DataTemplate> 
                        </dt:ShapeTemplateSelector>
                    </ItemsControl.ItemTemplate>
