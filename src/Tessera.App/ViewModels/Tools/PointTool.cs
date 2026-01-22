@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Media;
 using Tessera.App.Interfaces;
 
-namespace Tessera.App.ViewModels.Tools;
+namespace Tessera.App.ViewModels;
 
 public class PointTool : ICanvasTool
 {

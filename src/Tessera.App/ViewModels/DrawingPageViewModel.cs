@@ -2,10 +2,10 @@ using System.Collections.ObjectModel;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Tessera.App.Data;
 using Tessera.App.Interfaces;
 using Tessera.App.Models;
-using Tessera.App.ViewModels.Tools;
 
 namespace Tessera.App.ViewModels;
 
@@ -21,7 +21,7 @@ public partial class DrawingPageViewModel : PageViewModel
     private Color _currentColor;
     
     [ObservableProperty]
-    private double _currentThickness = 2.0;
+    private double _currentThickness = 4.0;
     
     public ICanvasTool CurrentTool => SelectedToolItem.Tool;
     
@@ -32,7 +32,7 @@ public partial class DrawingPageViewModel : PageViewModel
         Tools = 
         [
             new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointTool(this)},
-            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new PointTool(this)},
+            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineTool(this)}
         ];
         SelectedToolItem = Tools[0];
         CurrentColor = Colors.Black;
@@ -53,5 +53,11 @@ public partial class DrawingPageViewModel : PageViewModel
     public void OnPointerReleased(PointerPoint pointerPoint)
     {
         CurrentTool.OnPointerReleased(pointerPoint.Position);
+    }
+
+    [RelayCommand]
+    private void ClearAll()
+    {
+        Shapes.Clear();
     }
 }

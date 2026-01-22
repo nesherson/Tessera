@@ -40,6 +40,8 @@
       <AvaloniaResource Include="Assets\Icons\pencil-simple.svg" />
       <None Remove="Assets\Images\sign-out.svg" />
       <AvaloniaResource Include="Assets\Icons\exit.svg" />
+      <None Remove="Assets\Icons\broom.svg" />
+      <AvaloniaResource Include="Assets\Icons\broom.svg" />
     </ItemGroup>
 
     <ItemGroup>

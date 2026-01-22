@@ -18,7 +18,7 @@
             <Setter Property="BorderBrush" Value="#E5E7EB"/>
             <Setter Property="CornerRadius" Value="6"/>
         </Style>
-        <Style Selector="Button.Tool:pointerover /template/ ContentPresenter">
+        <Style Selector="Border.Tool:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="#F3F4F6"/>
             <Setter Property="BorderBrush" Value="#D1D5DB"/>
         </Style>
@@ -81,6 +81,24 @@
                             </Style>
                         </ListBox.Styles>
                     </ListBox>
+                    <Rectangle Width="1" Fill="#ccc" Margin="5,2,10,2" VerticalAlignment="Stretch"/>
+                    <Button Command="{Binding ClearAllCommand}"
+                            ToolTip.Tip="Clear All"
+                            Background="Transparent"
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="0">
+                        <Svg Path="/Assets/Icons/broom.svg" Width="30"/>
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>
+                            </Style>
+                            <Style Selector="Button:pressed /template/ ContentPresenter">
+                                <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
@@ -108,7 +126,6 @@
                            <Canvas x:Name="DrawingOverlayCanvas"
                                    Background="Transparent"
                                    Initialized="Canvas_OnInitialized">
-                               <Rectangle Fill="red" Width="150" Height="150" Canvas.Left="150" Canvas.Right="150"></Rectangle>
                            </Canvas>
                        </ItemsPanelTemplate>
                    </ItemsControl.ItemsPanel>
@@ -120,6 +137,13 @@
                                    Width="{Binding Size}"
                                    Height="{Binding Size}"/>
                            </DataTemplate>
+                           <DataTemplate x:Key="LineShape" DataType="{x:Type vm:LineShape}">
+                               <Line
+                                   StartPoint="{Binding StartPoint}"
+                                   EndPoint="{Binding EndPoint}"
+                                   Stroke="{Binding Color}"
+                                   StrokeThickness="{Binding Thickness}" />
+                           </DataTemplate> 
                        </dt:ShapeTemplateSelector>
                    </ItemsControl.ItemTemplate>
                </ItemsControl>
