@@ -10,7 +10,8 @@
         x:DataType="vm:MainViewModel"
         Title="{Binding Title}"
         Width="1200"
-        Height="720">
+        Height="720"
+        Icon="/Assets/app-icon.png">
     <Window.Styles>
         <Style Selector="Button.LogoWrapper:pointerover /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
