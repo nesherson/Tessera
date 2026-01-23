@@ -7,12 +7,14 @@ namespace Tessera.App.ViewModels;
 public class LineTool : ICanvasTool
 {
     private readonly DrawingPageViewModel _drawingPageViewModel;
+    private readonly LineToolSettings _settings;
     
     private LineShape? _line;
     
-    public LineTool(DrawingPageViewModel  drawingPageViewModel)
+    public LineTool(DrawingPageViewModel  drawingPageViewModel, LineToolSettings settings)
     {
         _drawingPageViewModel = drawingPageViewModel;
+        _settings = settings;
     }
     
     public void OnPointerPressed(Point p)
@@ -21,8 +23,8 @@ public class LineTool : ICanvasTool
         {
             StartPoint = new Point(p.X, p.Y),
             EndPoint = new Point(p.X, p.Y),
-            Color = new SolidColorBrush(_drawingPageViewModel.CurrentColor),
-            Thickness = _drawingPageViewModel.CurrentThickness,
+            Thickness = _settings.LineThickness,
+            Color = new SolidColorBrush(_settings.LineColor),
         };
         
         _drawingPageViewModel.Shapes.Add(_line);

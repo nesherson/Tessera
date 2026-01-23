@@ -16,10 +16,6 @@ public partial class DrawingPageViewModel : PageViewModel
     [ObservableProperty] 
     private ToolItem _selectedToolItem;
     [ObservableProperty] 
-    private Color _currentColor;
-    [ObservableProperty]
-    private double _currentThickness = 4.0;
-    [ObservableProperty] 
     private bool _isSelectionVisible;
     [ObservableProperty] 
     private double _selectionX;
@@ -34,16 +30,18 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public DrawingPageViewModel()
     {
+        var pointSettings = new PointToolSettings();
+        var lineSettings = new LineToolSettings();
+        
         PageName = ApplicationPageNames.Drawing;
         Shapes = [];
         Tools = 
         [
-            new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointTool(this)},
-            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineTool(this)},
+            new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointTool(this, pointSettings), ToolSettings = pointSettings},
+            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineTool(this, lineSettings), ToolSettings = lineSettings},
             new ToolItem { Name = "Eraser", Icon = "/Assets/Icons/eraser.svg", Tool = new EraserTool(this)},
         ];
         SelectedToolItem = Tools[0];
-        CurrentColor = Colors.Black;
     }
     
     public ObservableCollection<ToolItem> Tools { get; }

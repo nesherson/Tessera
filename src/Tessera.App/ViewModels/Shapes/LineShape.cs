@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Controls.Shapes;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Tessera.App.ViewModels;

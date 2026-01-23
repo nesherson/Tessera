@@ -139,7 +139,7 @@
                    </ItemsControl.ItemsPanel>
                    <ItemsControl.ItemTemplate>
                        <dt:ShapeTemplateSelector>
-                           <DataTemplate x:Key="PointShape" DataType="{x:Type vm:PointShape}">
+                           <DataTemplate x:Key="PointShape" DataType="{x:Type vm:EllipseShape}">
                                <Ellipse
                                    Fill="{Binding Color}"
                                    Width="{Binding Size}"
@@ -182,40 +182,82 @@
                         VerticalAlignment="Center"/>
                 </Grid>
                 <ScrollViewer Grid.Row="1" >
-                    <StackPanel>
-                        <Border 
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Thickness" />
-                                <NumericUpDown
-                                    Grid.Column="1"
-                                    Value="{Binding CurrentThickness}"
-                                    BorderBrush="#E5E7EB"
-                                    CornerRadius="5"
-                                    ShowButtonSpinner="False"
-                                    Padding="8,8,0,0"/>
-                            </Grid>
-                        </Border>
-                        <Border 
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0, 0, 1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                <ColorPicker 
-                                    Grid.Column="1" 
-                                    Color="{Binding CurrentColor}"
-                                    HorizontalAlignment="Right"/>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
+                    <ContentControl Content="{Binding SelectedToolItem.ToolSettings}">
+                        <ContentControl.DataTemplates>
+                            <DataTemplate DataType="{x:Type vm:PointToolSettings}">
+                                <StackPanel>
+                                    <Border
+                                        BorderBrush="#E5E7EB"
+                                        BorderThickness="0,1"
+                                        Padding="20, 7">
+                                        <Grid ColumnDefinitions="*,*"
+                                              Margin="0">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                Classes="Label"
+                                                Text="Thickness" />
+                                            <NumericUpDown
+                                                Grid.Column="1"
+                                                Value="{Binding PointThickness}"
+                                                BorderBrush="#E5E7EB"
+                                                CornerRadius="5"
+                                                ShowButtonSpinner="False"
+                                                Padding="8,8,0,0"/>
+                                        </Grid>
+                                    </Border>
+                                    <Border
+                                        BorderBrush="#E5E7EB"
+                                        BorderThickness="0,0, 0, 1"
+                                        Padding="20, 7">
+                                        <Grid ColumnDefinitions="*,*"
+                                              Margin="0">
+                                            <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                            <ColorPicker
+                                                Grid.Column="1"
+                                                Color="{Binding PointColor}"
+                                                HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                              <DataTemplate DataType="{x:Type vm:LineToolSettings}">
+                                <StackPanel>
+                                    <Border
+                                        BorderBrush="#E5E7EB"
+                                        BorderThickness="0,1"
+                                        Padding="20, 7">
+                                        <Grid ColumnDefinitions="*,*"
+                                              Margin="0">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                Classes="Label"
+                                                Text="Thickness" />
+                                            <NumericUpDown
+                                                Grid.Column="1"
+                                                Value="{Binding LineThickness}"
+                                                BorderBrush="#E5E7EB"
+                                                CornerRadius="5"
+                                                ShowButtonSpinner="False"
+                                                Padding="8,8,0,0"/>
+                                        </Grid>
+                                    </Border>
+                                    <Border
+                                        BorderBrush="#E5E7EB"
+                                        BorderThickness="0,0, 0, 1"
+                                        Padding="20, 7">
+                                        <Grid ColumnDefinitions="*,*"
+                                              Margin="0">
+                                            <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                            <ColorPicker
+                                                Grid.Column="1"
+                                                Color="{Binding LineColor}"
+                                                HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ContentControl.DataTemplates>
+                    </ContentControl>
                 </ScrollViewer>
             </Grid>
         </Border>
