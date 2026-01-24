@@ -23,7 +23,8 @@ public class PointTool : ICanvasTool
         {
             X = x,
             Y = y,
-            Size = _settings.PointThickness,
+            Width = _settings.PointThickness,
+            Height = _settings.PointThickness,
             Color = new SolidColorBrush(_settings.PointColor)
         };
         

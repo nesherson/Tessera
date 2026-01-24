@@ -26,7 +26,8 @@ public class ShapeTool : ICanvasTool
         _previewShape.Y = p.Y;
         _previewShape.Width = 0;
         _previewShape.Height = 0;
-        _previewShape.StrokeColor = new SolidColorBrush(_settings.Color);
+        _previewShape.StrokeColor = new SolidColorBrush(_settings.StrokeColor);
+        _previewShape.Color = new SolidColorBrush(_settings.Color);
         _previewShape.StrokeThickness = _settings.Thickness;
 
         _vm.Shapes.Add(_previewShape);
