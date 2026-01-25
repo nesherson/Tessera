@@ -146,7 +146,7 @@
                                    StartPoint="{Binding StartPoint}"
                                    EndPoint="{Binding EndPoint}"
                                    Stroke="{Binding Color}"
-                                   StrokeThickness="{Binding Thickness}" />
+                                   StrokeThickness="{Binding StrokeThickness}" />
                            </DataTemplate> 
                            <DataTemplate x:Key="RectangleShape" DataType="{x:Type vm:RectangleShape}">
                                <Rectangle

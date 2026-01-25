@@ -12,7 +12,7 @@ public partial class LineShape : ShapeBase
     private Point _endPoint;
 
     [ObservableProperty]
-    private double _thickness;
+    private double _strokeThickness;
 
     public override bool Intersects(Rect rect)
     {

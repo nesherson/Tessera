@@ -93,7 +93,7 @@
                     <StackPanel>
                         <Border
                             BorderBrush="#E5E7EB"
-                            BorderThickness="0,1"
+                            BorderThickness="0,1,0,0"
                             Padding="20, 7">
                             <Grid ColumnDefinitions="*,*"
                                   Margin="0">
@@ -103,7 +103,9 @@
                                     Text="Thickness" />
                                 <ComboBox Grid.Column="1" 
                                           ItemsSource="{Binding AvailableShapes}"
-                                          SelectedItem="{Binding SelectedShapeType}"/>
+                                          SelectedItem="{Binding SelectedShapeType}"
+                                          HorizontalAlignment="Stretch"
+                                          Padding="8,8,0,0"/>
                             </Grid>
                         </Border>
                         <Border

@@ -1,13 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Tessera.App.Controls;
 
 public partial class CanvasToolSettings : UserControl
 {
-
     public static readonly StyledProperty<ObservableObject> ToolSettingsProperty = 
         AvaloniaProperty.Register<CanvasToolSettings, ObservableObject>(nameof(ToolSettings));
 
