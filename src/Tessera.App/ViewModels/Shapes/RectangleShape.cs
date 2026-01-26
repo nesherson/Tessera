@@ -6,6 +6,6 @@ public class RectangleShape : ShapeBase
 {
     public override bool Intersects(Rect rect)
     {
-        return false;
+        return rect.Intersects(new Rect(X, Y, Width, Height));
     }
 }
