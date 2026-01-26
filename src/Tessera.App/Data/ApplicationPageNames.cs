@@ -4,6 +4,5 @@ public enum ApplicationPageNames
 {
     Unknown,
     Dummy,
-    Home,
-    ThemeSettings
+    Drawing
 }

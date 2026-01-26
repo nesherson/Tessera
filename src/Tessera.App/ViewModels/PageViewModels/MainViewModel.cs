@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tessera.App.Data;
@@ -12,6 +14,7 @@ public partial class MainViewModel : ViewModelBase
      private readonly IPageFactory _pageFactory;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DrawingPageIsActive))]
     private PageViewModel _currentPage;
     
     [ObservableProperty]
@@ -31,14 +34,31 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(IPageFactory pageFactory)
     {
         _pageFactory = pageFactory;
-        CurrentPage = pageFactory.GetPageViewModel(ApplicationPageNames.Home);
+        CurrentPage = pageFactory.GetPageViewModel(ApplicationPageNames.Drawing);
         Title = "Tessera";
     }
 
     public string Title { get; set; } 
+    public bool DrawingPageIsActive => CurrentPage.PageName == ApplicationPageNames.Drawing;
     
-    public void GoToPage(ApplicationPageNames pageName)
+    [RelayCommand]
+    public void GoToPage(ApplicationPageNames applicationPage)
     {
-        CurrentPage = _pageFactory.GetPageViewModel(pageName);
+        CurrentPage = _pageFactory.GetPageViewModel(applicationPage);
+    }
+    
+    [RelayCommand]
+    private void ToggleSideMenu()
+    {
+        IsPaneOpen = !IsPaneOpen;
+    }
+    
+    [RelayCommand]
+    private void ExitApplication()
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
     }
 }

@@ -15,17 +15,14 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(
             sp => pageName => pageName switch
             {
-                ApplicationPageNames.Unknown => sp.GetRequiredService<HomePageViewModel>(),
-                ApplicationPageNames.Home => sp.GetRequiredService<HomePageViewModel>(),
-                ApplicationPageNames.ThemeSettings => sp.GetRequiredService<ThemeSettingsPageViewModel>(),
-                _ => sp.GetRequiredService<HomePageViewModel>()
+                ApplicationPageNames.Drawing => sp.GetRequiredService<DrawingPageViewModel>(),
+                _ => sp.GetRequiredService<DrawingPageViewModel>()
             });
     }
     
     public static void AddViewModels(this IServiceCollection services)
     {
         services.AddSingleton<MainViewModel>();
-        services.AddTransient<HomePageViewModel>();
-        services.AddTransient<ThemeSettingsPageViewModel>();
+        services.AddTransient<DrawingPageViewModel>();
     }
 }

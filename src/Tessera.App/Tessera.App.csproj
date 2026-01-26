@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.3.11" />
+        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.3.11" />
         <PackageReference Include="Avalonia.Desktop" Version="11.3.11" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.11" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.11" />
@@ -19,19 +20,34 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-        <PackageReference Include="FluentAvaloniaUI" Version="2.4.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.12" />
+        <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.9.2" />
     </ItemGroup>
 
     <ItemGroup>
+      <AvaloniaResource Include="Assets\Logo\logo-large.svg" />
+      <AvaloniaResource Include="Assets\Logo\logo-small.svg" />
       <None Remove="Assets\avalonia-logo.ico" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Views\ThemeSettings.axaml.cs">
-        <DependentUpon>ThemeSettings.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
+      <None Remove="Assets\Fonts\Phosphor.ttf" />
+      <None Remove="Assets\Fonts\Phosphor-Fill.ttf" />
+      <None Remove="Assets\Images\logo.svg" />
+      <None Remove="Assets\Images\logo-small.svg" />
+      <None Remove="Assets\Images\dot-outline.svg" />
+      <AvaloniaResource Include="Assets\Icons\point.svg" />
+      <None Remove="Assets\Images\line.svg" />
+      <AvaloniaResource Include="Assets\Icons\line.svg" />
+      <None Remove="Assets\Images\pencil-simple.svg" />
+      <AvaloniaResource Include="Assets\Icons\pencil-simple.svg" />
+      <None Remove="Assets\Images\sign-out.svg" />
+      <AvaloniaResource Include="Assets\Icons\exit.svg" />
+      <None Remove="Assets\Icons\broom.svg" />
+      <AvaloniaResource Include="Assets\Icons\broom.svg" />
+      <None Remove="Assets\Icons\eraser.svg" />
+      <AvaloniaResource Include="Assets\Icons\eraser.svg" />
+      <None Remove="Assets\Icons\shapes.svg" />
+      <AvaloniaResource Include="Assets\Icons\shapes.svg" />
+      <None Remove="Assets\Icons\pen.svg" />
+      <AvaloniaResource Include="Assets\Icons\pen.svg" />
     </ItemGroup>
 
     <ItemGroup>
