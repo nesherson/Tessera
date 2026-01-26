@@ -23,8 +23,8 @@ public class LineTool : ICanvasTool
         {
             StartPoint = new Point(p.X, p.Y),
             EndPoint = new Point(p.X, p.Y),
-            StrokeThickness = _settings.LineThickness,
-            Color = new SolidColorBrush(_settings.LineColor),
+            StrokeThickness = _settings.StrokeThickness,
+            Color = new SolidColorBrush(_settings.StrokeColor),
         };
         
         _drawingPageViewModel.Shapes.Add(_line);

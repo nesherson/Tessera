@@ -6,8 +6,8 @@ namespace Tessera.App.ViewModels;
 public partial class LineToolSettings : ObservableObject
 {
     [ObservableProperty]
-    private double _lineThickness = 3;
+    private double _strokeThickness = 3;
 
     [ObservableProperty]
-    private Color _lineColor = Colors.Black;
+    private Color _strokeColor = Colors.Black;
 }

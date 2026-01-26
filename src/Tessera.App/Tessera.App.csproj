@@ -46,6 +46,8 @@
       <AvaloniaResource Include="Assets\Icons\eraser.svg" />
       <None Remove="Assets\Icons\shapes.svg" />
       <AvaloniaResource Include="Assets\Icons\shapes.svg" />
+      <None Remove="Assets\Icons\pen.svg" />
+      <AvaloniaResource Include="Assets\Icons\pen.svg" />
     </ItemGroup>
 
     <ItemGroup>

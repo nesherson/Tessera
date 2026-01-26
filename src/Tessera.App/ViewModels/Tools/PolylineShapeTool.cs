@@ -1,0 +1,47 @@
+﻿using System.Collections.ObjectModel;
+using Avalonia;
+using Avalonia.Media;
+using Tessera.App.Interfaces;
+
+namespace Tessera.App.ViewModels;
+
+public class PolylineShapeTool : ICanvasTool
+{
+    private readonly DrawingPageViewModel _vm;
+    private readonly PolylineToolSettings _settings;
+    
+    private PolylineShape? _line;
+
+    public PolylineShapeTool(DrawingPageViewModel vm, PolylineToolSettings settings)
+    {
+        _vm = vm;
+        _settings = settings;
+    }
+    public void OnPointerPressed(Point p)
+    {
+        _line = new PolylineShape
+        {
+            StrokeThickness = _settings.StrokeThickness,
+            StrokeColor = new SolidColorBrush(_settings.StrokeColor),
+            StrokeJoin = _settings.SelectedStrokeJoin,
+            StrokeCap = _settings.SelectedStrokeCap
+        };
+
+        _line.Points.Add(p);
+        _vm.Shapes.Add(_line);
+    }
+
+    public void OnPointerMoved(Point p)
+    {
+        if (_line == null) return;
+
+        var newPoints = new ObservableCollection<Point>(_line.Points) { p };
+
+        _line.Points = newPoints;
+    }
+
+    public void OnPointerReleased(Point p)
+    {
+        _line = null;
+    }
+}

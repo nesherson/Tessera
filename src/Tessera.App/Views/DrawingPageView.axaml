@@ -145,8 +145,16 @@
                                <Line
                                    StartPoint="{Binding StartPoint}"
                                    EndPoint="{Binding EndPoint}"
-                                   Stroke="{Binding Color}"
+                                   Stroke="{Binding StrokeColor}"
                                    StrokeThickness="{Binding StrokeThickness}" />
+                           </DataTemplate> 
+                           <DataTemplate x:Key="PolylineShape" DataType="{x:Type vm:PolylineShape}">
+                               <Polyline
+                                   Points="{Binding Points}"
+                                   Stroke="{Binding StrokeColor}"
+                                   StrokeThickness="{Binding StrokeThickness}"
+                                   StrokeJoin="{Binding StrokeJoin}"
+                                   StrokeLineCap="{Binding StrokeCap}"/>
                            </DataTemplate> 
                            <DataTemplate x:Key="RectangleShape" DataType="{x:Type vm:RectangleShape}">
                                <Rectangle

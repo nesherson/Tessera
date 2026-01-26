@@ -32,6 +32,7 @@ public partial class DrawingPageViewModel : PageViewModel
         var pointSettings = new PointToolSettings();
         var lineSettings = new LineToolSettings();
         var shapeSettings = new ShapeToolSettings();
+        var polylineSettings = new PolylineToolSettings();
         
         PageName = ApplicationPageNames.Drawing;
         Shapes = [];
@@ -39,6 +40,7 @@ public partial class DrawingPageViewModel : PageViewModel
         [
             new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointTool(this, pointSettings), ToolSettings = pointSettings},
             new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineTool(this, lineSettings), ToolSettings = lineSettings},
+            new ToolItem { Name = "Free drawing", Icon = "/Assets/Icons/pen.svg", Tool = new PolylineShapeTool(this, polylineSettings), ToolSettings = polylineSettings},
             new ToolItem { Name = "Shape", Icon = "/Assets/Icons/shapes.svg", Tool = new ShapeTool(this, shapeSettings), ToolSettings = shapeSettings},
             new ToolItem { Name = "Eraser", Icon = "/Assets/Icons/eraser.svg", Tool = new EraserTool(this)},
         ];
