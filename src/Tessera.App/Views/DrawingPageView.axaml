@@ -17,6 +17,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#E5E7EB"/>
             <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="3"/>
         </Style>
         <Style Selector="Border.Tool:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="#F3F4F6"/>
@@ -51,8 +52,10 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Border Classes="Tool" ToolTip.Tip="{Binding Name}">
-                                    <Svg Path="{Binding Icon}" Width="30" />
+                                <Border 
+                                    Classes="Tool"
+                                    ToolTip.Tip="{Binding Name}">
+                                    <Svg Path="{Binding Icon}" Width="28"/>
                                 </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -82,8 +85,8 @@
                             BorderBrush="#E5E7EB"
                             BorderThickness="1"
                             CornerRadius="4"
-                            Padding="0">
-                        <Svg Path="/Assets/Icons/broom.svg" Width="30"/>
+                            Padding="2">
+                        <Svg Path="/Assets/Icons/broom.svg" Width="28"/>
                         <Button.Styles>
                             <Style Selector="Button:pointerover /template/ ContentPresenter">
                                 <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>
