@@ -7,7 +7,7 @@ using Tessera.App.Enumerations;
 
 namespace Tessera.App.ViewModels;
 
-public partial class PolylineToolSettings : ObservableObject
+public partial class PolylineShapeToolSettings : ObservableObject
 {
     [ObservableProperty]
     private double _strokeThickness = 3;

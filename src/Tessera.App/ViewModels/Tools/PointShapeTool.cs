@@ -4,12 +4,12 @@ using Tessera.App.Interfaces;
 
 namespace Tessera.App.ViewModels;
 
-public class PointTool : ICanvasTool
+public class PointShapeTool : ICanvasTool
 {
     private readonly DrawingPageViewModel _drawingPageViewModel;
-    private readonly PointToolSettings _settings;
+    private readonly PointShapeToolSettings _settings;
     
-    public PointTool(DrawingPageViewModel  drawingPageViewModel,  PointToolSettings settings)
+    public PointShapeTool(DrawingPageViewModel  drawingPageViewModel,  PointShapeToolSettings settings)
     {
         _drawingPageViewModel = drawingPageViewModel;
         _settings = settings;

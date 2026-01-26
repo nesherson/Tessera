@@ -4,14 +4,14 @@ using Tessera.App.Interfaces;
 
 namespace Tessera.App.ViewModels;
 
-public class LineTool : ICanvasTool
+public class LineShapeTool : ICanvasTool
 {
     private readonly DrawingPageViewModel _drawingPageViewModel;
-    private readonly LineToolSettings _settings;
+    private readonly LineShapeToolSettings _settings;
     
     private LineShape? _line;
     
-    public LineTool(DrawingPageViewModel  drawingPageViewModel, LineToolSettings settings)
+    public LineShapeTool(DrawingPageViewModel  drawingPageViewModel, LineShapeToolSettings settings)
     {
         _drawingPageViewModel = drawingPageViewModel;
         _settings = settings;

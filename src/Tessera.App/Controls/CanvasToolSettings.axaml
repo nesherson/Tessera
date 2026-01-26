@@ -17,215 +17,235 @@
             <Setter Property="BorderBrush" Value="#E5E7EB" />
         </Style>
     </UserControl.Styles>
-    <ScrollViewer>
-        <ContentControl Content="{Binding ToolSettings, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}">
-            <ContentControl.DataTemplates>
-                <DataTemplate DataType="{x:Type vm:PointToolSettings}">
-                    <StackPanel>
+    <Grid RowDefinitions="Auto, *">
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="20, 20, 20, 15">
+            <TextBlock 
+                Text="Configuration" 
+                FontSize="16" 
+                VerticalAlignment="Center"/>
+        </Grid>
+        <ScrollViewer Grid.Row="1">
+            <ContentControl Content="{Binding ToolSettings, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}">
+                <ContentControl.DataTemplates>
+                    <DataTemplate DataType="{x:Type vm:EraserToolSettings}">
                         <Border
                             BorderBrush="#E5E7EB"
                             BorderThickness="0,1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Thickness" />
-                                <NumericUpDown
-                                    Grid.Column="1"
-                                    Value="{Binding PointThickness}"
-                                    BorderBrush="#E5E7EB"
-                                    CornerRadius="5"
-                                    ShowButtonSpinner="False"
-                                    Padding="8,8,0,0"/>
-                            </Grid>
+                            Padding="20, 7"
+                            VerticalAlignment="Top">
+                            <TextBlock
+                                Classes="Label"
+                                Text="None" />
                         </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0, 0, 1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                <ColorPicker
-                                    Grid.Column="1"
-                                    Color="{Binding PointColor}"
-                                    HorizontalAlignment="Right"/>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type vm:LineToolSettings}">
-                    <StackPanel>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Thickness" />
-                                <NumericUpDown
-                                    Grid.Column="1"
-                                    Value="{Binding StrokeThickness}"
-                                    BorderBrush="#E5E7EB"
-                                    CornerRadius="5"
-                                    ShowButtonSpinner="False"
-                                    Padding="8,8,0,0"/>
-                            </Grid>
-                        </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0, 0, 1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                <ColorPicker
-                                    Grid.Column="1"
-                                    Color="{Binding StrokeColor}"
-                                    HorizontalAlignment="Right"/>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type vm:PolylineToolSettings}">
-                    <StackPanel>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Thickness" />
-                                <NumericUpDown
-                                    Grid.Column="1"
-                                    Value="{Binding StrokeThickness}"
-                                    BorderBrush="#E5E7EB"
-                                    CornerRadius="5"
-                                    ShowButtonSpinner="False"
-                                    Padding="8,8,0,0"/>
-                            </Grid>
-                        </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0, 0, 1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                <ColorPicker
-                                    Grid.Column="1"
-                                    Color="{Binding StrokeColor}"
-                                    HorizontalAlignment="Right"/>
-                            </Grid>
-                        </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0,0,1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Stroke join" />
-                                <ComboBox Grid.Column="1" 
-                                          ItemsSource="{Binding AvailableStrokeJoins}"
-                                          SelectedItem="{Binding SelectedStrokeJoin}"
-                                          HorizontalAlignment="Stretch" />
-                            </Grid>
-                        </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0,0,1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Stroke cap" />
-                                <ComboBox Grid.Column="1" 
-                                          ItemsSource="{Binding AvailableStrokeCaps}"
-                                          SelectedItem="{Binding SelectedStrokeCap}"
-                                          HorizontalAlignment="Stretch"/>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type vm:ShapeToolSettings}">
-                    <StackPanel>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,1,0,0"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Thickness" />
-                                <ComboBox Grid.Column="1" 
-                                          ItemsSource="{Binding AvailableShapes}"
-                                          SelectedItem="{Binding SelectedShapeType}"
-                                          HorizontalAlignment="Stretch"/>
-                            </Grid>
-                        </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Classes="Label"
-                                    Text="Thickness" />
-                                <NumericUpDown
-                                    Grid.Column="1"
-                                    Value="{Binding Thickness}"
-                                    BorderBrush="#E5E7EB"
-                                    CornerRadius="5"
-                                    ShowButtonSpinner="False"
-                                    Padding="8,8,0,0"/>
-                            </Grid>
-                        </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0, 0, 1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                <ColorPicker
-                                    Grid.Column="1"
-                                    Color="{Binding Color}"
-                                    HorizontalAlignment="Right"/>
-                            </Grid>
-                        </Border>
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,0, 0, 1"
-                            Padding="20, 7">
-                            <Grid ColumnDefinitions="*,*"
-                                  Margin="0">
-                                <TextBlock Grid.Column="0" Classes="Label" Text="Stroke Color" Margin="0,10,0,6"/>
-                                <ColorPicker
-                                    Grid.Column="1"
-                                    Color="{Binding StrokeColor}"
-                                    HorizontalAlignment="Right"/>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-            </ContentControl.DataTemplates>
-        </ContentControl>
-    </ScrollViewer>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:PointShapeToolSettings}">
+                        <StackPanel>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Thickness" />
+                                    <NumericUpDown
+                                        Grid.Column="1"
+                                        Value="{Binding PointThickness}"
+                                        BorderBrush="#E5E7EB"
+                                        CornerRadius="5"
+                                        ShowButtonSpinner="False"
+                                        Padding="8,8,0,0"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0, 0, 1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                    <ColorPicker
+                                        Grid.Column="1"
+                                        Color="{Binding PointColor}"
+                                        HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:LineShapeToolSettings}">
+                        <StackPanel>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Thickness" />
+                                    <NumericUpDown
+                                        Grid.Column="1"
+                                        Value="{Binding StrokeThickness}"
+                                        BorderBrush="#E5E7EB"
+                                        CornerRadius="5"
+                                        ShowButtonSpinner="False"
+                                        Padding="8,8,0,0"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0, 0, 1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                    <ColorPicker
+                                        Grid.Column="1"
+                                        Color="{Binding StrokeColor}"
+                                        HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:PolylineShapeToolSettings}">
+                        <StackPanel>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Thickness" />
+                                    <NumericUpDown
+                                        Grid.Column="1"
+                                        Value="{Binding StrokeThickness}"
+                                        BorderBrush="#E5E7EB"
+                                        CornerRadius="5"
+                                        ShowButtonSpinner="False"
+                                        Padding="8,8,0,0"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0, 0, 1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                    <ColorPicker
+                                        Grid.Column="1"
+                                        Color="{Binding StrokeColor}"
+                                        HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0,0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Stroke join" />
+                                    <ComboBox Grid.Column="1" 
+                                              ItemsSource="{Binding AvailableStrokeJoins}"
+                                              SelectedItem="{Binding SelectedStrokeJoin}"
+                                              HorizontalAlignment="Stretch" />
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0,0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Stroke cap" />
+                                    <ComboBox Grid.Column="1" 
+                                              ItemsSource="{Binding AvailableStrokeCaps}"
+                                              SelectedItem="{Binding SelectedStrokeCap}"
+                                              HorizontalAlignment="Stretch"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:ShapeToolSettings}">
+                        <StackPanel>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,1,0,0"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Thickness" />
+                                    <ComboBox Grid.Column="1" 
+                                              ItemsSource="{Binding AvailableShapes}"
+                                              SelectedItem="{Binding SelectedShapeType}"
+                                              HorizontalAlignment="Stretch"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Thickness" />
+                                    <NumericUpDown
+                                        Grid.Column="1"
+                                        Value="{Binding Thickness}"
+                                        BorderBrush="#E5E7EB"
+                                        CornerRadius="5"
+                                        ShowButtonSpinner="False"
+                                        Padding="8,8,0,0"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0, 0, 1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                    <ColorPicker
+                                        Grid.Column="1"
+                                        Color="{Binding Color}"
+                                        HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0, 0, 1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock Grid.Column="0" Classes="Label" Text="Stroke Color" Margin="0,10,0,6"/>
+                                    <ColorPicker
+                                        Grid.Column="1"
+                                        Color="{Binding StrokeColor}"
+                                        HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ContentControl.DataTemplates>
+            </ContentControl>
+        </ScrollViewer>
+    </Grid>
+  
 </UserControl>

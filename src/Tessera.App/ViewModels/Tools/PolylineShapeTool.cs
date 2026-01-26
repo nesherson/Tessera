@@ -8,11 +8,11 @@ namespace Tessera.App.ViewModels;
 public class PolylineShapeTool : ICanvasTool
 {
     private readonly DrawingPageViewModel _vm;
-    private readonly PolylineToolSettings _settings;
+    private readonly PolylineShapeToolSettings _settings;
     
     private PolylineShape? _line;
 
-    public PolylineShapeTool(DrawingPageViewModel vm, PolylineToolSettings settings)
+    public PolylineShapeTool(DrawingPageViewModel vm, PolylineShapeToolSettings settings)
     {
         _vm = vm;
         _settings = settings;

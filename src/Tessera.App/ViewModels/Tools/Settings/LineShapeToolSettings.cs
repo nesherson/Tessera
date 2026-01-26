@@ -3,11 +3,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Tessera.App.ViewModels;
 
-public partial class PointToolSettings : ObservableObject
+public partial class LineShapeToolSettings : ObservableObject
 {
     [ObservableProperty]
-    private double _pointThickness = 3;
+    private double _strokeThickness = 3;
 
     [ObservableProperty]
-    private Color _pointColor = Colors.Black;
+    private Color _strokeColor = Colors.Black;
 }
