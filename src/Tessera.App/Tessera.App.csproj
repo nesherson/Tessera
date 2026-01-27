@@ -48,6 +48,8 @@
       <AvaloniaResource Include="Assets\Icons\shapes.svg" />
       <None Remove="Assets\Icons\pen.svg" />
       <AvaloniaResource Include="Assets\Icons\pen.svg" />
+      <None Remove="Assets\Icons\hand-grabbing.svg" />
+      <AvaloniaResource Include="Assets\Icons\hand-grabbing.svg" />
     </ItemGroup>
 
     <ItemGroup>
