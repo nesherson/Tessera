@@ -17,18 +17,24 @@ public class PointShapeTool : ICanvasTool
     
     public void OnPointerPressed(Point p)
     {
-        var x = p.X - _vm.PanX;
-        var y = p.Y - _vm.PanY;
-        var newPoint = new EllipseShape
+        // var x = p.X - _vm.PanX;
+        // var y = p.Y - _vm.PanY;
+        if (_vm.ViewMatrix.HasInverse)
         {
-            X = x,
-            Y = y,
-            Width = _settings.PointThickness,
-            Height = _settings.PointThickness,
-            Color = new SolidColorBrush(_settings.PointColor)
-        };
+            var inverse = _vm.ViewMatrix.Invert();
+            var worldPoint = p.Transform(inverse);
+            
+            var newPoint = new EllipseShape
+            {
+                X = worldPoint.X,
+                Y = worldPoint.Y,
+                Width = _settings.PointThickness,
+                Height = _settings.PointThickness,
+                Color = new SolidColorBrush(_settings.PointColor)
+            };
         
-        _vm.Shapes.Add(newPoint);
+            _vm.Shapes.Add(newPoint);
+        }
     }
 
     public void OnPointerMoved(Point p)

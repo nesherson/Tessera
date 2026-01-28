@@ -109,16 +109,16 @@
             BorderThickness="1"
             BoxShadow="0 1 3 0 #10000000">
             <Grid ClipToBounds="True">
-                <Panel Background="Transparent"
+                <Panel Name="CanvasContainer"
+                       Background="Transparent"
                        PointerPressed="OnPointerPressed"
                        PointerMoved="OnPointerMoved"
                        PointerReleased="OnPointerReleased">
-                    <Panel Name="MovingWorld">
-                        <Panel.RenderTransform>
-                            <TranslateTransform X="{Binding PanX}" Y="{Binding PanY}"/>
-                        </Panel.RenderTransform>
-                    </Panel>
-                    <ItemsControl ItemsSource="{Binding Shapes}">
+                    
+                    <ItemsControl ItemsSource="{Binding Shapes}" >
+                        <ItemsControl.RenderTransform>
+                            <MatrixTransform Matrix="{Binding ViewMatrix}"/>
+                        </ItemsControl.RenderTransform>
                         <ItemsControl.Styles>
                             <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
                                 <Setter Property="Canvas.Left" Value="{Binding X}"/>
@@ -127,9 +127,9 @@
                         </ItemsControl.Styles>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <Canvas x:Name="DrawingOverlayCanvas"
-                                        Background="Transparent"
-                                        Initialized="Canvas_OnInitialized">
+                                <Canvas x:Name="Canvas"
+                                        Background="Red"
+                                        Opacity="0.1">
                                 </Canvas>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
@@ -149,7 +149,7 @@
                                         EndPoint="{Binding EndPoint}"
                                         Stroke="{Binding StrokeColor}"
                                         StrokeThickness="{Binding StrokeThickness}" />
-                                </DataTemplate> 
+                                </DataTemplate>
                                 <DataTemplate x:Key="PolylineShape" DataType="{x:Type vm:PolylineShape}">
                                     <Polyline
                                         Points="{Binding Points}"
@@ -157,7 +157,7 @@
                                         StrokeThickness="{Binding StrokeThickness}"
                                         StrokeJoin="{Binding StrokeJoin}"
                                         StrokeLineCap="{Binding StrokeCap}"/>
-                                </DataTemplate> 
+                                </DataTemplate>
                                 <DataTemplate x:Key="RectangleShape" DataType="{x:Type vm:RectangleShape}">
                                     <Rectangle
                                         Width="{Binding Width}"
@@ -165,13 +165,138 @@
                                         Stroke="{Binding StrokeColor}"
                                         Fill="{Binding Color}"
                                         StrokeThickness="{Binding StrokeThickness}" />
-                                </DataTemplate> 
+                                </DataTemplate>
                             </dt:ShapeTemplateSelector>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-        
-                   
+                    <TextBlock Text="Left Click + Drag to Pan. Click to Add Point." 
+                               Margin="10" IsHitTestVisible="False"/>
                 </Panel>
+                <!-- <Panel  -->
+                <!--     Background="Blue" Opacity="0.1"> -->
+                <!--     <Panel.RenderTransform> -->
+                <!--         <MatrixTransform Matrix="{Binding ViewMatrix}" /> -->
+                <!--     </Panel.RenderTransform> -->
+                <!-- </Panel> -->
+                <!-- <Panel Background="Blue" -->
+                <!--        Opacity="0.1" -->
+                <!--        PointerPressed="OnPointerPressed" -->
+                <!--        PointerMoved="OnPointerMoved" -->
+                <!--        PointerReleased="OnPointerReleased" /> -->
+                <!-- <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False"> -->
+                <!--     <ItemsControl.Styles> -->
+                <!--         <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase"> -->
+                <!--             <Setter Property="Canvas.Left" Value="{Binding X}"/> -->
+                <!--             <Setter Property="Canvas.Top" Value="{Binding Y}"/> -->
+                <!--         </Style> -->
+                <!--     </ItemsControl.Styles> -->
+                <!--     <ItemsControl.ItemsPanel> -->
+                <!--         <ItemsPanelTemplate> -->
+                <!--             <Canvas x:Name="Canvas" -->
+                <!--                     Background="Red" -->
+                <!--                     Opacity="0.1"> -->
+                <!--             </Canvas> -->
+                <!--         </ItemsPanelTemplate> -->
+                <!--     </ItemsControl.ItemsPanel> -->
+                <!--     <ItemsControl.ItemTemplate> -->
+                <!--         <dt:ShapeTemplateSelector> -->
+                <!--             <DataTemplate x:Key="EllipseShape" DataType="{x:Type vm:EllipseShape}"> -->
+                <!--                 <Ellipse -->
+                <!--                     Width="{Binding Width}" -->
+                <!--                     Height="{Binding Height}" -->
+                <!--                     Stroke="{Binding StrokeColor}" -->
+                <!--                     Fill="{Binding Color}" -->
+                <!--                     StrokeThickness="{Binding StrokeThickness}" /> -->
+                <!--             </DataTemplate> -->
+                <!--             <DataTemplate x:Key="LineShape" DataType="{x:Type vm:LineShape}"> -->
+                <!--                 <Line -->
+                <!--                     StartPoint="{Binding StartPoint}" -->
+                <!--                     EndPoint="{Binding EndPoint}" -->
+                <!--                     Stroke="{Binding StrokeColor}" -->
+                <!--                     StrokeThickness="{Binding StrokeThickness}" /> -->
+                <!--             </DataTemplate> -->
+                <!--             <DataTemplate x:Key="PolylineShape" DataType="{x:Type vm:PolylineShape}"> -->
+                <!--                 <Polyline -->
+                <!--                     Points="{Binding Points}" -->
+                <!--                     Stroke="{Binding StrokeColor}" -->
+                <!--                     StrokeThickness="{Binding StrokeThickness}" -->
+                <!--                     StrokeJoin="{Binding StrokeJoin}" -->
+                <!--                     StrokeLineCap="{Binding StrokeCap}"/> -->
+                <!--             </DataTemplate> -->
+                <!--             <DataTemplate x:Key="RectangleShape" DataType="{x:Type vm:RectangleShape}"> -->
+                <!--                 <Rectangle -->
+                <!--                     Width="{Binding Width}" -->
+                <!--                     Height="{Binding Height}" -->
+                <!--                     Stroke="{Binding StrokeColor}" -->
+                <!--                     Fill="{Binding Color}" -->
+                <!--                     StrokeThickness="{Binding StrokeThickness}" /> -->
+                <!--             </DataTemplate> -->
+                <!--         </dt:ShapeTemplateSelector> -->
+                <!--     </ItemsControl.ItemTemplate> -->
+                <!-- </ItemsControl> -->
+            
+                <!-- <Border Name="MovingWorld" -->
+                <!--         Background="Red" -->
+                <!--         Opacity="0.2" -->
+                <!--         PointerPressed="OnPointerPressed" -->
+                <!--         PointerMoved="OnPointerMoved" -->
+                <!--         PointerReleased="OnPointerReleased"> -->
+                <!--     <Border.RenderTransform> -->
+                <!--         <MatrixTransform Matrix="{Binding ViewMatrix}" /> -->
+                <!--     </Border.RenderTransform> -->
+                <!--     <ItemsControl ItemsSource="{Binding Shapes}"> -->
+                <!--         <ItemsControl.Styles> -->
+                <!--             <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase"> -->
+                <!--                 <Setter Property="Canvas.Left" Value="{Binding X}"/> -->
+                <!--                 <Setter Property="Canvas.Top" Value="{Binding Y}"/> -->
+                <!--             </Style> -->
+                <!--         </ItemsControl.Styles> -->
+                <!--         <ItemsControl.ItemsPanel> -->
+                <!--             <ItemsPanelTemplate> -->
+                <!--                 <Canvas x:Name="DrawingOverlayCanvas" -->
+                <!--                         Background="Transparent" -->
+                <!--                         Initialized="Canvas_OnInitialized"> -->
+                <!--                 </Canvas> -->
+                <!--             </ItemsPanelTemplate> -->
+                <!--         </ItemsControl.ItemsPanel> -->
+                <!--         <ItemsControl.ItemTemplate> -->
+                <!--             <dt:ShapeTemplateSelector> -->
+                <!--                 <DataTemplate x:Key="EllipseShape" DataType="{x:Type vm:EllipseShape}"> -->
+                <!--                     <Ellipse -->
+                <!--                         Width="{Binding Width}" -->
+                <!--                         Height="{Binding Height}" -->
+                <!--                         Stroke="{Binding StrokeColor}" -->
+                <!--                         Fill="{Binding Color}" -->
+                <!--                         StrokeThickness="{Binding StrokeThickness}" /> -->
+                <!--                 </DataTemplate> -->
+                <!--                 <DataTemplate x:Key="LineShape" DataType="{x:Type vm:LineShape}"> -->
+                <!--                     <Line -->
+                <!--                         StartPoint="{Binding StartPoint}" -->
+                <!--                         EndPoint="{Binding EndPoint}" -->
+                <!--                         Stroke="{Binding StrokeColor}" -->
+                <!--                         StrokeThickness="{Binding StrokeThickness}" /> -->
+                <!--                 </DataTemplate> -->
+                <!--                 <DataTemplate x:Key="PolylineShape" DataType="{x:Type vm:PolylineShape}"> -->
+                <!--                     <Polyline -->
+                <!--                         Points="{Binding Points}" -->
+                <!--                         Stroke="{Binding StrokeColor}" -->
+                <!--                         StrokeThickness="{Binding StrokeThickness}" -->
+                <!--                         StrokeJoin="{Binding StrokeJoin}" -->
+                <!--                         StrokeLineCap="{Binding StrokeCap}"/> -->
+                <!--                 </DataTemplate> -->
+                <!--                 <DataTemplate x:Key="RectangleShape" DataType="{x:Type vm:RectangleShape}"> -->
+                <!--                     <Rectangle -->
+                <!--                         Width="{Binding Width}" -->
+                <!--                         Height="{Binding Height}" -->
+                <!--                         Stroke="{Binding StrokeColor}" -->
+                <!--                         Fill="{Binding Color}" -->
+                <!--                         StrokeThickness="{Binding StrokeThickness}" /> -->
+                <!--                 </DataTemplate> -->
+                <!--             </dt:ShapeTemplateSelector> -->
+                <!--         </ItemsControl.ItemTemplate> -->
+                <!--     </ItemsControl> -->
+                <!-- </Border> -->
+                    
             </Grid>
         </Border>
         <Border 
@@ -187,14 +312,20 @@
             <Grid RowDefinitions="Auto,*">
                 <c:CanvasToolSettings
                     ToolSettings="{Binding SelectedToolItem.ToolSettings}" />
+                <!-- <StackPanel Grid.Row="1"> -->
+                <!--     <WrapPanel> -->
+                <!--         <TextBlock Text="PanX -> " /> -->
+                <!--         <TextBlock Text="{Binding PanX}" /> -->
+                <!--     </WrapPanel> -->
+                <!--     <WrapPanel> -->
+                <!--         <TextBlock Text="PanY -> " /> -->
+                <!--         <TextBlock Text="{Binding PanY}" /> -->
+                <!--     </WrapPanel> -->
+                <!-- </StackPanel> -->
                 <StackPanel Grid.Row="1">
                     <WrapPanel>
-                        <TextBlock Text="PanX -> " />
-                        <TextBlock Text="{Binding PanX}" />
-                    </WrapPanel>
-                    <WrapPanel>
-                        <TextBlock Text="PanY -> " />
-                        <TextBlock Text="{Binding PanY}" />
+                        <TextBlock Text="Matrix -> " />
+                        <TextBlock Text="{Binding ViewMatrix}" />
                     </WrapPanel>
                 </StackPanel>
             </Grid>
