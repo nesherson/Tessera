@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Tessera.App.Enumerations;
 
 namespace Tessera.App.ViewModels;
 

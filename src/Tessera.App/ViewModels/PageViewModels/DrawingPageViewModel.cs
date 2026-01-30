@@ -1,12 +1,7 @@
-using System;
 using System.Collections.ObjectModel;
 using Avalonia;
-using Avalonia.Controls.Primitives;
-using Avalonia.Input;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ExCSS;
 using Tessera.App.Data;
 using Tessera.App.Interfaces;
 using Point = Avalonia.Point;
