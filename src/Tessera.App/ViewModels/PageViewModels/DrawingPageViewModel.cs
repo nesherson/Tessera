@@ -35,12 +35,7 @@ public partial class DrawingPageViewModel : PageViewModel
     
     [ObservableProperty] 
     private double _selectionHeight;
-
-    // [ObservableProperty]
-    // private double _panX = 0;
-    //
-    // [ObservableProperty]
-    // private double _panY = 0;
+    
     [ObservableProperty]
     private Matrix _viewMatrix = Matrix.Identity;
     
@@ -82,7 +77,6 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public void OnPointerReleased(Point point)
     {
-        
         CurrentTool.OnPointerReleased(point);
     }
     
@@ -90,37 +84,5 @@ public partial class DrawingPageViewModel : PageViewModel
     private void ClearAll()
     {
         Shapes.Clear();
-    }
-    
-    public void Pan(double deltaX, double deltaY)
-    {
-        // Create a translation matrix for the delta
-        var translation = Matrix.CreateTranslation(deltaX, deltaY);
-        
-        // Prepend the translation to the current transform.
-        // Prepend means "Move the world relative to the camera".
-        ViewMatrix = translation * ViewMatrix;
-    }
-
-    // Logic to Add Point: Converts screen coordinates to canvas coordinates
-    public void AddPoint(Point screenPosition)
-    {
-        // 1. Invert the current transform matrix.
-        // This allows us to map a point from "Screen Space" back to "Canvas Space".
-        if (ViewMatrix.TryInvert(out Matrix inverted))
-        {
-            // 2. Transform the screen point to find where it lands on the infinite canvas
-            var canvasPosition = screenPosition.Transform(inverted);
-
-            // 3. Add to collection
-            Shapes.Add(new EllipseShape
-            {
-                X = canvasPosition.X,
-                Y = canvasPosition.Y,
-                Width = 5,
-                Height = 5,
-                Color = Brushes.Red
-            });
-        }
     }
 }
