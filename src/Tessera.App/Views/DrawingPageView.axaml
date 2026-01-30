@@ -182,23 +182,6 @@
             <Grid RowDefinitions="Auto,*">
                 <c:CanvasToolSettings
                     ToolSettings="{Binding SelectedToolItem.ToolSettings}" />
-                <!-- <StackPanel Grid.Row="1"> -->
-                <!--     <WrapPanel> -->
-                <!--         <TextBlock Text="PanX -> " /> -->
-                <!--         <TextBlock Text="{Binding PanX}" /> -->
-                <!--     </WrapPanel> -->
-                <!--     <WrapPanel> -->
-                <!--         <TextBlock Text="PanY -> " /> -->
-                <!--         <TextBlock Text="{Binding PanY}" /> -->
-                <!--     </WrapPanel> -->
-                <!-- </StackPanel> -->
-                <StackPanel Grid.Row="1">
-                    <WrapPanel>
-                        <TextBlock Text="Matrix -> " />
-                        <TextBlock Text="{Binding ViewMatrix}" />
-                        <TextBlock Text="{Binding SelectedToolItem.Tool}" />
-                    </WrapPanel>
-                </StackPanel>
             </Grid>
         </Border>
     </Grid>
