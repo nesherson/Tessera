@@ -114,6 +114,17 @@
                        PointerPressed="OnPointerPressed"
                        PointerMoved="OnPointerMoved"
                        PointerReleased="OnPointerReleased">
+                    <Canvas IsHitTestVisible="False"> 
+                        <Rectangle Canvas.Left="{Binding SelectionX}"
+                                   Canvas.Top="{Binding SelectionY}"
+                                   Width="{Binding SelectionWidth}"
+                                   Height="{Binding SelectionHeight}"
+                                   IsVisible="{Binding IsSelectionVisible}"
+                                   Stroke="Red" StrokeThickness="1" Fill="#33FF0000"/>
+                        <Canvas.RenderTransform>
+                            <MatrixTransform Matrix="{Binding ViewMatrix}"/>
+                        </Canvas.RenderTransform>
+                    </Canvas>
                     <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
                         <ItemsControl.Styles>
                             <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
