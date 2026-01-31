@@ -54,7 +54,6 @@ public partial class DrawingPageViewModel : PageViewModel
             new ToolItem { Name = "Eraser", Icon = "/Assets/Icons/eraser.svg", Tool = new EraserTool(this), ToolSettings = new EraserToolSettings()},
         ];
         SelectedToolItem = Tools[0];
-        Shapes.Add(new RectangleShape { Width = 50, Height = 50, X = 150, Y = 150});
     }
     
     public ObservableCollection<ToolItem> Tools { get; }
