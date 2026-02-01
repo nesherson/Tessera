@@ -22,13 +22,12 @@ public class LineShapeTool : ICanvasTool
         if (!_vm.ViewMatrix.HasInverse)
             return;
         
-        var inverse = _vm.ViewMatrix.Invert();
-        var worldPoint = p.Transform(inverse);
+        var currentPoint = _vm.ToWorld(p);
         
         _line = new LineShape
         {
-            StartPoint = new Point(worldPoint.X, worldPoint.Y),
-            EndPoint = new Point(worldPoint.X, worldPoint.Y),
+            StartPoint = new Point(currentPoint.X, currentPoint.Y),
+            EndPoint = new Point(currentPoint.X, currentPoint.Y),
             StrokeThickness = _settings.StrokeThickness,
             Color = new SolidColorBrush(_settings.StrokeColor),
         };
@@ -43,10 +42,9 @@ public class LineShapeTool : ICanvasTool
         if (!_vm.ViewMatrix.HasInverse)
             return;
         
-        var inverse = _vm.ViewMatrix.Invert();
-        var worldPoint = p.Transform(inverse);
+        var currentPoint = _vm.ToWorld(p);
         
-        _line.EndPoint = new Point(worldPoint.X, worldPoint.Y);
+        _line.EndPoint = new Point(currentPoint.X, currentPoint.Y);
     }
 
     public void OnPointerReleased(Point p)

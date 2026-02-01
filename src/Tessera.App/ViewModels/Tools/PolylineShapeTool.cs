@@ -22,7 +22,7 @@ public class PolylineShapeTool : ICanvasTool
     {
         if (!_vm.ViewMatrix.HasInverse) return;
         
-        var currentPoint = p.Transform(_vm.ViewMatrix.Invert());
+        var currentPoint = _vm.ToWorld(p);
         
         _line = new PolylineShape
         {
@@ -40,8 +40,8 @@ public class PolylineShapeTool : ICanvasTool
     {
         if (_line == null) return;
         if (!_vm.ViewMatrix.HasInverse) return;
-        
-        var currentPoint = p.Transform(_vm.ViewMatrix.Invert());
+
+        var currentPoint = _vm.ToWorld(p);
         var newPoints = new ObservableCollection<Point>(_line.Points) { currentPoint };
 
         _line.Points = newPoints;

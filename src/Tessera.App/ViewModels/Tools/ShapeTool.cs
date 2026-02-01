@@ -22,7 +22,7 @@ public class ShapeTool : ICanvasTool
     {
         if (!_vm.ViewMatrix.HasInverse) return;
         
-        _startPoint = p.Transform(_vm.ViewMatrix.Invert());
+        _startPoint = _vm.ToWorld(p);
         _previewShape = CreateShape(_settings.SelectedShapeType);
         _previewShape.X = p.X;
         _previewShape.Y = p.Y;
@@ -40,8 +40,7 @@ public class ShapeTool : ICanvasTool
         if (_previewShape == null) return;
         if (!_vm.ViewMatrix.HasInverse) return;
         
-        var currentPoint = p.Transform(_vm.ViewMatrix.Invert());
-        
+        var currentPoint = _vm.ToWorld(p);
         var x = Math.Min(currentPoint.X, _startPoint.X);
         var y = Math.Min(currentPoint.Y, _startPoint.Y);
         var w = Math.Abs(currentPoint.X - _startPoint.X);

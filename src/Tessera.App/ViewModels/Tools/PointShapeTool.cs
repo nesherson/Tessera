@@ -17,14 +17,11 @@ public class PointShapeTool : ICanvasTool
     
     public void OnPointerPressed(Point p)
     {
-        if (!_vm.ViewMatrix.HasInverse) return;
-        
-        var inverse = _vm.ViewMatrix.Invert();
-        var worldPoint = p.Transform(inverse);
+        var currentPoint = _vm.ToWorld(p);
         var newPoint = new EllipseShape
         {
-            X = worldPoint.X,
-            Y = worldPoint.Y,
+            X = currentPoint.X,
+            Y = currentPoint.Y,
             Width = _settings.PointThickness,
             Height = _settings.PointThickness,
             Color = new SolidColorBrush(_settings.PointColor)

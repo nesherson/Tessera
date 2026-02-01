@@ -79,4 +79,9 @@ public partial class DrawingPageViewModel : PageViewModel
     {
         Shapes.Clear();
     }
+
+    public Point ToWorld(Point screenPoint)
+    {
+        return !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+    }
 }
