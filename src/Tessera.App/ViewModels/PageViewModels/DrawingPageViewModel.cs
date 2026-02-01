@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using Avalonia;
+using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tessera.App.Data;
@@ -33,6 +34,9 @@ public partial class DrawingPageViewModel : PageViewModel
     
     [ObservableProperty]
     private Matrix _viewMatrix = Matrix.Identity;
+    
+    [ObservableProperty]
+    private Cursor _currentCursor = Cursor.Default;
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     

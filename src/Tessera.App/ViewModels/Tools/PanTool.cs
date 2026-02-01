@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Input;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.ViewModels;
@@ -21,6 +22,7 @@ public class PanTool : ICanvasTool
         _startPoint = p;
         _originalMatrix = _vm.ViewMatrix;
         _isDragging = false;
+        _vm.CurrentCursor = new Cursor(StandardCursorType.SizeAll);
     }
 
     public void OnPointerMoved(Point p)
@@ -45,5 +47,6 @@ public class PanTool : ICanvasTool
     {
         _startPoint = null;
         _isDragging = false;
+        _vm.CurrentCursor = Cursor.Default;
     }
 }
