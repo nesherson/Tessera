@@ -51,6 +51,10 @@
       <AvaloniaResource Include="Assets\Icons\pen.svg" />
       <None Remove="Assets\Icons\hand-grabbing.svg" />
       <AvaloniaResource Include="Assets\Icons\hand-grabbing.svg" />
+      <None Remove="Assets\Icons\arrows-in-cardinal.svg" />
+      <AvaloniaResource Include="Assets\Icons\arrows-in-cardinal.svg" />
+      <None Remove="Assets\Icons\arrows-counter-clockwise.svg" />
+      <AvaloniaResource Include="Assets\Icons\arrows-counter-clockwise.svg" />
     </ItemGroup>
 
     <ItemGroup>

@@ -74,14 +74,20 @@ public partial class DrawingPageViewModel : PageViewModel
         CurrentTool.OnPointerReleased(point);
     }
     
+    public Point ToWorld(Point screenPoint)
+    {
+        return !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+    }
+    
     [RelayCommand]
     private void ClearAll()
     {
         Shapes.Clear();
     }
-
-    public Point ToWorld(Point screenPoint)
+    
+    [RelayCommand]
+    private void ResetView()
     {
-        return !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+        ViewMatrix = Matrix.Identity;
     }
 }
