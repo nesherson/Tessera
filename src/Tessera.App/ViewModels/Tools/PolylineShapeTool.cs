@@ -17,8 +17,13 @@ public class PolylineShapeTool : ICanvasTool
         _vm = vm;
         _settings = settings;
     }
+    
     public void OnPointerPressed(Point p)
     {
+        if (!_vm.ViewMatrix.HasInverse) return;
+        
+        var currentPoint = _vm.ToWorld(p);
+        
         _line = new PolylineShape
         {
             StrokeThickness = _settings.StrokeThickness,
@@ -27,15 +32,17 @@ public class PolylineShapeTool : ICanvasTool
             StrokeCap = _settings.SelectedStrokeCap
         };
 
-        _line.Points.Add(p);
+        _line.Points.Add(currentPoint);
         _vm.Shapes.Add(_line);
     }
 
     public void OnPointerMoved(Point p)
     {
         if (_line == null) return;
+        if (!_vm.ViewMatrix.HasInverse) return;
 
-        var newPoints = new ObservableCollection<Point>(_line.Points) { p };
+        var currentPoint = _vm.ToWorld(p);
+        var newPoints = new ObservableCollection<Point>(_line.Points) { currentPoint };
 
         _line.Points = newPoints;
     }

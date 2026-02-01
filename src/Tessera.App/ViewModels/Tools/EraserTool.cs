@@ -18,10 +18,11 @@ public class EraserTool : ICanvasTool
     
     public void OnPointerPressed(Point p)
     {
-        _startPoint = p;
+        if (!_vm.ViewMatrix.HasInverse) return;
         
-        _vm.SelectionX = p.X;
-        _vm.SelectionY = p.Y;
+        _startPoint = _vm.ToWorld(p);
+        _vm.SelectionX = _startPoint.X;
+        _vm.SelectionY = _startPoint.Y;
         _vm.SelectionWidth = 0;
         _vm.SelectionHeight = 0;
         _vm.IsSelectionVisible = true;
@@ -30,11 +31,13 @@ public class EraserTool : ICanvasTool
     public void OnPointerMoved(Point p)
     {
         if (!_vm.IsSelectionVisible) return;
+        if (!_vm.ViewMatrix.HasInverse) return;
         
-        var x = Math.Min(p.X, _startPoint.X);
-        var y = Math.Min(p.Y, _startPoint.Y);
-        var w = Math.Abs(p.X - _startPoint.X);
-        var h = Math.Abs(p.Y - _startPoint.Y);
+        var currentPoint = _vm.ToWorld(p);
+        var x = Math.Min(currentPoint.X, _startPoint.X);
+        var y = Math.Min(currentPoint.Y, _startPoint.Y);
+        var w = Math.Abs(currentPoint.X - _startPoint.X);
+        var h = Math.Abs(currentPoint.Y - _startPoint.Y);
 
         _vm.SelectionX = x;
         _vm.SelectionY = y;
@@ -45,14 +48,10 @@ public class EraserTool : ICanvasTool
     public void OnPointerReleased(Point p)
     {
         var rect = new Rect(_vm.SelectionX, _vm.SelectionY, _vm.SelectionWidth, _vm.SelectionHeight);
-        var shapesToRemove = _vm.Shapes
+        _vm.Shapes
             .Where(shape => shape.Intersects(rect))
-            .ToList();
-        
-        foreach (var item in shapesToRemove)
-        {
-            _vm.Shapes.Remove(item);
-        }
+            .ToList()
+            .ForEach(x => _vm.Shapes.Remove(x));
         
         _vm.IsSelectionVisible = false;
     }

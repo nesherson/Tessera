@@ -1,5 +1,5 @@
-using System;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Tessera.App.ViewModels;
 
 namespace Tessera.App.Views;
@@ -7,21 +7,30 @@ namespace Tessera.App.Views;
 public partial class DrawingPageView : UserControl
 {
     private DrawingPageViewModel? ViewModel => DataContext as DrawingPageViewModel;
+
     public DrawingPageView()
     {
         InitializeComponent();
     }
     
-    private void Canvas_OnInitialized(object? sender, EventArgs e)
+    private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (sender is not Canvas canvas)
-            return;
+        var pointer = e.GetCurrentPoint(CanvasContainer);
+        
+        ViewModel?.OnPointerPressed(pointer.Position);
+    }
 
-        canvas.PointerPressed += (_, pe) =>
-            ViewModel?.OnPointerPressed(pe.GetCurrentPoint(canvas));
-        canvas.PointerMoved += (_, pe) =>
-            ViewModel?.OnPointerMoved(pe.GetCurrentPoint(canvas));
-        canvas.PointerReleased += (_, pe) =>
-            ViewModel?.OnPointerReleased(pe.GetCurrentPoint(canvas));
+    private void OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        var currentPoint = e.GetCurrentPoint(CanvasContainer).Position;
+        
+        ViewModel?.OnPointerMoved(currentPoint);
+    }
+
+    private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        var currentPoint = e.GetCurrentPoint(CanvasContainer).Position;
+        
+        ViewModel?.OnPointerReleased(currentPoint);
     }
 }

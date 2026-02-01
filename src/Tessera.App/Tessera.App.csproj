@@ -21,6 +21,7 @@
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.12" />
+        <PackageReference Include="PanAndZoom" Version="11.3.9.1" />
         <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.9.2" />
     </ItemGroup>
 
@@ -48,6 +49,12 @@
       <AvaloniaResource Include="Assets\Icons\shapes.svg" />
       <None Remove="Assets\Icons\pen.svg" />
       <AvaloniaResource Include="Assets\Icons\pen.svg" />
+      <None Remove="Assets\Icons\hand-grabbing.svg" />
+      <AvaloniaResource Include="Assets\Icons\hand-grabbing.svg" />
+      <None Remove="Assets\Icons\arrows-in-cardinal.svg" />
+      <AvaloniaResource Include="Assets\Icons\arrows-in-cardinal.svg" />
+      <None Remove="Assets\Icons\arrows-counter-clockwise.svg" />
+      <AvaloniaResource Include="Assets\Icons\arrows-counter-clockwise.svg" />
     </ItemGroup>
 
     <ItemGroup>

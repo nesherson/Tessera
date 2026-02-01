@@ -1,28 +1,42 @@
 using System.Collections.ObjectModel;
+using Avalonia;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tessera.App.Data;
 using Tessera.App.Interfaces;
+using Point = Avalonia.Point;
 
 namespace Tessera.App.ViewModels;
 
 public partial class DrawingPageViewModel : PageViewModel
 {
     [ObservableProperty] 
-    private ObservableCollection<ShapeBase> _shapes;
+    private ObservableCollection<ShapeBase> _shapes = [];
+    
     [ObservableProperty] 
     private ToolItem _selectedToolItem;
+    
     [ObservableProperty] 
     private bool _isSelectionVisible;
+    
     [ObservableProperty] 
     private double _selectionX;
+    
     [ObservableProperty] 
     private double _selectionY;
+    
     [ObservableProperty] 
     private double _selectionWidth;
+    
     [ObservableProperty] 
     private double _selectionHeight;
+    
+    [ObservableProperty]
+    private Matrix _viewMatrix = Matrix.Identity;
+    
+    [ObservableProperty]
+    private Cursor _currentCursor = Cursor.Default;
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     
@@ -34,9 +48,9 @@ public partial class DrawingPageViewModel : PageViewModel
         var polylineSettings = new PolylineShapeToolSettings();
         
         PageName = ApplicationPageNames.Drawing;
-        Shapes = [];
         Tools = 
         [
+            new ToolItem { Name = "Pan", Icon = "/Assets/Icons/hand-grabbing.svg", Tool = new PanTool(this)},
             new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointShapeTool(this, pointSettings), ToolSettings = pointSettings},
             new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineShapeTool(this, lineSettings), ToolSettings = lineSettings},
             new ToolItem { Name = "Free drawing", Icon = "/Assets/Icons/pen.svg", Tool = new PolylineShapeTool(this, polylineSettings), ToolSettings = polylineSettings},
@@ -47,34 +61,37 @@ public partial class DrawingPageViewModel : PageViewModel
     }
     
     public ObservableCollection<ToolItem> Tools { get; }
-
-    public void OnPointerPressed(PointerPoint pointerPoint)
+    
+    public void OnPointerPressed(Point point)
     {
-        if (!pointerPoint.Properties.IsLeftButtonPressed)
-            return;
-        
-        CurrentTool.OnPointerPressed(pointerPoint.Position);
+        CurrentTool.OnPointerPressed(point);
     }
     
-    public void OnPointerMoved(PointerPoint pointerPoint)
+    public void OnPointerMoved(Point point)
     {
-        if (!pointerPoint.Properties.IsLeftButtonPressed)
-            return;
         
-        CurrentTool.OnPointerMoved(pointerPoint.Position);
+        CurrentTool.OnPointerMoved(point);
     }
     
-    public void OnPointerReleased(PointerPoint pointerPoint)
+    public void OnPointerReleased(Point point)
     {
-        if (!pointerPoint.Properties.IsLeftButtonPressed)
-            return;
-        
-        CurrentTool.OnPointerReleased(pointerPoint.Position);
+        CurrentTool.OnPointerReleased(point);
     }
-
+    
+    public Point ToWorld(Point screenPoint)
+    {
+        return !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+    }
+    
     [RelayCommand]
     private void ClearAll()
     {
         Shapes.Clear();
+    }
+    
+    [RelayCommand]
+    private void ResetView()
+    {
+        ViewMatrix = Matrix.Identity;
     }
 }

@@ -6,35 +6,45 @@ namespace Tessera.App.ViewModels;
 
 public class LineShapeTool : ICanvasTool
 {
-    private readonly DrawingPageViewModel _drawingPageViewModel;
+    private readonly DrawingPageViewModel _vm;
     private readonly LineShapeToolSettings _settings;
     
     private LineShape? _line;
     
     public LineShapeTool(DrawingPageViewModel  drawingPageViewModel, LineShapeToolSettings settings)
     {
-        _drawingPageViewModel = drawingPageViewModel;
+        _vm = drawingPageViewModel;
         _settings = settings;
     }
     
     public void OnPointerPressed(Point p)
     {
+        if (!_vm.ViewMatrix.HasInverse)
+            return;
+        
+        var currentPoint = _vm.ToWorld(p);
+        
         _line = new LineShape
         {
-            StartPoint = new Point(p.X, p.Y),
-            EndPoint = new Point(p.X, p.Y),
+            StartPoint = new Point(currentPoint.X, currentPoint.Y),
+            EndPoint = new Point(currentPoint.X, currentPoint.Y),
             StrokeThickness = _settings.StrokeThickness,
             Color = new SolidColorBrush(_settings.StrokeColor),
         };
-        
-        _drawingPageViewModel.Shapes.Add(_line);
+
+        _vm.Shapes.Add(_line);
     }
 
     public void OnPointerMoved(Point p)
     {
         if (_line == null) return;
         
-        _line.EndPoint = new Point(p.X, p.Y);
+        if (!_vm.ViewMatrix.HasInverse)
+            return;
+        
+        var currentPoint = _vm.ToWorld(p);
+        
+        _line.EndPoint = new Point(currentPoint.X, currentPoint.Y);
     }
 
     public void OnPointerReleased(Point p)
