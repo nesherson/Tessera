@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Tessera.App.ViewModels;
@@ -18,19 +19,17 @@ public partial class ConfirmDialogViewModel : DialogViewModelBase
     [ObservableProperty]
     private bool _confirmed;
     
+    public Action<bool>? OnResult { get; init; }
+    
     [RelayCommand]
     private void Confirm()
     {
-        Confirmed = true;
-        
-        Close();
+        OnResult?.Invoke(true);
     }
     
     [RelayCommand]
     private void Cancel()
     {
-        Confirmed = false;
-        
-        Close();
+        OnResult?.Invoke(false);
     }
 }
