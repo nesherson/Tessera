@@ -5,8 +5,12 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tessera.App.Views.CanvasSettingsView"
              xmlns:vm="clr-namespace:Tessera.App.ViewModels"
+             xmlns:conv="clr-namespace:Tessera.App.Converters"
              x:DataType="vm:CanvasSettingsViewModel"
              Width="350">
+    <UserControl.Resources>
+        <conv:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+    </UserControl.Resources>
     <UserControl.Styles>
         <Style Selector="NumericUpDown">
             <Setter Property="BorderBrush" Value="{DynamicResource InputPrimaryBorder}" />
@@ -45,6 +49,10 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+            </StackPanel>
+            <StackPanel Spacing="5">
+                <TextBlock Text="Grid color" />
+                <ColorPicker Color="{Binding SelectedGridColor, Converter={StaticResource ColorToBrushConverter}}" HorizontalAlignment="Right"/>
             </StackPanel>
             <StackPanel Spacing="5" Orientation="Horizontal">
                 <TextBlock Text="Grid Snapping(Not working)" Padding="0,5,0,0" />

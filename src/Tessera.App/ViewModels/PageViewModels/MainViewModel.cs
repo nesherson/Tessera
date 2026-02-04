@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Drawing;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -69,6 +70,7 @@ public partial class MainViewModel : ViewModelBase
         {
             GridSpacing =  m.GridSpacing,
             SelectedGridType = m.GridType,
+            SelectedGridColor = m.GridColor,
             OnResult = result =>
             {
                 m.Tcs.SetResult(result);

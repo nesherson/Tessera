@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -105,12 +106,13 @@ public partial class DrawingPageViewModel : PageViewModel
     [RelayCommand]
     private async Task OpenOptions()
     {
-        var result = await WeakReferenceMessenger.Default.Send(new ShowCanvasSettingsDialogMessage(GridSpacing, GridType)).Tcs.Task;
+        var result = await WeakReferenceMessenger.Default.Send(new ShowCanvasSettingsDialogMessage(GridSpacing, GridType, GridColor)).Tcs.Task;
 
         if (result is not null)
         {
             GridSpacing = result.GridSpacing;
             GridType = result.GridType;
+            GridColor = result.GridColor;
         }
     }
     

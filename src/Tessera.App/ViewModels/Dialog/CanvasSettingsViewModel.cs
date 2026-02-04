@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tessera.App.Enumerations;
@@ -11,10 +12,15 @@ namespace Tessera.App.ViewModels;
 public partial class CanvasSettingsViewModel : DialogViewModelBase
 {
     private double? _gridSpacing;
-    private bool _gridSnapping;
 
+    [ObservableProperty] 
+    private GridType _selectedGridType;
+    
     [ObservableProperty]
-    private GridType _selectedGridType = GridType.Dots;
+    private bool _gridSnapping;
+    
+    [ObservableProperty]
+    private IBrush? _selectedGridColor;
 
     public IEnumerable<GridType> GridTypes => Enum.GetValues<GridType>();
     public Action<CanvasSettingsResult?>? OnResult { get; init; }
@@ -26,17 +32,13 @@ public partial class CanvasSettingsViewModel : DialogViewModelBase
         get => _gridSpacing;
         set => SetProperty(ref _gridSpacing, value);
     }
-    
-    public bool GridSnapping
-    {
-        get => _gridSnapping;
-        set => SetProperty(ref _gridSnapping, value);
-    }
 
     [RelayCommand]
     private void Save()
     {
-        OnResult?.Invoke(new CanvasSettingsResult(GridSpacing ?? 20, SelectedGridType));
+        OnResult?.Invoke(new CanvasSettingsResult(GridSpacing ?? 20, 
+            SelectedGridType, 
+            SelectedGridColor ?? new SolidColorBrush(Colors.Black)));
     }
 
     [RelayCommand]

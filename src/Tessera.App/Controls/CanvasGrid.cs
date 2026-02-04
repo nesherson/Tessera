@@ -21,13 +21,14 @@ public class CanvasGrid : Control
         nameof(Matrix));
     
     private const double DotRadius = 1.0;
-    private IPen _pen = new  Pen(Brushes.Black, thickness: 0.5);
+    private IPen _pen = new Pen(Brushes.Black, thickness: 0.5);
     
     static CanvasGrid()
     {
         AffectsRender<CanvasGrid>(MatrixProperty);
         AffectsRender<CanvasGrid>(GridSpacingProperty);
         AffectsRender<CanvasGrid>(GridTypeProperty);
+        AffectsRender<CanvasGrid>(GridColorProperty);
     }
     
     public Matrix Matrix
