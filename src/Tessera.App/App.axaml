@@ -35,6 +35,12 @@
         <SolidColorBrush x:Key="SplitViewPaneBackground">#f1f3f4</SolidColorBrush>
 		<SolidColorBrush x:Key="SplitViewBorderBrush">#E5E7EB</SolidColorBrush>
         
+		<!-- Input Brushes -->
+		<SolidColorBrush x:Key="InputPrimaryBorder">#a9afbc</SolidColorBrush>
+        
+        <!-- Theme overrides -->
+        <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground">#a9afbc</SolidColorBrush>
+        
 		<FontFamily x:Key="Phosphor">/Assets/Fonts/Phosphor.ttf#Phosphor</FontFamily>
 		<FontFamily x:Key="PhosphorFill">/Assets/Fonts/Phosphor-Fill.ttf#Phosphor-Fill</FontFamily>
         
