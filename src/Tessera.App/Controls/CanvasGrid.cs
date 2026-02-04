@@ -21,7 +21,7 @@ public class CanvasGrid : Control
         nameof(Matrix));
     
     private const double DotRadius = 1.0;
-    private IPen? _pen = new  Pen(Brushes.Black, thickness: 0.5);
+    private IPen _pen = new  Pen(Brushes.Black, thickness: 0.5);
     
     static CanvasGrid()
     {
@@ -75,6 +75,7 @@ public class CanvasGrid : Control
                 DrawLineGrid(ctx, offsetX, offsetY, Bounds.Width, Bounds.Height);
                 break;
             case GridType.Crosses:
+                DrawCrossGrid(ctx, offsetX, offsetY, Bounds.Width, Bounds.Height);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -117,6 +118,28 @@ public class CanvasGrid : Control
             for (var y = offsetY - GridSpacing; y < height; y += GridSpacing)
             {
                 ctx.DrawEllipse(GridColor, null, new Point(x, y), DotRadius, DotRadius);
+            }
+        }
+    }
+    
+    private void DrawCrossGrid(DrawingContext ctx, double offsetX, double offsetY, double width, double height)
+    {
+        const double crossSize = 3.0; 
+
+        for (var x = offsetX - GridSpacing; x < width; x += GridSpacing)
+        {
+            for (var y = offsetY - GridSpacing; y < height; y += GridSpacing)
+            {
+                var snappedX = Math.Round(x) + 0.5;
+                var snappedY = Math.Round(y) + 0.5;
+
+                ctx.DrawLine(_pen, 
+                    new Point(snappedX - crossSize, snappedY), 
+                    new Point(snappedX + crossSize, snappedY));
+
+                ctx.DrawLine(_pen, 
+                    new Point(snappedX, snappedY - crossSize), 
+                    new Point(snappedX, snappedY + crossSize));
             }
         }
     }
