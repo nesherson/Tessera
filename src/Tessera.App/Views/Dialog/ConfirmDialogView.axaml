@@ -11,7 +11,7 @@
     </Design.DataContext>
     <Border Background="{DynamicResource PrimaryBackground}">
         <StackPanel>
-            <Border Background="{DynamicResource PrimaryBackgroundGradient}">
+            <Border Background="{DynamicResource PrimaryBackground}">
                 <TextBlock Text="{Binding Title}"
                            Padding="10"
                            FontSize="18" />
