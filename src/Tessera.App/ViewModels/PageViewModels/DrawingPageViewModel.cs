@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Input;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -41,6 +42,9 @@ public partial class DrawingPageViewModel : PageViewModel
     
     [ObservableProperty] 
     private GridType _gridType = GridType.Dots;
+    
+    [ObservableProperty]
+    private IBrush _gridColor = Brushes.LightGray;
     
     [ObservableProperty]
     private Matrix _viewMatrix = Matrix.Identity;

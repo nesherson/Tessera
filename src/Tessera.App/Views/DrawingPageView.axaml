@@ -133,11 +133,13 @@
                                 <MatrixTransform Matrix="{Binding ViewMatrix}"/>
                             </Canvas.RenderTransform>
                         </Canvas>
-                        <c:DotGrid 
+                        <c:CanvasGrid 
                             IsHitTestVisible="False"
                             Matrix="{Binding ViewMatrix}"
-                            GridSpacing="{Binding GridSpacing}">
-                        </c:DotGrid>
+                            GridSpacing="{Binding GridSpacing}"
+                            GridType="{Binding GridType}"
+                            GridColor="{Binding GridColor}">
+                        </c:CanvasGrid>
                         <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
                             <ItemsControl.Styles>
                                 <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
