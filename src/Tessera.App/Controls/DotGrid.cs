@@ -9,19 +9,28 @@ public class DotGrid : Control
     public static readonly StyledProperty<Matrix> MatrixProperty = AvaloniaProperty.Register<DotGrid, Matrix>(
         nameof(Matrix));
     
-    private const double GridSpacing = 15.0;
+    public static readonly StyledProperty<double> GridSpacingProperty = AvaloniaProperty.Register<DotGrid, double>(
+        nameof(Matrix));
+    
     private const double DotRadius = 1.0;
     private static readonly IBrush DotBrush = Brushes.LightGray;
     
     static DotGrid()
     {
         AffectsRender<DotGrid>(MatrixProperty);
+        AffectsRender<DotGrid>(GridSpacingProperty);
     }
     
     public Matrix Matrix
     {
         get => GetValue(MatrixProperty);
         set => SetValue(MatrixProperty, value);
+    }
+    
+    public double GridSpacing
+    {
+        get => GetValue(GridSpacingProperty);
+        set => SetValue(GridSpacingProperty, value);
     }
     
     public override void Render(DrawingContext context)

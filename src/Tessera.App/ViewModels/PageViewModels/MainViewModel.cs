@@ -43,6 +43,7 @@ public partial class MainViewModel : ViewModelBase
         Title = "Tessera";
         
         WeakReferenceMessenger.Default.Register<ShowConfirmDialogMessage>(this, HandleShowConfirmDialogMessage);
+        WeakReferenceMessenger.Default.Register<ShowCanvasSettingsDialogMessage>(this, HandleShowCanvasOptionsDialogMessage);
     }
 
     private void HandleShowConfirmDialogMessage(object r, ShowConfirmDialogMessage m)
@@ -61,14 +62,29 @@ public partial class MainViewModel : ViewModelBase
         
         Dialog.Show();
     }
+    
+    private void HandleShowCanvasOptionsDialogMessage(object r, ShowCanvasSettingsDialogMessage m)
+    {
+        Dialog = new CanvasSettingsViewModel
+        {
+            GridSpacing =  m.GridSpacing,
+            SelectedGridType = m.GridType,
+            OnResult = result =>
+            {
+                m.Tcs.SetResult(result);
+                Dialog?.Close();
+                Dialog = null;
+            }
+        };
+        
+        Dialog.Show();
+    }
 
     public string Title { get; set; } 
     public bool DrawingPageIsActive => CurrentPage.PageName == ApplicationPageNames.Drawing;
     
-    
-    
     [RelayCommand]
-    public void GoToPage(ApplicationPageNames applicationPage)
+    private void GoToPage(ApplicationPageNames applicationPage)
     {
         CurrentPage = _pageFactory.GetPageViewModel(applicationPage);
     }

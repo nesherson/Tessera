@@ -1,10 +1,14 @@
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Tessera.App.Data;
+using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
+using Tessera.App.Messages;
 using Point = Avalonia.Point;
 
 namespace Tessera.App.ViewModels;
@@ -31,6 +35,12 @@ public partial class DrawingPageViewModel : PageViewModel
     
     [ObservableProperty] 
     private double _selectionHeight;
+    
+    [ObservableProperty] 
+    private double _gridSpacing = 15;
+    
+    [ObservableProperty] 
+    private GridType _gridType = GridType.Dots;
     
     [ObservableProperty]
     private Matrix _viewMatrix = Matrix.Identity;
@@ -69,7 +79,6 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public void OnPointerMoved(Point point)
     {
-        
         CurrentTool.OnPointerMoved(point);
     }
     
@@ -87,6 +96,18 @@ public partial class DrawingPageViewModel : PageViewModel
     private void ClearAll()
     {
         Shapes.Clear();
+    }
+    
+    [RelayCommand]
+    private async Task OpenOptions()
+    {
+        var result = await WeakReferenceMessenger.Default.Send(new ShowCanvasSettingsDialogMessage(GridSpacing, GridType)).Tcs.Task;
+
+        if (result is not null)
+        {
+            GridSpacing = result.GridSpacing;
+            GridType = result.GridType;
+        }
     }
     
     [RelayCommand]

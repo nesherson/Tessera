@@ -96,11 +96,18 @@
                             </ListBox.Styles>
                         </ListBox>
                         <Rectangle Width="1" Fill="#ccc" Margin="5,2,10,2" VerticalAlignment="Stretch"/>
-                        <Button Command="{Binding ClearAllCommand}"
-                                ToolTip.Tip="Clear All"
-                                Classes="FunctionBtn">
-                            <Svg Path="/Assets/Icons/broom.svg" Width="28"/>
-                        </Button>
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <Button Command="{Binding ClearAllCommand}"
+                                    ToolTip.Tip="Clear All"
+                                    Classes="FunctionBtn">
+                                <Svg Path="/Assets/Icons/broom.svg" Width="28"/>
+                            </Button>
+                            <Button Command="{Binding OpenOptionsCommand}"
+                                    ToolTip.Tip="Open options"
+                                    Classes="FunctionBtn">
+                                <Svg Path="/Assets/Icons/gear.svg" Width="28"/>
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -127,7 +134,9 @@
                             </Canvas.RenderTransform>
                         </Canvas>
                         <c:DotGrid 
-                            IsHitTestVisible="False" Matrix="{Binding ViewMatrix}">
+                            IsHitTestVisible="False"
+                            Matrix="{Binding ViewMatrix}"
+                            GridSpacing="{Binding GridSpacing}">
                         </c:DotGrid>
                         <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
                             <ItemsControl.Styles>
