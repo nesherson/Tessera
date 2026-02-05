@@ -65,7 +65,7 @@ public partial class DrawingPageViewModel : PageViewModel
         PageName = ApplicationPageNames.Drawing;
         Tools = 
         [
-            new ToolItem { Name = "Pan", Icon = "/Assets/Icons/hand-grabbing.svg", Tool = new PanTool(this)},
+            new ToolItem { Name = "Pan", Icon = "/Assets/Icons/hand-grabbing.svg", Tool = new PanTool(this), ToolSettings = new PanToolSettings()},
             new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointShapeTool(this, pointSettings), ToolSettings = pointSettings},
             new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineShapeTool(this, lineSettings), ToolSettings = lineSettings},
             new ToolItem { Name = "Free drawing", Icon = "/Assets/Icons/pen.svg", Tool = new PolylineShapeTool(this, polylineSettings), ToolSettings = polylineSettings},
@@ -106,7 +106,9 @@ public partial class DrawingPageViewModel : PageViewModel
     [RelayCommand]
     private async Task OpenOptions()
     {
-        var result = await WeakReferenceMessenger.Default.Send(new ShowCanvasSettingsDialogMessage(GridSpacing, GridType, GridColor)).Tcs.Task;
+        var result = await WeakReferenceMessenger
+            .Default
+            .Send(new ShowCanvasSettingsDialogMessage(GridSpacing, GridType, GridColor)).Tcs.Task;
 
         if (result is not null)
         {

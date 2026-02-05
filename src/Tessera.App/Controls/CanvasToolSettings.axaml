@@ -38,6 +38,17 @@
                                 Text="None" />
                         </Border>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:PanToolSettings}">
+                        <Border
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="0,1"
+                            Padding="20, 7"
+                            VerticalAlignment="Top">
+                            <TextBlock
+                                Classes="Label"
+                                Text="None" />
+                        </Border>
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type vm:PointShapeToolSettings}">
                         <StackPanel>
                             <Border
