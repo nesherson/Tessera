@@ -55,8 +55,9 @@
                             <Border Padding="5,0">
                                 <StackPanel>
                                     <c:IconButton
-                                        Foreground="{DynamicResource NavBtnForeground}"
                                         Classes.active="{Binding DrawingPageIsActive}"
+                                        Background="Transparent"
+                                        HorizontalAlignment="Stretch"
                                         Command="{Binding GoToPageCommand}"
                                         CommandParameter="{x:Static data:ApplicationPageNames.Drawing}"
                                         Content="Drawing"
@@ -69,8 +70,8 @@
                             Grid.Row="1"
                             Padding="5,0,5,10">
                             <c:IconButton
-                                Foreground="{DynamicResource NavBtnForeground}"
                                 Command="{Binding ExitApplicationCommand}"
+                                Background="Transparent"
                                 Content="Exit"
                                 IsTextVisible="{Binding IsPaneOpen}"
                                 IconPath="/Assets/Icons/exit.svg" />
