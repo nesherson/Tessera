@@ -52,10 +52,12 @@
             </StackPanel>
             <StackPanel Spacing="5">
                 <TextBlock Text="Grid color" />
-                <ColorPicker Color="{Binding SelectedGridColor, Converter={StaticResource ColorToBrushConverter}}" HorizontalAlignment="Right"/>
+                <ColorPicker 
+                    Color="{Binding SelectedGridColor, Converter={StaticResource ColorToBrushConverter}}"
+                    HorizontalAlignment="Left" />
             </StackPanel>
             <StackPanel Spacing="5" Orientation="Horizontal">
-                <TextBlock Text="Grid Snapping(Not working)" Padding="0,5,0,0" />
+                <TextBlock Text="Grid Snapping(Not implemented)" Padding="0,7,0,0" />
                 <CheckBox IsChecked="{Binding GridSnapping}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" 
