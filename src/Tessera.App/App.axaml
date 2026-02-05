@@ -8,7 +8,7 @@
     </Application.DataTemplates>
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
+        <StyleInclude Source="Styles/ButtonStyles.axaml" />
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
     </Application.Styles>
     <Application.Resources>
@@ -19,47 +19,27 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         
-        <!-- General Styles -->
+        <!-- General Brushes -->
 		<SolidColorBrush x:Key="PrimaryBackground">#FFFFFF</SolidColorBrush>
 		<SolidColorBrush x:Key="PrimaryForeground">#696b88</SolidColorBrush>
 		<SolidColorBrush x:Key="PrimaryHoverBackground">#f1f2f4</SolidColorBrush>
 		<SolidColorBrush x:Key="PrimaryActiveBackground">#f1f2f4</SolidColorBrush>
 		<SolidColorBrush x:Key="PrimaryHoverForeground">#2a44ad</SolidColorBrush>
-		<SolidColorBrush x:Key="PrimaryActiveForeground">#2a44ad</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryActiveForeground">#2a44ad</SolidColorBrush>
+        
+        <!-- Button Brushes -->
+        <SolidColorBrush x:Key="DangerBackground">#FF0000</SolidColorBrush>
+		<SolidColorBrush x:Key="DangerHoverBackground">#ff1a1a</SolidColorBrush>
 		
-		<!-- Navigation Button Styles -->
-		<SolidColorBrush x:Key="NavBtnForeground">#384247</SolidColorBrush>
-		<SolidColorBrush x:Key="NavBtnPrimaryHoverBackground">#f1f2f4</SolidColorBrush>
-		<SolidColorBrush x:Key="NavBtnPrimaryActiveBackground">#f1f2f4</SolidColorBrush>
-		
-		<!-- Split View Styles -->
+		<!-- Split View Brushes -->
         <SolidColorBrush x:Key="SplitViewPaneBackground">#f1f3f4</SolidColorBrush>
 		<SolidColorBrush x:Key="SplitViewBorderBrush">#E5E7EB</SolidColorBrush>
-		
-		<LinearGradientBrush x:Key="PrimaryBackgroundGradient" StartPoint="0%, 0%" EndPoint="100%, 0%">
-			<GradientStop Offset="0" Color="#FFFFFF"></GradientStop>
-			<GradientStop Offset="1" Color="#f2f2f2"></GradientStop>
-		</LinearGradientBrush>
-		
-		<LinearGradientBrush x:Key="DangerGradient" StartPoint="0%, 0%" EndPoint="100%, 0%">
-			<GradientStop Offset="0" Color="#ff0000"></GradientStop>
-			<GradientStop Offset="1" Color="#aa0000"></GradientStop>
-		</LinearGradientBrush>
-		
-		<LinearGradientBrush x:Key="ActiveGradientText" StartPoint="0%, 0%" EndPoint="100%, 0%">
-			<GradientStop Offset="0" Color="#7C59CD"></GradientStop>
-			<GradientStop Offset="1" Color="#7C59CD"></GradientStop>
-		</LinearGradientBrush>
-		
-		<LinearGradientBrush x:Key="ActiveGradient" StartPoint="0%, 0%" EndPoint="100%, 0%">
-			<GradientStop Offset="0" Color="#6633DD"></GradientStop>
-			<GradientStop Offset="1" Color="#431B9F"></GradientStop>
-		</LinearGradientBrush>
-		
-		<LinearGradientBrush x:Key="AlertGradient" StartPoint="0%, 0%" EndPoint="100%, 0%">
-			<GradientStop Offset="0" Color="#ffff00"></GradientStop>
-			<GradientStop Offset="1" Color="#ff8800"></GradientStop>
-		</LinearGradientBrush>
+        
+		<!-- Input Brushes -->
+		<SolidColorBrush x:Key="InputPrimaryBorder">#a9afbc</SolidColorBrush>
+        
+        <!-- Theme overrides -->
+        <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground">#a9afbc</SolidColorBrush>
         
 		<FontFamily x:Key="Phosphor">/Assets/Fonts/Phosphor.ttf#Phosphor</FontFamily>
 		<FontFamily x:Key="PhosphorFill">/Assets/Fonts/Phosphor-Fill.ttf#Phosphor-Fill</FontFamily>

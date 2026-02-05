@@ -1,10 +1,14 @@
-﻿using Avalonia;
+﻿using System.Drawing;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Tessera.App.Data;
 using Tessera.App.Factories;
+using Tessera.App.Interfaces;
+using Tessera.App.Messages;
 
 namespace Tessera.App.ViewModels;
 
@@ -18,6 +22,9 @@ public partial class MainViewModel : ViewModelBase
     
     [ObservableProperty]
     private bool _isPaneOpen;
+    
+    [ObservableProperty]
+    private DialogViewModelBase? _dialog;
     
     public MainViewModel()
     {
@@ -35,13 +42,51 @@ public partial class MainViewModel : ViewModelBase
         _pageFactory = pageFactory;
         CurrentPage = pageFactory.GetPageViewModel(ApplicationPageNames.Drawing);
         Title = "Tessera";
+        
+        WeakReferenceMessenger.Default.Register<ShowConfirmDialogMessage>(this, HandleShowConfirmDialogMessage);
+        WeakReferenceMessenger.Default.Register<ShowCanvasSettingsDialogMessage>(this, HandleShowCanvasOptionsDialogMessage);
+    }
+
+    private void HandleShowConfirmDialogMessage(object r, ShowConfirmDialogMessage m)
+    {
+        Dialog = new ConfirmDialogViewModel
+        {
+            Title = m.Title,
+            Message = m.Message,
+            OnResult = result =>
+            {
+                m.Tcs.SetResult(result);
+                Dialog?.Close();
+                Dialog = null;
+            }
+        };
+        
+        Dialog.Show();
+    }
+    
+    private void HandleShowCanvasOptionsDialogMessage(object r, ShowCanvasSettingsDialogMessage m)
+    {
+        Dialog = new CanvasSettingsViewModel
+        {
+            GridSpacing =  m.GridSpacing,
+            SelectedGridType = m.GridType,
+            SelectedGridColor = m.GridColor,
+            OnResult = result =>
+            {
+                m.Tcs.SetResult(result);
+                Dialog?.Close();
+                Dialog = null;
+            }
+        };
+        
+        Dialog.Show();
     }
 
     public string Title { get; set; } 
     public bool DrawingPageIsActive => CurrentPage.PageName == ApplicationPageNames.Drawing;
     
     [RelayCommand]
-    public void GoToPage(ApplicationPageNames applicationPage)
+    private void GoToPage(ApplicationPageNames applicationPage)
     {
         CurrentPage = _pageFactory.GetPageViewModel(applicationPage);
     }
