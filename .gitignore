@@ -4,3 +4,5 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea
+Tessera.sln.DotSettings.user
+src/Tessera.App/Tessera.App.csproj.DotSettings
