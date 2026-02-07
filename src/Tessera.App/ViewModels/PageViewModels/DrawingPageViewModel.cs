@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -54,6 +54,9 @@ public partial class DrawingPageViewModel : PageViewModel
     private Cursor _currentCursor = Cursor.Default;
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
+
+    [ObservableProperty] private double _currentX;
+    [ObservableProperty] private double _currentY;
     
     public DrawingPageViewModel()
     {
@@ -94,7 +97,10 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public Point ToWorld(Point screenPoint)
     {
-        return !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+        var world = !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+        Debug.WriteLine($"WORLD CALC: {world.X}, {world.Y}");
+        Debug.WriteLine($"Matrix has inverse: {ViewMatrix.HasInverse}");
+        return world;
     }
     
     [RelayCommand]
@@ -122,5 +128,22 @@ public partial class DrawingPageViewModel : PageViewModel
     private void ResetView()
     {
         ViewMatrix = Matrix.Identity;
+    }
+    
+    public void Zoom(Point point, double delta)
+    {
+        var zoomFactor = delta > 0 ? 1.1 : 0.9;
+        var currentScale = ViewMatrix.M11;
+
+        if (currentScale * zoomFactor < 0.1 || currentScale * zoomFactor > 10.0) 
+            return;
+        
+        // var zoomMatrix = Matrix.CreateTranslation(-point.X, -point.Y)
+        //                  * Matrix.CreateScale(zoomFactor, zoomFactor)
+        //                  * Matrix.CreateTranslation(point.X, point.Y);
+        
+        var zoomMatrix = Matrix.CreateScale(zoomFactor, zoomFactor);
+        
+        ViewMatrix *= zoomMatrix;
     }
 }

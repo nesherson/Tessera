@@ -121,7 +121,14 @@
                            PointerPressed="OnPointerPressed"
                            PointerMoved="OnPointerMoved"
                            PointerReleased="OnPointerReleased"
+                           PointerWheelChanged="OnPointerWheelChanged"
                            Cursor="{Binding CurrentCursor}">
+                        <Line StartPoint="-10, 0" EndPoint="10, 0" Stroke="Red" StrokeThickness="2"/>
+                        <Line StartPoint="0, -10" EndPoint="0, 10" Stroke="Red" StrokeThickness="2"/>
+    
+                        <Ellipse Width="4" Height="4" Margin="-2,-2,0,0" Fill="Red"/>
+    
+                        <TextBlock Text="(0,0)" Foreground="Red" FontSize="12" Margin="5,5,0,0"/>
                         <Canvas IsHitTestVisible="False"> 
                             <Rectangle Canvas.Left="{Binding SelectionX}"
                                        Canvas.Top="{Binding SelectionY}"
@@ -219,6 +226,10 @@
                     <TextBlock Text="{Binding ViewMatrix.M31}" FontSize="12"/>
                     <TextBlock Text="OffsetY: " Margin="5,0,0,0" FontSize="12"/>
                     <TextBlock Text="{Binding ViewMatrix.M31}" FontSize="12"/>
+                    <TextBlock Text="CurrentX: " FontSize="12" />
+                    <TextBlock Text="{Binding CurrentX}" FontSize="12"/>
+                    <TextBlock Text="CurrentY: " Margin="5,0,0,0" FontSize="12"/>
+                    <TextBlock Text="{Binding CurrentY}" FontSize="12"/>
                 </WrapPanel>
             </Border>
         </Grid>
