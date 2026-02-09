@@ -39,8 +39,8 @@
         <Style Selector="Border.MainBorder">
             <Setter Property="Background" Value="#ffffff" />
             <Setter Property="BorderBrush" Value="#E5E7EB" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
+            <!-- <Setter Property="BorderThickness" Value="1" /> -->
+            <!-- <Setter Property="CornerRadius" Value="8" /> -->
             <Setter Property="BoxShadow" Value="0 1 3 0 #10000000" />
         </Style>
     </UserControl.Styles>
@@ -114,7 +114,8 @@
             <Border 
                 Grid.Row="1"
                 Grid.Column="0"
-                Classes="MainBorder">
+                Classes="MainBorder"
+                Padding="0">
                 <Grid ClipToBounds="True">
                     <Panel Name="CanvasContainer"
                            Background="Transparent"
@@ -123,12 +124,12 @@
                            PointerReleased="OnPointerReleased"
                            PointerWheelChanged="OnPointerWheelChanged"
                            Cursor="{Binding CurrentCursor}">
-                        <Line StartPoint="-10, 0" EndPoint="10, 0" Stroke="Red" StrokeThickness="2"/>
-                        <Line StartPoint="0, -10" EndPoint="0, 10" Stroke="Red" StrokeThickness="2"/>
-    
-                        <Ellipse Width="4" Height="4" Margin="-2,-2,0,0" Fill="Red"/>
-    
-                        <TextBlock Text="(0,0)" Foreground="Red" FontSize="12" Margin="5,5,0,0"/>
+                        <!-- <Line StartPoint="-10, 0" EndPoint="10, 0" Stroke="Red" StrokeThickness="2"/> -->
+                        <!-- <Line StartPoint="0, -10" EndPoint="0, 10" Stroke="Red" StrokeThickness="2"/> -->
+                        <!-- -->
+                        <!-- <Ellipse Width="4" Height="4" Margin="-2,-2,0,0" Fill="Red"/> -->
+                        <!-- -->
+                        <!-- <TextBlock Text="(0,0)" Foreground="Red" FontSize="12" Margin="5,5,0,0"/> -->
                         <Canvas IsHitTestVisible="False"> 
                             <Rectangle Canvas.Left="{Binding SelectionX}"
                                        Canvas.Top="{Binding SelectionY}"
@@ -137,7 +138,11 @@
                                        IsVisible="{Binding IsSelectionVisible}"
                                        Stroke="Red" StrokeThickness="1" Fill="#33FF0000"/>
                             <Canvas.RenderTransform>
-                                <MatrixTransform Matrix="{Binding ViewMatrix}"/>
+                                <!-- <MatrixTransform Matrix="{Binding ViewMatrix}"/> -->
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                                    <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}" />
+                                </TransformGroup>
                             </Canvas.RenderTransform>
                         </Canvas>
                         <c:CanvasGrid 
@@ -158,7 +163,11 @@
                                 <ItemsPanelTemplate>
                                     <Canvas x:Name="Canvas">
                                         <Canvas.RenderTransform>
-                                            <MatrixTransform Matrix="{Binding ViewMatrix}"/>
+                                            <!-- <MatrixTransform Matrix="{Binding ViewMatrix}"/> -->
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                                                <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}" />
+                                            </TransformGroup>
                                         </Canvas.RenderTransform>
                                     </Canvas>
                                 </ItemsPanelTemplate>
@@ -207,8 +216,32 @@
                 Grid.RowSpan="3"
                 Grid.Column="1" 
                 Classes="MainBorder">
+            <StackPanel>
                 <c:CanvasToolSettings
                     ToolSettings="{Binding SelectedToolItem.ToolSettings}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="OffsetX -> " />
+                    <TextBlock Text="{Binding ViewMatrix.M31}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="OffsetY -> " />
+                    <TextBlock Text="{Binding ViewMatrix.M32}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="ScaleX -> " />
+                    <TextBlock Text="{Binding ViewMatrix.M11}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="ScaleY -> " />
+                    <TextBlock Text="{Binding ViewMatrix.M22}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Point x-> " />
+                    <TextBlock Text="{Binding CurrentPoint.X}" />
+                    <TextBlock Text="Point Y -> " />
+                    <TextBlock Text="{Binding CurrentPoint.Y}" />
+                </StackPanel>
+            </StackPanel>
             </Border>
             <Border 
                 Grid.Row="2"
@@ -227,10 +260,33 @@
                     <TextBlock Text="OffsetY: " Margin="5,0,0,0" FontSize="12"/>
                     <TextBlock Text="{Binding ViewMatrix.M31}" FontSize="12"/>
                     <TextBlock Text="CurrentX: " FontSize="12" />
-                    <TextBlock Text="{Binding CurrentX}" FontSize="12"/>
-                    <TextBlock Text="CurrentY: " Margin="5,0,0,0" FontSize="12"/>
-                    <TextBlock Text="{Binding CurrentY}" FontSize="12"/>
                 </WrapPanel>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" 
+                    VerticalAlignment="Top" HorizontalAlignment="Right"
+                    ZIndex="9000"
+                    Background="#AA000000" CornerRadius="4" Padding="8" Margin="10"
+                    IsHitTestVisible="False">
+                <StackPanel Spacing="2">
+                    <TextBlock Text="COORDINATE INSPECTOR" Foreground="Yellow" FontSize="10" FontWeight="Bold"/>
+        
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Screen: " Foreground="White" Width="50"/>
+                        <TextBlock Text="{Binding DebugScreenPoint}" Foreground="LightBlue"/>
+                    </StackPanel>
+        
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="World: " Foreground="White" Width="50"/>
+                        <TextBlock Text="{Binding DebugWorldPoint}" Foreground="Lime"/>
+                    </StackPanel>
+        
+                    <Separator Background="Gray" Height="1" Margin="0,5"/>
+        
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Scale: " Foreground="White" Width="50"/>
+                        <TextBlock Text="{Binding ViewMatrix.M11, StringFormat={}{0:P1}}" Foreground="Orange"/>
+                    </StackPanel>
+                </StackPanel>
             </Border>
         </Grid>
     </Border>

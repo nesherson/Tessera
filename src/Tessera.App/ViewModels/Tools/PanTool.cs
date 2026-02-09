@@ -37,10 +37,18 @@ public class PanTool : ICanvasTool
         }
 
         if (!_isDragging) return;
+        //
+        // var translation = Matrix.CreateTranslation(delta.Value.X, delta.Value.Y);
+        //
+        // _vm.ViewMatrix = translation * _originalMatrix;
         
-        var translation = Matrix.CreateTranslation(delta.Value.X, delta.Value.Y);
+        // var delta = p - _lastMousePosition;
         
-        _vm.ViewMatrix = translation * _originalMatrix;
+        // Simply slide the offsets
+       _vm.OffsetX += delta.Value.X;
+        _vm.OffsetY += delta.Value.Y;
+        
+        _startPoint = p;
     }
 
     public void OnPointerReleased(Point p)

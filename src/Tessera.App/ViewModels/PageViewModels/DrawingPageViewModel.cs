@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -55,8 +56,23 @@ public partial class DrawingPageViewModel : PageViewModel
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
 
-    [ObservableProperty] private double _currentX;
-    [ObservableProperty] private double _currentY;
+    [ObservableProperty] private Point _currentPoint;
+    [ObservableProperty] private double _offsetX = 0;
+    [ObservableProperty] private double _offsetY = 0;
+    [ObservableProperty] private double _scale = 1;
+    
+    [ObservableProperty] private string _debugScreenPoint = "0, 0";
+    [ObservableProperty] private string _debugWorldPoint = "0, 0";
+
+    public void UpdateDebugInfo(Point screenPoint)
+    {
+        // Capture exactly what the screen sees
+        DebugScreenPoint = $"{screenPoint.X:F0}, {screenPoint.Y:F0}";
+    
+        // Capture exactly what the math world calculates
+        var world = ToWorld(screenPoint);
+        DebugWorldPoint = $"{world.X:F1}, {world.Y:F1}";
+    }
     
     public DrawingPageViewModel()
     {
@@ -97,10 +113,14 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public Point ToWorld(Point screenPoint)
     {
-        var world = !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
-        Debug.WriteLine($"WORLD CALC: {world.X}, {world.Y}");
-        Debug.WriteLine($"Matrix has inverse: {ViewMatrix.HasInverse}");
-        return world;
+        // var world = !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+        // Debug.WriteLine($"ScreenPoint: {screenPoint},  World: {world}");
+        // CurrentPoint = world;
+        
+        double worldX = (screenPoint.X - OffsetX) / Scale;
+        double worldY = (screenPoint.Y - OffsetY) / Scale;
+        return new Point(worldX, worldY);
+        // return world;
     }
     
     [RelayCommand]
@@ -132,18 +152,34 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public void Zoom(Point point, double delta)
     {
-        var zoomFactor = delta > 0 ? 1.1 : 0.9;
-        var currentScale = ViewMatrix.M11;
-
-        if (currentScale * zoomFactor < 0.1 || currentScale * zoomFactor > 10.0) 
-            return;
-        
-        // var zoomMatrix = Matrix.CreateTranslation(-point.X, -point.Y)
+        // var zoomFactor = delta > 0 ? 1.1 : 0.9;
+        // var currentScale = ViewMatrix.M11;
+        //
+        // if (currentScale * zoomFactor < 0.1 || currentScale * zoomFactor > 10.0) 
+        //     return;
+        //
+        //
+        // ViewMatrix = ViewMatrix * Matrix.CreateTranslation(-point.X, -point.Y)
         //                  * Matrix.CreateScale(zoomFactor, zoomFactor)
         //                  * Matrix.CreateTranslation(point.X, point.Y);
+
+
+        // var zoomMatrix = Matrix.CreateScale(zoomFactor, zoomFactor);
+
+        // ViewMatrix = ViewMatrix *  zoomMatrix;
         
-        var zoomMatrix = Matrix.CreateScale(zoomFactor, zoomFactor);
-        
-        ViewMatrix *= zoomMatrix;
+        double oldScale = Scale;
+        double zoomFactor = delta > 0 ? 1.1 : 0.9;
+        Scale *= zoomFactor;
+
+        // Clamp the scale
+        Scale = Math.Clamp(Scale, 0.1, 10.0);
+
+        // Adjust Offset to zoom into the mouse position
+        // Formula: Offset = ScreenPoint - (WorldPoint * NewScale)
+        var worldPoint = ToWorld(point); 
+    
+        OffsetX = point.X - (worldPoint.X * Scale);
+        OffsetY = point.Y - (worldPoint.Y * Scale);
     }
 }

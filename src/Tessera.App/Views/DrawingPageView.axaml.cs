@@ -29,6 +29,7 @@ public partial class DrawingPageView : UserControl
         var currentPoint = e.GetPosition(CanvasContainer);
         
         ViewModel?.OnPointerMoved(currentPoint);
+        ViewModel?.UpdateDebugInfo(currentPoint);
     }
 
     private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
