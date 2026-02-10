@@ -56,6 +56,8 @@
       <AvaloniaResource Include="Assets\Icons\arrows-counter-clockwise.svg" />
       <None Remove="Assets\Icons\gear.svg" />
       <AvaloniaResource Include="Assets\Icons\gear.svg" />
+      <None Remove="Assets\Icons\text-t.svg" />
+      <AvaloniaResource Include="Assets\Icons\text-t.svg" />
     </ItemGroup>
 
     <ItemGroup>

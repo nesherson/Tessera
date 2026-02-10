@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Tessera.App.ViewModels;
 
 namespace Tessera.App.Views;
@@ -32,5 +33,27 @@ public partial class DrawingPageView : UserControl
         var currentPoint = e.GetCurrentPoint(CanvasContainer).Position;
         
         ViewModel?.OnPointerReleased(currentPoint);
+    }
+
+    private void OnTextBoxLoaded(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox tb) return;
+        
+        tb.Focus();
+        tb.SelectAll();
+    }
+
+    private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox { DataContext: TextShape shape }) return;
+        
+        ViewModel?.ResetToolSelection();
+        
+        if (string.IsNullOrWhiteSpace(shape.Text))
+        {
+            ViewModel?.Shapes.Remove(shape);
+        }
+        
+        shape.IsEditing = false;
     }
 }

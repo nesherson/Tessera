@@ -189,6 +189,26 @@
                                             Fill="{Binding Color}"
                                             StrokeThickness="{Binding StrokeThickness}" />
                                     </DataTemplate>
+                                    <DataTemplate x:Key="TextShape" DataType="{x:Type vm:TextShape}">
+                                        <Panel>
+                                            <TextBlock Text="{Binding Text}"
+                                                       FontSize="{Binding FontSize}"
+                                                       Foreground="{Binding TextColor}"
+                                                       IsVisible="{Binding !IsEditing}" />
+
+                                            <TextBox Text="{Binding Text, Mode=TwoWay}"
+                                                     FontSize="{Binding FontSize}"
+                                                     Foreground="{Binding TextColor}"
+                                                     IsVisible="{Binding IsEditing}"
+                                                     Background="White"
+                                                     BorderBrush="DeepSkyBlue"
+                                                     BorderThickness="1"
+                                                     MinWidth="50"
+                                                     Padding="2"
+                                                     Loaded="OnTextBoxLoaded"
+                                                     LostFocus="OnTextBoxLostFocus"/>
+                                        </Panel>
+                                    </DataTemplate>
                                 </dt:ShapeTemplateSelector>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

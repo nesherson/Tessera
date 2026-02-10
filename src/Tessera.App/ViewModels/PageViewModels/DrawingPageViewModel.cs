@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -70,9 +69,10 @@ public partial class DrawingPageViewModel : PageViewModel
             new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineShapeTool(this, lineSettings), ToolSettings = lineSettings},
             new ToolItem { Name = "Free drawing", Icon = "/Assets/Icons/pen.svg", Tool = new PolylineShapeTool(this, polylineSettings), ToolSettings = polylineSettings},
             new ToolItem { Name = "Shape", Icon = "/Assets/Icons/shapes.svg", Tool = new ShapeTool(this, shapeSettings), ToolSettings = shapeSettings},
+            new ToolItem { Name = "Text", Icon = "/Assets/Icons/text-t.svg", Tool = new TextShapeTool(this)},
             new ToolItem { Name = "Eraser", Icon = "/Assets/Icons/eraser.svg", Tool = new EraserTool(this), ToolSettings = new EraserToolSettings()},
         ];
-        SelectedToolItem = Tools[0];
+        ResetToolSelection();
     }
     
     public ObservableCollection<ToolItem> Tools { get; }
@@ -95,6 +95,11 @@ public partial class DrawingPageViewModel : PageViewModel
     public Point ToWorld(Point screenPoint)
     {
         return !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
+    }
+
+    public void ResetToolSelection()
+    {
+        SelectedToolItem = Tools[0];
     }
     
     [RelayCommand]
