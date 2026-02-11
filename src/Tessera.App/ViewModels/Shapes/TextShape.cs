@@ -17,6 +17,14 @@ public partial class TextShape : ShapeBase
     
     public override bool Intersects(Rect rect)
     {
-        return false;
+        var formattedText = new FormattedText(
+            Text,
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Inter"),
+            FontSize,
+            null);
+        
+        return rect.Intersects(new Rect(X, Y, formattedText.Width, formattedText.Height));
     }
 }
