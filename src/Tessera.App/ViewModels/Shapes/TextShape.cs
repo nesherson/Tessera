@@ -10,10 +10,10 @@ public partial class TextShape : ShapeBase
     private string _text;
     
     [ObservableProperty] 
-    private double _fontSize = 14;
+    private double _fontSize;
     
     [ObservableProperty] 
-    private IBrush _textColor = Brushes.Black;
+    private IBrush _textColor;
     
     [ObservableProperty] 
     private bool _isEditing;

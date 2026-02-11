@@ -6,10 +6,12 @@ namespace Tessera.App.ViewModels;
 public class TextShapeTool : ICanvasTool
 {
     private readonly DrawingPageViewModel _vm;
+    private readonly TextShapeToolSettings _settings;
 
-    public TextShapeTool(DrawingPageViewModel drawingPageViewModel)
+    public TextShapeTool(DrawingPageViewModel drawingPageViewModel, TextShapeToolSettings settings)
     {
         _vm = drawingPageViewModel;
+        _settings = settings;
     }
 
     public void OnPointerPressed(Point p)
@@ -19,7 +21,9 @@ public class TextShapeTool : ICanvasTool
         {
             X = currentPoint.X,
             Y = currentPoint.Y,
-            IsEditing = true 
+            IsEditing = true,
+            FontSize = _settings.FontSize,
+            Color = _settings.Color,
         };
     
         _vm.Shapes.Add(newText);

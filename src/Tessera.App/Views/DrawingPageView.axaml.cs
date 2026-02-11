@@ -47,13 +47,11 @@ public partial class DrawingPageView : UserControl
     {
         if (sender is not TextBox { DataContext: TextShape shape }) return;
         
-        ViewModel?.ResetToolSelection();
-        
         if (string.IsNullOrWhiteSpace(shape.Text))
         {
             ViewModel?.Shapes.Remove(shape);
         }
-        
+
         shape.IsEditing = false;
     }
 }

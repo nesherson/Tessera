@@ -5,7 +5,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tessera.App.Controls.CanvasToolSettings"
              xmlns:vm="clr-namespace:Tessera.App.ViewModels"
-             xmlns:controls="clr-namespace:Tessera.App.Controls">
+             xmlns:controls="clr-namespace:Tessera.App.Controls"
+             xmlns:converters="clr-namespace:Tessera.App.Converters">
     <UserControl.Styles>
         <Style Selector="TextBlock.Label">
             <Setter Property="FontSize" Value="12"/>
@@ -17,6 +18,9 @@
             <Setter Property="BorderBrush" Value="#E5E7EB" />
         </Style>
     </UserControl.Styles>
+    <UserControl.Resources>
+        <converters:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+    </UserControl.Resources>
     <Grid RowDefinitions="Auto, *">
         <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="20, 20, 20, 15">
             <TextBlock 
@@ -249,6 +253,42 @@
                                     <ColorPicker
                                         Grid.Column="1"
                                         Color="{Binding StrokeColor}"
+                                        HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:TextShapeToolSettings}">
+                        <StackPanel>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Font size" />
+                                    <NumericUpDown
+                                        Grid.Column="1"
+                                        Value="{Binding FontSize}"
+                                        BorderBrush="#E5E7EB"
+                                        CornerRadius="5"
+                                        ShowButtonSpinner="False"
+                                        Padding="8,8,0,0"/>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0, 0, 1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
+                                    <ColorPicker
+                                        Grid.Column="1"
+                                        Color="{Binding Color, Converter={StaticResource ColorToBrushConverter}}"
                                         HorizontalAlignment="Right"/>
                                 </Grid>
                             </Border>
