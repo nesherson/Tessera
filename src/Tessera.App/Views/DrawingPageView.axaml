@@ -46,7 +46,7 @@
         <Style Selector="TextBox.TbTransparent:pointerover /template/ Border#PART_BorderElement">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
-
+        
         <Style Selector="TextBox.TbTransparent:focus /template/ Border#PART_BorderElement">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
@@ -200,13 +200,13 @@
                                         <Panel>
                                             <TextBlock Text="{Binding Text}"
                                                        FontSize="{Binding FontSize}"
-                                                       Foreground="{Binding TextColor}"
+                                                       Foreground="{Binding Color}"
                                                        IsVisible="{Binding !IsEditing}" />
                                             <TextBox 
                                                 Classes="TbTransparent"
                                                 Text="{Binding Text, Mode=TwoWay}"
                                                 FontSize="{Binding FontSize}"
-                                                Foreground="{Binding TextColor}"
+                                                Foreground="{Binding Color}"
                                                 IsVisible="{Binding IsEditing}"
                                                 Background="Transparent"
                                                 BorderBrush="DeepSkyBlue"

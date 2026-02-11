@@ -13,9 +13,6 @@ public partial class TextShape : ShapeBase
     private double _fontSize;
     
     [ObservableProperty] 
-    private IBrush _textColor;
-    
-    [ObservableProperty] 
     private bool _isEditing;
     
     public override bool Intersects(Rect rect)
