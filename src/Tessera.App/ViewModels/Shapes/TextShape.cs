@@ -7,7 +7,7 @@ namespace Tessera.App.ViewModels;
 public partial class TextShape : ShapeBase
 {
     [ObservableProperty]
-    private string _text;
+    private string _text = "";
     
     [ObservableProperty] 
     private double _fontSize;
@@ -16,7 +16,7 @@ public partial class TextShape : ShapeBase
     private bool _isEditing;
     
     [ObservableProperty]
-    private FontFamily _fontFamily;
+    private FontFamily _fontFamily = new("Sans Serif Collection");
     
     public override bool Intersects(Rect rect)
     {

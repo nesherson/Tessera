@@ -11,7 +11,7 @@ public class ShapeTemplateSelector : IDataTemplate
     [Content]
     public Dictionary<string, IDataTemplate> Templates { get; } = new();
 
-    public Control Build(object? param)
+    public Control? Build(object? param)
     {
         if (param is null)
         {
