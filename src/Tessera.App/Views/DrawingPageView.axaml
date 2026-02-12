@@ -43,6 +43,13 @@
             <Setter Property="CornerRadius" Value="8" />
             <Setter Property="BoxShadow" Value="0 1 3 0 #10000000" />
         </Style>
+        <Style Selector="TextBox.TbTransparent:pointerover /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        
+        <Style Selector="TextBox.TbTransparent:focus /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
     </UserControl.Styles>
     <Border Padding="5">
         <Grid 
@@ -188,6 +195,30 @@
                                             Stroke="{Binding StrokeColor}"
                                             Fill="{Binding Color}"
                                             StrokeThickness="{Binding StrokeThickness}" />
+                                    </DataTemplate>
+                                    <DataTemplate x:Key="TextShape" DataType="{x:Type vm:TextShape}">
+                                        <Panel>
+                                            <TextBlock Text="{Binding Text}"
+                                                       FontSize="{Binding FontSize}"
+                                                       Foreground="{Binding Color}"
+                                                       IsVisible="{Binding !IsEditing}"
+                                                       FontFamily="{Binding FontFamily}" />
+                                            <TextBox 
+                                                Classes="TbTransparent"
+                                                Text="{Binding Text, Mode=TwoWay}"
+                                                FontSize="{Binding FontSize}"
+                                                FontFamily="{Binding FontFamily}"
+                                                Foreground="{Binding Color}"
+                                                IsVisible="{Binding IsEditing}"
+                                                Background="Transparent"
+                                                BorderBrush="DeepSkyBlue"
+                                                BorderThickness="1"
+                                                MinWidth="50"
+                                                Padding="1"
+                                                Loaded="OnTextBoxLoaded"
+                                                LostFocus="OnTextBoxLostFocus"
+                                                KeyDown="OnTextBoxKeyDown"/>
+                                        </Panel>
                                     </DataTemplate>
                                 </dt:ShapeTemplateSelector>
                             </ItemsControl.ItemTemplate>
