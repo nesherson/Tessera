@@ -54,4 +54,22 @@ public partial class DrawingPageView : UserControl
 
         shape.IsEditing = false;
     }
+
+    private void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (sender is not TextBox { DataContext: TextShape shape }) 
+            return;
+
+        switch (e.Key)
+        {
+            case Key.Enter:
+                shape.IsEditing = false;
+                e.Handled = true;
+                break;
+            case Key.Escape:
+                ViewModel?.Shapes.Remove(shape); 
+                e.Handled = true;
+                break;
+        }
+    }
 }
