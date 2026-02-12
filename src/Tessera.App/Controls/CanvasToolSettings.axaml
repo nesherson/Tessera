@@ -281,7 +281,24 @@
                             </Border>
                             <Border
                                 BorderBrush="#E5E7EB"
-                                BorderThickness="0,0, 0, 1"
+                                BorderThickness="0,0,0,1"
+                                Padding="20, 7">
+                                <Grid ColumnDefinitions="*,*"
+                                      Margin="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Classes="Label"
+                                        Text="Font family" />
+                                    <ComboBox Grid.Column="1" 
+                                              ItemsSource="{Binding AvailableFontFamilies}"
+                                              SelectedItem="{Binding SelectedFontFamily}"
+                                              HorizontalAlignment="Stretch">
+                                    </ComboBox>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="0,0,0,1"
                                 Padding="20, 7">
                                 <Grid ColumnDefinitions="*,*"
                                       Margin="0">
@@ -298,5 +315,4 @@
             </ContentControl>
         </ScrollViewer>
     </Grid>
-  
 </UserControl>

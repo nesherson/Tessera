@@ -201,11 +201,13 @@
                                             <TextBlock Text="{Binding Text}"
                                                        FontSize="{Binding FontSize}"
                                                        Foreground="{Binding Color}"
-                                                       IsVisible="{Binding !IsEditing}" />
+                                                       IsVisible="{Binding !IsEditing}"
+                                                       FontFamily="{Binding FontFamily}" />
                                             <TextBox 
                                                 Classes="TbTransparent"
                                                 Text="{Binding Text, Mode=TwoWay}"
                                                 FontSize="{Binding FontSize}"
+                                                FontFamily="{Binding FontFamily}"
                                                 Foreground="{Binding Color}"
                                                 IsVisible="{Binding IsEditing}"
                                                 Background="Transparent"
@@ -214,7 +216,8 @@
                                                 MinWidth="50"
                                                 Padding="1"
                                                 Loaded="OnTextBoxLoaded"
-                                                LostFocus="OnTextBoxLostFocus"/>
+                                                LostFocus="OnTextBoxLostFocus"
+                                                KeyDown="OnTextBoxKeyDown"/>
                                         </Panel>
                                     </DataTemplate>
                                 </dt:ShapeTemplateSelector>

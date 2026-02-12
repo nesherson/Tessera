@@ -15,13 +15,16 @@ public partial class TextShape : ShapeBase
     [ObservableProperty] 
     private bool _isEditing;
     
+    [ObservableProperty]
+    private FontFamily _fontFamily;
+    
     public override bool Intersects(Rect rect)
     {
         var formattedText = new FormattedText(
             Text,
             System.Globalization.CultureInfo.CurrentCulture,
             FlowDirection.LeftToRight,
-            new Typeface("Inter"),
+            new Typeface(FontFamily),
             FontSize,
             null);
         
