@@ -10,26 +10,24 @@ public class PanTool : ICanvasTool
     
     private bool _isDragging;
     private Point? _startPoint;
-    private Matrix _originalMatrix;
     
     public PanTool(DrawingPageViewModel vm)
     {
         _vm = vm;
     }
     
-    public void OnPointerPressed(Point p)
+    public void OnPointerPressed(Point screenPoint)
     {
-        _startPoint = p;
-        _originalMatrix = _vm.ViewMatrix;
+        _startPoint = screenPoint;
         _isDragging = false;
         _vm.CurrentCursor = new Cursor(StandardCursorType.SizeAll);
     }
 
-    public void OnPointerMoved(Point p)
+    public void OnPointerMoved(Point screenPoint)
     {
         if (_startPoint == null) return;
         
-        var delta = p - _startPoint;
+        var delta = screenPoint - _startPoint;
         
         if (!_isDragging && (System.Math.Abs(delta.Value.X) > 3 || System.Math.Abs(delta.Value.Y) > 3))
         {
@@ -38,12 +36,12 @@ public class PanTool : ICanvasTool
 
         if (!_isDragging) return;
         
-        var translation = Matrix.CreateTranslation(delta.Value.X, delta.Value.Y);
-        
-        _vm.ViewMatrix = translation * _originalMatrix;
+        _vm.OffsetX += delta.Value.X;
+        _vm.OffsetY += delta.Value.Y;
+        _startPoint = screenPoint;
     }
 
-    public void OnPointerReleased(Point p)
+    public void OnPointerReleased(Point screenPoint)
     {
         _startPoint = null;
         _isDragging = false;

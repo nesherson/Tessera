@@ -19,9 +19,6 @@ public class LineShapeTool : ICanvasTool
     
     public void OnPointerPressed(Point p)
     {
-        if (!_vm.ViewMatrix.HasInverse)
-            return;
-        
         var currentPoint = _vm.ToWorld(p);
         
         _line = new LineShape
@@ -38,9 +35,6 @@ public class LineShapeTool : ICanvasTool
     public void OnPointerMoved(Point p)
     {
         if (_line == null) return;
-        
-        if (!_vm.ViewMatrix.HasInverse)
-            return;
         
         var currentPoint = _vm.ToWorld(p);
         

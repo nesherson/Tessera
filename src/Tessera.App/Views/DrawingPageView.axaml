@@ -137,12 +137,13 @@
                                        IsVisible="{Binding IsSelectionVisible}"
                                        Stroke="Red" StrokeThickness="1" Fill="#33FF0000"/>
                             <Canvas.RenderTransform>
-                                <MatrixTransform Matrix="{Binding ViewMatrix}"/>
+                                <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}" />
                             </Canvas.RenderTransform>
                         </Canvas>
                         <c:CanvasGrid 
                             IsHitTestVisible="False"
-                            Matrix="{Binding ViewMatrix}"
+                            OffsetX="{Binding OffsetX}"
+                            OffsetY="{Binding OffsetY}"
                             GridSpacing="{Binding GridSpacing}"
                             GridType="{Binding GridType}"
                             GridColor="{Binding GridColor}">
@@ -158,7 +159,7 @@
                                 <ItemsPanelTemplate>
                                     <Canvas x:Name="Canvas">
                                         <Canvas.RenderTransform>
-                                            <MatrixTransform Matrix="{Binding ViewMatrix}"/>
+                                            <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}" />
                                         </Canvas.RenderTransform>
                                     </Canvas>
                                 </ItemsPanelTemplate>
@@ -247,9 +248,9 @@
                         <Svg Path="/Assets/Icons/arrows-counter-clockwise.svg" Width="12"/>
                     </Button>
                     <TextBlock Text="OffsetX: " FontSize="12" />
-                    <TextBlock Text="{Binding ViewMatrix.M31}" FontSize="12"/>
+                    <TextBlock Text="{Binding OffsetX}" FontSize="12"/>
                     <TextBlock Text="OffsetY: " Margin="5,0,0,0" FontSize="12"/>
-                    <TextBlock Text="{Binding ViewMatrix.M31}" FontSize="12"/>
+                    <TextBlock Text="{Binding OffsetY}" FontSize="12"/>
                 </WrapPanel>
             </Border>
         </Grid>

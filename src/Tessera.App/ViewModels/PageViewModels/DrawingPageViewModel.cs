@@ -47,10 +47,13 @@ public partial class DrawingPageViewModel : PageViewModel
     private IBrush _gridColor = Brushes.LightGray;
     
     [ObservableProperty]
-    private Matrix _viewMatrix = Matrix.Identity;
-    
-    [ObservableProperty]
     private Cursor _currentCursor = Cursor.Default;
+    
+    [ObservableProperty] 
+    private double _offsetX;
+    
+    [ObservableProperty] 
+    private double _offsetY;
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     
@@ -135,10 +138,7 @@ public partial class DrawingPageViewModel : PageViewModel
         CurrentTool.OnPointerReleased(point);
     }
     
-    public Point ToWorld(Point screenPoint)
-    {
-        return !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
-    }
+    public Point ToWorld(Point screenPoint) => new(screenPoint.X - OffsetX, screenPoint.Y - OffsetY);
 
     public void ResetToolSelection()
     {
@@ -169,6 +169,7 @@ public partial class DrawingPageViewModel : PageViewModel
     [RelayCommand]
     private void ResetView()
     {
-        ViewMatrix = Matrix.Identity;
+        OffsetX = 0;
+        OffsetY = 0;
     }
 }
