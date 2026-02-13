@@ -6,20 +6,20 @@ namespace Tessera.App.ViewModels;
 
 public class LineShapeTool : ICanvasTool
 {
-    private readonly DrawingPageViewModel _vm;
+    private readonly ICanvasContext _canvasContext;
     private readonly LineShapeToolSettings _settings;
     
     private LineShape? _line;
     
-    public LineShapeTool(DrawingPageViewModel  drawingPageViewModel, LineShapeToolSettings settings)
+    public LineShapeTool(ICanvasContext canvasContext, LineShapeToolSettings settings)
     {
-        _vm = drawingPageViewModel;
+        _canvasContext = canvasContext;
         _settings = settings;
     }
     
     public void OnPointerPressed(Point p)
     {
-        var currentPoint = _vm.ToWorld(p);
+        var currentPoint = _canvasContext.ToWorld(p);
         
         _line = new LineShape
         {
@@ -29,14 +29,14 @@ public class LineShapeTool : ICanvasTool
             Color = new SolidColorBrush(_settings.StrokeColor),
         };
 
-        _vm.Shapes.Add(_line);
+        _canvasContext.Shapes.Add(_line);
     }
 
     public void OnPointerMoved(Point p)
     {
         if (_line == null) return;
         
-        var currentPoint = _vm.ToWorld(p);
+        var currentPoint = _canvasContext.ToWorld(p);
         
         _line.EndPoint = new Point(currentPoint.X, currentPoint.Y);
     }

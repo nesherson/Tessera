@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,7 +13,7 @@ using Point = Avalonia.Point;
 
 namespace Tessera.App.ViewModels;
 
-public partial class DrawingPageViewModel : PageViewModel
+public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 {
     [ObservableProperty] 
     private ObservableCollection<ShapeBase> _shapes = [];
@@ -22,20 +21,8 @@ public partial class DrawingPageViewModel : PageViewModel
     [ObservableProperty] 
     private ToolItem _selectedToolItem;
     
-    [ObservableProperty] 
-    private bool _isSelectionVisible;
-    
-    [ObservableProperty] 
-    private double _selectionX;
-    
-    [ObservableProperty] 
-    private double _selectionY;
-    
-    [ObservableProperty] 
-    private double _selectionWidth;
-    
-    [ObservableProperty] 
-    private double _selectionHeight;
+    [ObservableProperty]
+    private RectangleShape _eraserRect;
     
     [ObservableProperty] 
     private double _gridSpacing = 15;
@@ -123,19 +110,19 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public ObservableCollection<ToolItem> Tools { get; }
     
-    public void OnPointerPressed(Point point)
+    public void OnPointerPressed(Point screenPoint)
     {
-        CurrentTool.OnPointerPressed(point);
+        CurrentTool.OnPointerPressed(screenPoint);
     }
     
-    public void OnPointerMoved(Point point)
+    public void OnPointerMoved(Point screenPoint)
     {
-        CurrentTool.OnPointerMoved(point);
+        CurrentTool.OnPointerMoved(screenPoint);
     }
     
-    public void OnPointerReleased(Point point)
+    public void OnPointerReleased(Point screenPoint)
     {
-        CurrentTool.OnPointerReleased(point);
+        CurrentTool.OnPointerReleased(screenPoint);
     }
     
     public Point ToWorld(Point screenPoint) => new(screenPoint.X - OffsetX, screenPoint.Y - OffsetY);

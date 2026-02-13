@@ -6,18 +6,18 @@ namespace Tessera.App.ViewModels;
 
 public class PointShapeTool : ICanvasTool
 {
-    private readonly DrawingPageViewModel _vm;
+    private readonly ICanvasContext _canvasContext;
     private readonly PointShapeToolSettings _settings;
     
-    public PointShapeTool(DrawingPageViewModel  drawingPageViewModel,  PointShapeToolSettings settings)
+    public PointShapeTool(ICanvasContext  canvasContext,  PointShapeToolSettings settings)
     {
-        _vm = drawingPageViewModel;
+        _canvasContext = canvasContext;
         _settings = settings;
     }
     
     public void OnPointerPressed(Point p)
     {
-        var currentPoint = _vm.ToWorld(p);
+        var currentPoint = _canvasContext.ToWorld(p);
         var newPoint = new EllipseShape
         {
             X = currentPoint.X,
@@ -27,16 +27,12 @@ public class PointShapeTool : ICanvasTool
             Color = new SolidColorBrush(_settings.PointColor)
         };
         
-        _vm.Shapes.Add(newPoint);
+        _canvasContext.Shapes.Add(newPoint);
     }
 
-    public void OnPointerMoved(Point p)
-    {
-       // Not used
-    }
+    // Not used
+    public void OnPointerMoved(Point p) {}
 
-    public void OnPointerReleased(Point p)
-    {
-        // Not used
-    }
+    // Not used
+    public void OnPointerReleased(Point p) {}
 }
