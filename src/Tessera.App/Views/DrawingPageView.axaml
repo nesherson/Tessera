@@ -130,12 +130,14 @@
                            PointerReleased="OnPointerReleased"
                            Cursor="{Binding CurrentCursor}">
                         <Canvas IsHitTestVisible="False"> 
-                            <Rectangle Canvas.Left="{Binding SelectionX}"
-                                       Canvas.Top="{Binding SelectionY}"
-                                       Width="{Binding SelectionWidth}"
-                                       Height="{Binding SelectionHeight}"
-                                       IsVisible="{Binding IsSelectionVisible}"
-                                       Stroke="Red" StrokeThickness="1" Fill="#33FF0000"/>
+                            <Rectangle Canvas.Left="{Binding EraserRect.X}"
+                                       Canvas.Top="{Binding EraserRect.Y}"
+                                       Width="{Binding EraserRect.Width}"
+                                       Height="{Binding EraserRect.Height}"
+                                       IsVisible="{Binding EraserRect.IsVisible}"
+                                       Stroke="{Binding EraserRect.StrokeColor}" 
+                                       StrokeThickness="{Binding EraserRect.StrokeThickness}" 
+                                       Fill="{Binding EraserRect.Color}"/>
                             <Canvas.RenderTransform>
                                 <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}" />
                             </Canvas.RenderTransform>

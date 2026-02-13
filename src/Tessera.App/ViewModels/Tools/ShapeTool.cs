@@ -8,19 +8,19 @@ namespace Tessera.App.ViewModels;
 
 public class ShapeTool : ICanvasTool
 {
-    private readonly DrawingPageViewModel _vm;
+    private readonly ICanvasContext _canvasContext;
     private readonly ShapeToolSettings _settings;
     private Point _startPoint;
     private ShapeBase? _previewShape;
 
-    public ShapeTool(DrawingPageViewModel vm, ShapeToolSettings settings)
+    public ShapeTool(ICanvasContext canvasContext, ShapeToolSettings settings)
     {
-        _vm = vm;
+        _canvasContext = canvasContext;
         _settings = settings;
     }
     public void OnPointerPressed(Point p)
     {
-        _startPoint = _vm.ToWorld(p);
+        _startPoint = _canvasContext.ToWorld(p);
         _previewShape = CreateShape(_settings.SelectedShapeType);
         _previewShape.X = p.X;
         _previewShape.Y = p.Y;
@@ -30,14 +30,14 @@ public class ShapeTool : ICanvasTool
         _previewShape.Color = new SolidColorBrush(_settings.Color);
         _previewShape.StrokeThickness = _settings.Thickness;
 
-        _vm.Shapes.Add(_previewShape);
+        _canvasContext.Shapes.Add(_previewShape);
     }
 
     public void OnPointerMoved(Point p)
     {
         if (_previewShape == null) return;
         
-        var currentPoint = _vm.ToWorld(p);
+        var currentPoint = _canvasContext.ToWorld(p);
         var x = Math.Min(currentPoint.X, _startPoint.X);
         var y = Math.Min(currentPoint.Y, _startPoint.Y);
         var w = Math.Abs(currentPoint.X - _startPoint.X);
