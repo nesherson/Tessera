@@ -20,8 +20,6 @@ public class ShapeTool : ICanvasTool
     }
     public void OnPointerPressed(Point p)
     {
-        if (!_vm.ViewMatrix.HasInverse) return;
-        
         _startPoint = _vm.ToWorld(p);
         _previewShape = CreateShape(_settings.SelectedShapeType);
         _previewShape.X = p.X;
@@ -38,7 +36,6 @@ public class ShapeTool : ICanvasTool
     public void OnPointerMoved(Point p)
     {
         if (_previewShape == null) return;
-        if (!_vm.ViewMatrix.HasInverse) return;
         
         var currentPoint = _vm.ToWorld(p);
         var x = Math.Min(currentPoint.X, _startPoint.X);
