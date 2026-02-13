@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public partial class LineShape : ShapeBase
 {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
-using Tessera.App.ViewModels;
+using Tessera.App.Models;
 
 namespace Tessera.App.DataTemplates;
 

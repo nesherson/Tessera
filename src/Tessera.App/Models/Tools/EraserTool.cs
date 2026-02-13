@@ -4,7 +4,7 @@ using Avalonia;
 using Avalonia.Media;
 using Tessera.App.Interfaces;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class EraserTool : ICanvasTool
 {
@@ -29,7 +29,7 @@ public class EraserTool : ICanvasTool
     
     public void OnPointerPressed(Point p)
     {
-        _startPoint = _canvasContext.ToWorld(p);
+        _startPoint = _canvasContext.Transform.ToWorld(p);
         _eraserRect.X = _startPoint.X;
         _eraserRect.Y = _startPoint.Y;
         _eraserRect.Width = 0;
@@ -42,7 +42,7 @@ public class EraserTool : ICanvasTool
         if (!_eraserRect.IsVisible)
             return;
         
-        var currentPoint = _canvasContext.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(p);
         var x = Math.Min(currentPoint.X, _startPoint.X);
         var y = Math.Min(currentPoint.Y, _startPoint.Y);
         var w = Math.Abs(currentPoint.X - _startPoint.X);

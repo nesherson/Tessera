@@ -1,23 +1,24 @@
 ﻿using Avalonia;
 using Avalonia.Media;
 using Tessera.App.Interfaces;
+using Tessera.App.ViewModels;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class TextShapeTool : ICanvasTool
 {
-    private readonly DrawingPageViewModel _vm;
+    private readonly ICanvasContext _canvasContext;
     private readonly TextShapeToolSettings _settings;
 
-    public TextShapeTool(DrawingPageViewModel drawingPageViewModel, TextShapeToolSettings settings)
+    public TextShapeTool(ICanvasContext canvasContext, TextShapeToolSettings settings)
     {
-        _vm = drawingPageViewModel;
+        _canvasContext = canvasContext;
         _settings = settings;
     }
 
     public void OnPointerPressed(Point p)
     {
-        var currentPoint = _vm.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(p);
         var newText = new TextShape
         {
             X = currentPoint.X,
@@ -28,7 +29,7 @@ public class TextShapeTool : ICanvasTool
             FontFamily = new FontFamily(_settings.SelectedFontFamily)
         };
     
-        _vm.Shapes.Add(newText);
+        _canvasContext.Shapes.Add(newText);
     }
 
     public void OnPointerMoved(Point p)

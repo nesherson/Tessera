@@ -1,6 +1,6 @@
 ﻿using Avalonia.Media;
 using Tessera.App.Enumerations;
 
-namespace Tessera.App.ViewModels.Results;
+namespace Tessera.App.Results;
 
 public record CanvasSettingsResult(double GridSpacing, GridType GridType, IBrush GridColor);

@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Media;
 using Tessera.App.Interfaces;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class PointShapeTool : ICanvasTool
 {
@@ -17,7 +17,7 @@ public class PointShapeTool : ICanvasTool
     
     public void OnPointerPressed(Point p)
     {
-        var currentPoint = _canvasContext.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(p);
         var newPoint = new EllipseShape
         {
             X = currentPoint.X,

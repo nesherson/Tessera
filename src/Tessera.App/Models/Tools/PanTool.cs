@@ -2,7 +2,7 @@
 using Avalonia.Input;
 using Tessera.App.Interfaces;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class PanTool : ICanvasTool
 {
@@ -27,8 +27,7 @@ public class PanTool : ICanvasTool
         
         var delta = screenPoint - _startPoint;
         
-        _canvasContext.OffsetX += delta.Value.X;
-        _canvasContext.OffsetY += delta.Value.Y;
+        _canvasContext.Transform.Pan(delta.Value.X, delta.Value.Y);
         _startPoint = screenPoint;
     }
 

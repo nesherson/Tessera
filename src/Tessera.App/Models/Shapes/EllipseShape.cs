@@ -1,6 +1,6 @@
 using Avalonia;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class EllipseShape : ShapeBase
 {

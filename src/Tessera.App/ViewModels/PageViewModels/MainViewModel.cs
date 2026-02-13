@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -7,7 +6,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Tessera.App.Data;
 using Tessera.App.Factories;
-using Tessera.App.Interfaces;
 using Tessera.App.Messages;
 
 namespace Tessera.App.ViewModels;
