@@ -18,8 +18,8 @@ public partial class CanvasTransform : ObservableObject
 
     public Point ToScreen(Point worldPoint)
     {
-        var x = worldPoint.X * OffsetX;
-        var y = worldPoint.Y * OffsetY;
+        var x = worldPoint.X + OffsetX;
+        var y = worldPoint.Y + OffsetY;
         
         return new Point(x, y);
     }

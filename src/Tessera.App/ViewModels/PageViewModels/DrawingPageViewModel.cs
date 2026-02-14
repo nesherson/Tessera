@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,7 +11,6 @@ using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
 using Tessera.App.Messages;
 using Tessera.App.Models;
-using Point = Avalonia.Point;
 
 namespace Tessera.App.ViewModels;
 
