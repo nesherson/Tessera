@@ -5,7 +5,7 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Enumerations;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public partial class ShapeToolSettings : ObservableObject
 {

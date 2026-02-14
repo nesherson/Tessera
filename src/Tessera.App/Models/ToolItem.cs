@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Interfaces;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class ToolItem
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public partial class PolylineShapeToolSettings : ObservableObject
 {

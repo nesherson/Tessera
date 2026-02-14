@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:Tessera.App.ViewModels"
              xmlns:dt="clr-namespace:Tessera.App.DataTemplates"
              xmlns:c="clr-namespace:Tessera.App.Controls"
+             xmlns:m="clr-namespace:Tessera.App.Models"
              x:Class="Tessera.App.Views.DrawingPageView"
              x:DataType="vm:DrawingPageViewModel">
     <Design.DataContext>
@@ -139,20 +140,20 @@
                                        StrokeThickness="{Binding EraserRect.StrokeThickness}" 
                                        Fill="{Binding EraserRect.Color}"/>
                             <Canvas.RenderTransform>
-                                <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}" />
+                                <TranslateTransform X="{Binding Transform.OffsetX}" Y="{Binding Transform.OffsetY}" />
                             </Canvas.RenderTransform>
                         </Canvas>
                         <c:CanvasGrid 
                             IsHitTestVisible="False"
-                            OffsetX="{Binding OffsetX}"
-                            OffsetY="{Binding OffsetY}"
+                            OffsetX="{Binding Transform.OffsetX}"
+                            OffsetY="{Binding Transform.OffsetY}"
                             GridSpacing="{Binding GridSpacing}"
                             GridType="{Binding GridType}"
                             GridColor="{Binding GridColor}">
                         </c:CanvasGrid>
                         <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
                             <ItemsControl.Styles>
-                                <Style Selector="ContentPresenter" x:DataType="vm:ShapeBase">
+                                <Style Selector="ContentPresenter" x:DataType="m:ShapeBase">
                                     <Setter Property="Canvas.Left" Value="{Binding X}"/>
                                     <Setter Property="Canvas.Top" Value="{Binding Y}"/>
                                 </Style>
@@ -161,14 +162,16 @@
                                 <ItemsPanelTemplate>
                                     <Canvas x:Name="Canvas">
                                         <Canvas.RenderTransform>
-                                            <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}" />
+                                            <TranslateTransform 
+                                                X="{Binding Transform.OffsetX}" 
+                                                Y="{Binding Transform.OffsetY}" />
                                         </Canvas.RenderTransform>
                                     </Canvas>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <dt:ShapeTemplateSelector>
-                                    <DataTemplate x:Key="EllipseShape" DataType="{x:Type vm:EllipseShape}">
+                                    <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
                                         <Ellipse
                                             Width="{Binding Width}"
                                             Height="{Binding Height}"
@@ -176,14 +179,14 @@
                                             Fill="{Binding Color}"
                                             StrokeThickness="{Binding StrokeThickness}" />
                                     </DataTemplate>
-                                    <DataTemplate x:Key="LineShape" DataType="{x:Type vm:LineShape}">
+                                    <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
                                         <Line
                                             StartPoint="{Binding StartPoint}"
                                             EndPoint="{Binding EndPoint}"
                                             Stroke="{Binding StrokeColor}"
                                             StrokeThickness="{Binding StrokeThickness}" />
                                     </DataTemplate>
-                                    <DataTemplate x:Key="PolylineShape" DataType="{x:Type vm:PolylineShape}">
+                                    <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
                                         <Polyline
                                             Points="{Binding Points}"
                                             Stroke="{Binding StrokeColor}"
@@ -191,7 +194,7 @@
                                             StrokeJoin="{Binding StrokeJoin}"
                                             StrokeLineCap="{Binding StrokeCap}"/>
                                     </DataTemplate>
-                                    <DataTemplate x:Key="RectangleShape" DataType="{x:Type vm:RectangleShape}">
+                                    <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
                                         <Rectangle
                                             Width="{Binding Width}"
                                             Height="{Binding Height}"
@@ -199,7 +202,7 @@
                                             Fill="{Binding Color}"
                                             StrokeThickness="{Binding StrokeThickness}" />
                                     </DataTemplate>
-                                    <DataTemplate x:Key="TextShape" DataType="{x:Type vm:TextShape}">
+                                    <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                         <Panel>
                                             <TextBlock Text="{Binding Text}"
                                                        FontSize="{Binding FontSize}"
@@ -250,9 +253,9 @@
                         <Svg Path="/Assets/Icons/arrows-counter-clockwise.svg" Width="12"/>
                     </Button>
                     <TextBlock Text="OffsetX: " FontSize="12" />
-                    <TextBlock Text="{Binding OffsetX}" FontSize="12"/>
+                    <TextBlock Text="{Binding Transform.OffsetX}" FontSize="12"/>
                     <TextBlock Text="OffsetY: " Margin="5,0,0,0" FontSize="12"/>
-                    <TextBlock Text="{Binding OffsetY}" FontSize="12"/>
+                    <TextBlock Text="{Binding Transform.OffsetY}" FontSize="12"/>
                 </WrapPanel>
             </Border>
         </Grid>

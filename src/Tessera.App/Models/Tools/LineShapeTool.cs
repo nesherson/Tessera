@@ -2,7 +2,7 @@
 using Avalonia.Media;
 using Tessera.App.Interfaces;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class LineShapeTool : ICanvasTool
 {
@@ -19,7 +19,7 @@ public class LineShapeTool : ICanvasTool
     
     public void OnPointerPressed(Point p)
     {
-        var currentPoint = _canvasContext.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(p);
         
         _line = new LineShape
         {
@@ -36,7 +36,7 @@ public class LineShapeTool : ICanvasTool
     {
         if (_line == null) return;
         
-        var currentPoint = _canvasContext.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(p);
         
         _line.EndPoint = new Point(currentPoint.X, currentPoint.Y);
     }

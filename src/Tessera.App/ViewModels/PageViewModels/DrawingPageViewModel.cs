@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,7 +10,7 @@ using Tessera.App.Data;
 using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
 using Tessera.App.Messages;
-using Point = Avalonia.Point;
+using Tessera.App.Models;
 
 namespace Tessera.App.ViewModels;
 
@@ -35,12 +36,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     
     [ObservableProperty]
     private Cursor _currentCursor = Cursor.Default;
-    
-    [ObservableProperty] 
-    private double _offsetX;
-    
-    [ObservableProperty] 
-    private double _offsetY;
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     
@@ -105,9 +100,12 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 ToolSettings = new EraserToolSettings()
             },
         ];
+        Transform = new CanvasTransform();
+        
         ResetToolSelection();
     }
     
+    public CanvasTransform Transform { get; }
     public ObservableCollection<ToolItem> Tools { get; }
     
     public void OnPointerPressed(Point screenPoint)
@@ -125,8 +123,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         CurrentTool.OnPointerReleased(screenPoint);
     }
     
-    public Point ToWorld(Point screenPoint) => new(screenPoint.X - OffsetX, screenPoint.Y - OffsetY);
-
     public void ResetToolSelection()
     {
         SelectedToolItem = Tools[0];
@@ -152,11 +148,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
             GridColor = result.GridColor;
         }
     }
-    
+
     [RelayCommand]
-    private void ResetView()
-    {
-        OffsetX = 0;
-        OffsetY = 0;
-    }
+    private void ResetView() => Transform.Reset();
 }

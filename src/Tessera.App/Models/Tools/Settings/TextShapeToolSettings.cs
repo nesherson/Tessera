@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public partial class TextShapeToolSettings : ObservableObject
 {

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public class PanToolSettings : ObservableObject
 {

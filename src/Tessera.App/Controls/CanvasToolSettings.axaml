@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tessera.App.Controls.CanvasToolSettings"
-             xmlns:vm="clr-namespace:Tessera.App.ViewModels"
+             xmlns:m="clr-namespace:Tessera.App.Models"
              xmlns:controls="clr-namespace:Tessera.App.Controls"
              xmlns:converters="clr-namespace:Tessera.App.Converters">
     <UserControl.Styles>
@@ -31,7 +31,7 @@
         <ScrollViewer Grid.Row="1">
             <ContentControl Content="{Binding ToolSettings, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}">
                 <ContentControl.DataTemplates>
-                    <DataTemplate DataType="{x:Type vm:EraserToolSettings}">
+                    <DataTemplate DataType="{x:Type m:EraserToolSettings}">
                         <Border
                             BorderBrush="#E5E7EB"
                             BorderThickness="0,1"
@@ -42,7 +42,7 @@
                                 Text="None" />
                         </Border>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:PanToolSettings}">
+                    <DataTemplate DataType="{x:Type m:PanToolSettings}">
                         <Border
                             BorderBrush="#E5E7EB"
                             BorderThickness="0,1"
@@ -53,7 +53,7 @@
                                 Text="None" />
                         </Border>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:PointShapeToolSettings}">
+                    <DataTemplate DataType="{x:Type m:PointShapeToolSettings}">
                         <StackPanel>
                             <Border
                                 BorderBrush="#E5E7EB"
@@ -89,7 +89,7 @@
                             </Border>
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:LineShapeToolSettings}">
+                    <DataTemplate DataType="{x:Type m:LineShapeToolSettings}">
                         <StackPanel>
                             <Border
                                 BorderBrush="#E5E7EB"
@@ -125,7 +125,7 @@
                             </Border>
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:PolylineShapeToolSettings}">
+                    <DataTemplate DataType="{x:Type m:PolylineShapeToolSettings}">
                         <StackPanel>
                             <Border
                                 BorderBrush="#E5E7EB"
@@ -193,7 +193,7 @@
                             </Border>
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:ShapeToolSettings}">
+                    <DataTemplate DataType="{x:Type m:ShapeToolSettings}">
                         <StackPanel>
                             <Border
                                 BorderBrush="#E5E7EB"
@@ -258,7 +258,7 @@
                             </Border>
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:TextShapeToolSettings}">
+                    <DataTemplate DataType="{x:Type m:TextShapeToolSettings}">
                         <StackPanel>
                             <Border
                                 BorderBrush="#E5E7EB"

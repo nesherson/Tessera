@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Tessera.App.ViewModels;
+namespace Tessera.App.Models;
 
 public abstract partial class ShapeBase : ObservableObject
 {

@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Tessera.App.ViewModels;
+using Tessera.App.Models;
 
 namespace Tessera.App.Views;
 
