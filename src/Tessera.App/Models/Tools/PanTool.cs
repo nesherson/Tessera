@@ -25,9 +25,9 @@ public class PanTool : ICanvasTool
     {
         if (_startPoint == null) return;
         
-        var delta = screenPoint - _startPoint;
+        var delta = screenPoint - _startPoint.Value;
         
-        _canvasContext.Transform.Pan(delta.Value.X, delta.Value.Y);
+        _canvasContext.Transform.Pan(delta.X, delta.Y);
         _startPoint = screenPoint;
     }
 
