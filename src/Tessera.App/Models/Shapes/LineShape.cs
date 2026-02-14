@@ -1,21 +1,29 @@
 ﻿using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Helpers;
 
 namespace Tessera.App.Models;
 
 public partial class LineShape : ShapeBase
 {
-    [ObservableProperty]
+    [ObservableProperty] 
     private Point _startPoint;
 
-    [ObservableProperty]
+    [ObservableProperty] 
     private Point _endPoint;
-
-    [ObservableProperty]
-    private double _strokeThickness;
 
     public override bool Intersects(Rect rect)
     {
-        return rect.Contains(StartPoint) || rect.Contains(EndPoint);
+        if (rect.Contains(StartPoint) || rect.Contains(EndPoint)) return true;
+
+        var topLeft = rect.TopLeft;
+        var topRight = rect.TopRight;
+        var bottomLeft = rect.BottomLeft;
+        var bottomRight = rect.BottomRight;
+
+        return GeometryHelpers.SegmentsIntersect(StartPoint, EndPoint, topLeft, topRight) ||
+               GeometryHelpers.SegmentsIntersect(StartPoint, EndPoint, bottomLeft, bottomRight) ||
+               GeometryHelpers.SegmentsIntersect(StartPoint, EndPoint, topLeft, bottomLeft) ||
+               GeometryHelpers.SegmentsIntersect(StartPoint, EndPoint, topRight, bottomRight);
     }
 }
