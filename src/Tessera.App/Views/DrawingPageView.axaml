@@ -25,11 +25,12 @@
             <Setter Property="BorderBrush" Value="#D1D5DB"/>
         </Style>
         <Style Selector="Button.FunctionBtn">
-            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Background" Value="White" />
             <Setter Property="BorderBrush" Value="#E5E7EB" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Padding" Value="2" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Padding" Value="0,5" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
         <Style Selector="Button.FunctionBtn:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>
@@ -37,17 +38,17 @@
         <Style Selector="Button.FunctionBtn:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>
         </Style>
-        <!-- <Style Selector="Border.MainBorder"> -->
-        <!--     <Setter Property="Background" Value="#ffffff" /> -->
-        <!--     <Setter Property="BorderBrush" Value="#E5E7EB" /> -->
-        <!--     <Setter Property="BorderThickness" Value="1" /> -->
-        <!--     <Setter Property="CornerRadius" Value="8" /> -->
-        <!--     <Setter Property="BoxShadow" Value="0 1 3 0 #10000000" /> -->
-        <!-- </Style> -->
+        <Style Selector="Border.ToolbarBorder">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Width" Value="36" />
+            <Setter Property="BoxShadow" Value="0 1 3 0 #10000000" />
+        </Style>
         <Style Selector="TextBox.TbTransparent:pointerover /template/ Border#PART_BorderElement">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
-        
         <Style Selector="TextBox.TbTransparent:focus /template/ Border#PART_BorderElement">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
@@ -165,16 +166,8 @@
                 </ItemsControl>
             </Panel>
         </Grid>
-        <Border 
-            Grid.Column="1"
-            VerticalAlignment="Center"
-            Margin="25,0"
-            BorderBrush="#E5E7EB"
-            BorderThickness="1"
-            Background="White"
-            Width="40"
-            CornerRadius="5">
-            <StackPanel Orientation="Vertical" >
+        <StackPanel Grid.Column="1" Margin="15,0" VerticalAlignment="Center" Spacing="10">
+            <Border Classes="ToolbarBorder">
                 <ListBox 
                     ItemsSource="{Binding Tools}" 
                     SelectedItem="{Binding SelectedToolItem}"
@@ -188,21 +181,20 @@
                         <DataTemplate>
                             <Border 
                                 ToolTip.Tip="{Binding Name}">
-                                <Svg Path="{Binding Icon}" Width="28" />
+                                <Svg Path="{Binding Icon}" Width="20" />
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="Margin" Value="0"/>
                             <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Padding" Value="0,5"/>
                             <Setter Property="BorderThickness" Value="0,0,0,1" />
                             <Setter Property="BorderBrush" Value="#E5E7EB" />
+                            <Setter Property="Background" Value="White" />
                         </Style>
                         <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
                             <Setter Property="Background" Value="Transparent"/>	
-                            <Setter Property="BorderThickness" Value="0"/>	
                         </Style>
                         <Style Selector="ListBoxItem:selected Border">
                             <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>	
@@ -212,30 +204,22 @@
                         </Style>
                     </ListBox.Styles>
                 </ListBox>
-                <StackPanel Orientation="Vertical" >
+            </Border>
+            <Border Classes="ToolbarBorder">
+                <StackPanel Orientation="Vertical">
                     <Button Command="{Binding ClearAllCommand}"
                             ToolTip.Tip="Clear All"
-                            Background="Transparent"
-                            CornerRadius="0"
-                            Padding="5,0"
-                            Margin="0"
-                            BorderBrush="#E5E7EB"
+                            Classes="FunctionBtn"
                             BorderThickness="0,0,0,1">
-                        <Svg Path="/Assets/Icons/broom.svg" Width="28"/>
+                        <Svg Path="/Assets/Icons/broom.svg" Width="20"/>
                     </Button>
                     <Button Command="{Binding OpenOptionsCommand}"
                             ToolTip.Tip="Open options"
-                            Background="Transparent"
-                            CornerRadius="0"
-                            Padding="5,0"
-                            Margin="0"
-                            >
-                        <Svg Path="/Assets/Icons/gear.svg" Width="28"/>
+                            Classes="FunctionBtn">
+                        <Svg Path="/Assets/Icons/gear.svg" Width="20"/>
                     </Button>
                 </StackPanel>
-            </StackPanel>
-
-        </Border>
-
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>
