@@ -37,6 +37,9 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     [ObservableProperty]
     private Cursor _currentCursor = Cursor.Default;
     
+    [ObservableProperty]
+    private bool _isToolSettingsOpen;
+    
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     
     public DrawingPageViewModel()
