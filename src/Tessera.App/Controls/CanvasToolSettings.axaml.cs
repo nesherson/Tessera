@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Models;
 
 namespace Tessera.App.Controls;
 
@@ -17,5 +18,7 @@ public partial class CanvasToolSettings : UserControl
     public CanvasToolSettings()
     {
         InitializeComponent();
+
+        ToolSettings = new PointShapeToolSettings();
     }
 }
