@@ -24,7 +24,8 @@ public class PointShapeTool : ICanvasTool
             Y = currentPoint.Y,
             Width = _settings.PointSize.Thickness,
             Height = _settings.PointSize.Thickness,
-            Color =_settings.PointColor
+            Color =_settings.PointColor,
+            Opacity = _settings.Opacity
         };
         
         _canvasContext.Shapes.Add(newPoint);

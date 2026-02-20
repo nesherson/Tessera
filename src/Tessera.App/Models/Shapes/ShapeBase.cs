@@ -30,5 +30,8 @@ public abstract partial class ShapeBase : ObservableObject
     [ObservableProperty]
     private bool _isVisible = true;
     
+    [ObservableProperty]
+    private double _opacity;
+    
     public abstract bool Intersects(Rect rect);
 }

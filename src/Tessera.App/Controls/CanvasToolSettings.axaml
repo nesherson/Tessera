@@ -103,6 +103,11 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
+                                <Slider 
+                                    Value="{Binding Opacity}"
+                                    Minimum="0"
+                                    Maximum="1"
+                                    />
                                 <ListBox 
                                     ItemsSource="{Binding AvailableSizes}" 
                                     SelectedItem="{Binding PointSize}"

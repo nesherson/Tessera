@@ -15,6 +15,9 @@ public partial class PointShapeToolSettings : ObservableObject
 
     [ObservableProperty]
     private ShapeSize _pointSize;
+    
+    [ObservableProperty]
+    private double _opacity = 1;
 
     [ObservableProperty]
     private List<IBrush> _availableColors =

@@ -108,6 +108,7 @@
                         <dt:ShapeTemplateSelector>
                             <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
                                 <Ellipse
+                                    Opacity="{Binding Opacity}"
                                     Width="{Binding Width}"
                                     Height="{Binding Height}"
                                     Stroke="{Binding StrokeColor}"
