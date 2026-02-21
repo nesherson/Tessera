@@ -169,8 +169,23 @@
                 </ItemsControl>
             </Panel>
         </Grid>
-        <StackPanel Grid.Column="1" Margin="15,0" VerticalAlignment="Center" Spacing="10" Orientation="Horizontal">
-                <c:CanvasToolSettings ToolSettings="{Binding SelectedToolItem.ToolSettings}" />
+        <StackPanel 
+            Grid.Column="1"
+            Margin="15,0"
+            VerticalAlignment="Center"
+            Spacing="10"
+            Orientation="Horizontal">
+                <c:CanvasToolSettings 
+                    ToolSettings="{Binding SelectedToolItem.ToolSettings}">
+                    <c:CanvasToolSettings.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                            <Binding 
+                                Path="SelectedToolItem.ToolSettings" 
+                                Converter="{x:Static ObjectConverters.IsNotNull}" />
+                            <Binding Path="IsToolSettingsOpen"/>
+                        </MultiBinding>
+                    </c:CanvasToolSettings.IsVisible>
+                </c:CanvasToolSettings>
             <StackPanel>
                 <Border Classes="ToolbarBorder">
                     <ListBox 

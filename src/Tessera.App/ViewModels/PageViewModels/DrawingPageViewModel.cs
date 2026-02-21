@@ -58,7 +58,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Name = "Pan",
                 Icon = "/Assets/Icons/hand-grabbing.svg",
                 Tool = new PanTool(this),
-                ToolSettings = new PanToolSettings()
             },
             new ToolItem
             {
@@ -100,7 +99,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Name = "Eraser",
                 Icon = "/Assets/Icons/eraser.svg",
                 Tool = new EraserTool(this),
-                ToolSettings = new EraserToolSettings()
             },
         ];
         Transform = new CanvasTransform();

@@ -112,28 +112,6 @@
             <ScrollViewer Grid.Row="1">
                 <ContentControl Content="{Binding ToolSettings, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}">
                     <ContentControl.DataTemplates>
-                        <DataTemplate DataType="{x:Type m:EraserToolSettings}">
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,1"
-                                Padding="20, 7"
-                                VerticalAlignment="Top">
-                                <TextBlock
-                                    Classes="Label"
-                                    Text="None" />
-                            </Border>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type m:PanToolSettings}">
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,1"
-                                Padding="20, 7"
-                                VerticalAlignment="Top">
-                                <TextBlock
-                                    Classes="Label"
-                                    Text="None" />
-                            </Border>
-                        </DataTemplate>
                         <DataTemplate DataType="{x:Type m:PointShapeToolSettings}">
                             <StackPanel>
                                 <ListBox 
