@@ -64,6 +64,8 @@
       <AvaloniaResource Include="Assets\Icons\circle-dashed.svg" />
       <None Remove="Assets\Icons\circle-dotted.svg" />
       <AvaloniaResource Include="Assets\Icons\circle-dotted.svg" />
+      <None Remove="Assets\Icons\square.svg" />
+      <AvaloniaResource Include="Assets\Icons\square.svg" />
     </ItemGroup>
 
     <ItemGroup>

@@ -2,7 +2,7 @@
 
 namespace Tessera.App.Models;
 
-public class PointShapeToolSettings : BaseToolSettings
+public class PointShapeToolSettings : ToolSettingsBase
 {
     public PointShapeToolSettings()
     {

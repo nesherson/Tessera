@@ -52,6 +52,36 @@
         <Style Selector="TextBox.TbTransparent:focus /template/ Border#PART_BorderElement">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
+        <Style Selector="ListBox.ToolbarListBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel 
+                        Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:ToolItem}">
+                    <Border 
+                        ToolTip.Tip="{Binding Name}">
+                        <Svg Path="{Binding Icon}" Width="20" />
+                    </Border>
+                </DataTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="ListBox.ToolbarListBox ListBoxItem">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="Background" Value="White" />
+            <Style Selector="^:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="Transparent"/>	
+            </Style>
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
+            </Style>
+        </Style>
     </UserControl.Styles>
     <Grid 
         Background="#f9f9f9" 
@@ -138,7 +168,8 @@
                                     Height="{Binding Height}"
                                     Stroke="{Binding StrokeColor}"
                                     Fill="{Binding Color}"
-                                    StrokeThickness="{Binding StrokeThickness}" />
+                                    StrokeThickness="{Binding StrokeThickness}" 
+                                    StrokeDashArray="{Binding StrokeDashArray}"/>
                             </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                 <Panel>
@@ -175,55 +206,24 @@
             VerticalAlignment="Center"
             Spacing="10"
             Orientation="Horizontal">
-                <c:CanvasToolSettings 
-                    ToolSettings="{Binding SelectedToolItem.ToolSettings}">
-                    <c:CanvasToolSettings.IsVisible>
-                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                            <Binding 
-                                Path="SelectedToolItem.ToolSettings" 
-                                Converter="{x:Static ObjectConverters.IsNotNull}" />
-                            <Binding Path="IsToolSettingsOpen"/>
-                        </MultiBinding>
-                    </c:CanvasToolSettings.IsVisible>
-                </c:CanvasToolSettings>
-            <StackPanel>
+            <c:CanvasToolSettings 
+                ToolSettings="{Binding SelectedToolItem.ToolSettings}">
+                <c:CanvasToolSettings.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding 
+                            Path="SelectedToolItem.ToolSettings" 
+                            Converter="{x:Static ObjectConverters.IsNotNull}" />
+                        <Binding Path="IsToolSettingsOpen"/>
+                    </MultiBinding>
+                </c:CanvasToolSettings.IsVisible>
+            </c:CanvasToolSettings>
+            <StackPanel Spacing="10">
                 <Border Classes="ToolbarBorder">
                     <ListBox 
+                        Classes="ToolbarListBox"
                         ItemsSource="{Binding Tools}" 
                         SelectedItem="{Binding SelectedToolItem}"
-                        Padding="0"
                         Tapped="OnToolListBoxTapped">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border 
-                                    ToolTip.Tip="{Binding Name}">
-                                    <Svg Path="{Binding Icon}" Width="20" />
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.Styles>
-                            <Style Selector="ListBoxItem">
-                                <Setter Property="Cursor" Value="Hand"/>
-                                <Setter Property="Padding" Value="0,5"/>
-                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                <Setter Property="BorderBrush" Value="#E5E7EB" />
-                                <Setter Property="Background" Value="White" />
-                            </Style>
-                            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                                <Setter Property="Background" Value="Transparent"/>	
-                            </Style>
-                            <Style Selector="ListBoxItem:selected Border">
-                                <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>	
-                            </Style>
-                            <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-                                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
-                            </Style>
-                        </ListBox.Styles>
                     </ListBox>
                 </Border>
                 <Border Classes="ToolbarBorder">

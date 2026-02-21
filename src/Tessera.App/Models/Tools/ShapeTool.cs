@@ -21,14 +21,16 @@ public class ShapeTool : ICanvasTool
     public void OnPointerPressed(Point p)
     {
         _startPoint = _canvasContext.Transform.ToWorld(p);
-        _previewShape = CreateShape(_settings.SelectedShapeType);
+        _previewShape = CreateShape(_settings.ShapeType);
         _previewShape.X = p.X;
         _previewShape.Y = p.Y;
         _previewShape.Width = 0;
         _previewShape.Height = 0;
-        _previewShape.StrokeColor = new SolidColorBrush(_settings.StrokeColor);
-        _previewShape.Color = new SolidColorBrush(_settings.Color);
-        _previewShape.StrokeThickness = _settings.Thickness;
+        _previewShape.StrokeColor = _settings.StrokeColor;
+        _previewShape.Color = _settings.Color;
+        _previewShape.StrokeThickness = _settings.Size.Thickness;
+        _previewShape.StrokeDashArray = _settings.StrokeType.DashArray;
+        _previewShape.Opacity = _settings.Opacity;
 
         _canvasContext.Shapes.Add(_previewShape);
     }
@@ -56,10 +58,10 @@ public class ShapeTool : ICanvasTool
     
     private ShapeBase CreateShape(ShapeType type)
     {
-        return type switch
+        return type.Name switch
         {
-            ShapeType.Rectangle => new RectangleShape(),
-            ShapeType.Ellipse => new EllipseShape(),
+            "Rectangle" => new RectangleShape(),
+            "Ellipse" => new EllipseShape(),
             _ => new RectangleShape()
         };
     }

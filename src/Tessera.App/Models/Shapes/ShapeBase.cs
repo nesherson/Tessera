@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Collections;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -32,6 +33,9 @@ public abstract partial class ShapeBase : ObservableObject
     
     [ObservableProperty]
     private double _opacity;
+    
+    [ObservableProperty]
+    private AvaloniaList<double> _strokeDashArray;
     
     public abstract bool Intersects(Rect rect);
 }

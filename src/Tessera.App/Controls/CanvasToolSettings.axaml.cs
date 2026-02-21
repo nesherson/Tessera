@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Models;
 
@@ -15,10 +16,11 @@ public partial class CanvasToolSettings : UserControl
         get => GetValue(ToolSettingsProperty);
         set => SetValue(ToolSettingsProperty, value);
     }
+    
     public CanvasToolSettings()
     {
         InitializeComponent();
 
-        ToolSettings = new LineShapeToolSettings();
+        ToolSettings = new ShapeToolSettings();
     }
 }

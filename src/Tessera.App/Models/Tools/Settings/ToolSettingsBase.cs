@@ -1,11 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Helpers;
 
 namespace Tessera.App.Models;
 
-public partial class LineShapeToolSettings : ToolSettingsBase
+public partial class ToolSettingsBase : ObservableObject
 {
+    [ObservableProperty]
+    private List<IBrush> _availableColors = [..AppColors.DefaultPalette];
+
+    [ObservableProperty]
+    private List<ShapeSize> _availableSizes =
+    [
+        new() { Name = "S", Description = "Small", Thickness = 4 },
+        new() { Name = "M", Description = "Medium", Thickness = 8 },
+        new() { Name = "L", Description = "Large", Thickness = 12 },
+        new() { Name = "XL", Description = "Extra large", Thickness = 18 }
+    ];
+    
     [ObservableProperty]
     private List<StrokeType> _availableStrokeTypes =
     [
@@ -34,11 +47,13 @@ public partial class LineShapeToolSettings : ToolSettingsBase
 
     [ObservableProperty]
     private StrokeType _strokeType;
+    
+    [ObservableProperty]
+    private IBrush _color;
 
-    public LineShapeToolSettings()
-    {
-        Size = AvailableSizes.First();
-        Color = AvailableColors.First();
-        StrokeType = AvailableStrokeTypes.First();
-    }
+    [ObservableProperty]
+    private ShapeSize _size;
+    
+    [ObservableProperty]
+    private double _opacity = 1;
 }
