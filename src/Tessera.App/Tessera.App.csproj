@@ -58,6 +58,12 @@
       <AvaloniaResource Include="Assets\Icons\gear.svg" />
       <None Remove="Assets\Icons\text-t.svg" />
       <AvaloniaResource Include="Assets\Icons\text-t.svg" />
+      <None Remove="Assets\Icons\circle.svg" />
+      <AvaloniaResource Include="Assets\Icons\circle.svg" />
+      <None Remove="Assets\Icons\circle-dashed.svg" />
+      <AvaloniaResource Include="Assets\Icons\circle-dashed.svg" />
+      <None Remove="Assets\Icons\circle-dotted.svg" />
+      <AvaloniaResource Include="Assets\Icons\circle-dotted.svg" />
     </ItemGroup>
 
     <ItemGroup>

@@ -24,10 +24,10 @@ public class PolylineShapeTool : ICanvasTool
         
         _line = new PolylineShape
         {
-            StrokeThickness = _settings.StrokeThickness,
-            StrokeColor = new SolidColorBrush(_settings.StrokeColor),
-            StrokeJoin = _settings.SelectedStrokeJoin,
-            StrokeCap = _settings.SelectedStrokeCap
+            StrokeThickness = _settings.Size.Thickness,
+            StrokeColor = _settings.Color,
+            StrokeDashArray = _settings.StrokeType.DashArray,
+            Opacity = _settings.Opacity,
         };
 
         _line.Points.Add(currentPoint);

@@ -22,9 +22,9 @@ public class PointShapeTool : ICanvasTool
         {
             X = currentPoint.X,
             Y = currentPoint.Y,
-            Width = _settings.PointSize.Thickness,
-            Height = _settings.PointSize.Thickness,
-            Color =_settings.PointColor,
+            Width = _settings.Size.Thickness,
+            Height = _settings.Size.Thickness,
+            Color =_settings.Color,
             Opacity = _settings.Opacity
         };
         

@@ -19,6 +19,6 @@ public partial class CanvasToolSettings : UserControl
     {
         InitializeComponent();
 
-        ToolSettings = new PointShapeToolSettings();
+        ToolSettings = new LineShapeToolSettings();
     }
 }

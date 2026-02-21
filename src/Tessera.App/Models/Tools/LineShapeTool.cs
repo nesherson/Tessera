@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Media;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
@@ -25,8 +24,10 @@ public class LineShapeTool : ICanvasTool
         {
             StartPoint = new Point(currentPoint.X, currentPoint.Y),
             EndPoint = new Point(currentPoint.X, currentPoint.Y),
-            StrokeThickness = _settings.StrokeThickness,
-            Color = new SolidColorBrush(_settings.StrokeColor),
+            StrokeThickness = _settings.Size.Thickness,
+            StrokeColor = _settings.Color,
+            Opacity =  _settings.Opacity,
+            StrokeDashArray = _settings.StrokeType.DashArray
         };
 
         _canvasContext.Shapes.Add(_line);

@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Helpers;
 
@@ -11,6 +12,9 @@ public partial class LineShape : ShapeBase
 
     [ObservableProperty] 
     private Point _endPoint;
+
+    [ObservableProperty]
+    private AvaloniaList<double> _strokeDashArray;
 
     public override bool Intersects(Rect rect)
     {

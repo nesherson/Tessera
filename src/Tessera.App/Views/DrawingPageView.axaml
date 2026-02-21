@@ -120,15 +120,17 @@
                                     StartPoint="{Binding StartPoint}"
                                     EndPoint="{Binding EndPoint}"
                                     Stroke="{Binding StrokeColor}"
-                                    StrokeThickness="{Binding StrokeThickness}" />
+                                    StrokeThickness="{Binding StrokeThickness}" 
+                                    StrokeDashArray="{Binding StrokeDashArray}" 
+                                    Opacity="{Binding Opacity}" />
                             </DataTemplate>
                             <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
                                 <Polyline
                                     Points="{Binding Points}"
                                     Stroke="{Binding StrokeColor}"
                                     StrokeThickness="{Binding StrokeThickness}"
-                                    StrokeJoin="{Binding StrokeJoin}"
-                                    StrokeLineCap="{Binding StrokeCap}"/>
+                                    StrokeDashArray="{Binding StrokeDashArray}"
+                                    Opacity="{Binding Opacity}"/>
                             </DataTemplate>
                             <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
                                 <Rectangle

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
+using Avalonia.Collections;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -12,10 +13,7 @@ public partial class PolylineShape : ShapeBase
     private ObservableCollection<Point> _points = [];
 
     [ObservableProperty]
-    private PenLineJoin _strokeJoin;
-
-    [ObservableProperty]
-    private PenLineCap _strokeCap;
+    private AvaloniaList<double> _strokeDashArray;
     
     public override bool Intersects(Rect rect)
     {
