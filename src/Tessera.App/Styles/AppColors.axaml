@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="Color.Black">#000000</Color>
+    <Color x:Key="Color.Silver">#9fa8b2</Color>
+    <Color x:Key="Color.LightPurple">#e085f4</Color>
+    <Color x:Key="Color.Purple">#ae3ec9</Color>
+    <Color x:Key="Color.IndigoBlue">#5B6EE8</Color>
+    <Color x:Key="Color.SkyBlue">#4DAEE8</Color>
+    <Color x:Key="Color.Orange">#E8922A</Color>
+    <Color x:Key="Color.Rust">#C4622A</Color>
+    <Color x:Key="Color.Green">#2AAE62</Color>
+    <Color x:Key="Color.Emerald">#2AC47A</Color>
+    <Color x:Key="Color.Red">#E84444</Color>
+    <Color x:Key="Color.Salmon">#E87A6E</Color>
+
+    <SolidColorBrush x:Key="Brush.Black"       Color="{StaticResource Color.Black}" />
+    <SolidColorBrush x:Key="Brush.Silver"      Color="{StaticResource Color.Silver}" />
+    <SolidColorBrush x:Key="Brush.LightPurple" Color="{StaticResource Color.LightPurple}" />
+    <SolidColorBrush x:Key="Brush.Purple"      Color="{StaticResource Color.Purple}" />
+    <SolidColorBrush x:Key="Brush.IndigoBlue" Color="{StaticResource Color.IndigoBlue}" />
+    <SolidColorBrush x:Key="Brush.SkyBlue"    Color="{StaticResource Color.SkyBlue}" />
+    <SolidColorBrush x:Key="Brush.Orange"     Color="{StaticResource Color.Orange}" />
+    <SolidColorBrush x:Key="Brush.Rust"       Color="{StaticResource Color.Rust}" />
+    <SolidColorBrush x:Key="Brush.Green"      Color="{StaticResource Color.Green}" />
+    <SolidColorBrush x:Key="Brush.Emerald"    Color="{StaticResource Color.Emerald}" />
+    <SolidColorBrush x:Key="Brush.Red"        Color="{StaticResource Color.Red}" />
+    <SolidColorBrush x:Key="Brush.Salmon"     Color="{StaticResource Color.Salmon}" />
+</ResourceDictionary>

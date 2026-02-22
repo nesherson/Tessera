@@ -1,13 +1,3 @@
-﻿using Avalonia.Media;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿namespace Tessera.App.Models;
 
-namespace Tessera.App.Models;
-
-public partial class LineShapeToolSettings : ObservableObject
-{
-    [ObservableProperty]
-    private double _strokeThickness = 3;
-
-    [ObservableProperty]
-    private Color _strokeColor = Colors.Black;
-}
+public class LineShapeToolSettings : ToolSettingsBase;

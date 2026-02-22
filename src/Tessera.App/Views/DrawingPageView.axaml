@@ -25,11 +25,12 @@
             <Setter Property="BorderBrush" Value="#D1D5DB"/>
         </Style>
         <Style Selector="Button.FunctionBtn">
-            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Background" Value="White" />
             <Setter Property="BorderBrush" Value="#E5E7EB" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Padding" Value="2" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Padding" Value="0,5" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
         <Style Selector="Button.FunctionBtn:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>
@@ -37,227 +38,210 @@
         <Style Selector="Button.FunctionBtn:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>
         </Style>
-        <Style Selector="Border.MainBorder">
-            <Setter Property="Background" Value="#ffffff" />
+        <Style Selector="Border.ToolbarBorder">
+            <Setter Property="Background" Value="White" />
             <Setter Property="BorderBrush" Value="#E5E7EB" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Width" Value="36" />
             <Setter Property="BoxShadow" Value="0 1 3 0 #10000000" />
         </Style>
         <Style Selector="TextBox.TbTransparent:pointerover /template/ Border#PART_BorderElement">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
-        
         <Style Selector="TextBox.TbTransparent:focus /template/ Border#PART_BorderElement">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
+        <Style Selector="ListBox.ToolbarListBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel 
+                        Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:ToolItem}">
+                    <Border 
+                        ToolTip.Tip="{Binding Name}">
+                        <Svg Path="{Binding Icon}" Width="20" />
+                    </Border>
+                </DataTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="ListBox.ToolbarListBox ListBoxItem">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="Background" Value="White" />
+            <Style Selector="^:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
+            </Style>
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
+            </Style>
+        </Style>
     </UserControl.Styles>
-    <Border Padding="5">
-        <Grid 
-            Background="#f9f9f9" 
-            RowDefinitions="Auto, *, Auto"
-            ColumnDefinitions="*, 300"
-            ColumnSpacing="5"
-            RowSpacing="5">
-            <Border 
-                Grid.Row="0"
-                Grid.Column="0"
-                Classes="MainBorder"
-                Padding="10">
-                <Grid ColumnDefinitions="Auto, *">
-                    <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <ListBox 
-                            ItemsSource="{Binding Tools}" 
-                            SelectedItem="{Binding SelectedToolItem}"
-                            Background="Transparent">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border 
-                                        Classes="Tool"
-                                        ToolTip.Tip="{Binding Name}">
-                                        <Svg Path="{Binding Icon}" Width="28"/>
-                                    </Border>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                            <ListBox.Styles>
-                                <Style Selector="ListBoxItem">
-                                    <Setter Property="CornerRadius" Value="4"/>
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="Cursor" Value="Hand"/>
-                                    <Setter Property="Margin" Value="0,0,5,0"/>
-                                </Style>
-                                <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="Transparent"/>	
-                                    <Setter Property="BorderThickness" Value="0"/>	
-                                </Style>
-                                <Style Selector="ListBoxItem:selected Border">
-                                    <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>	
-                                </Style>
-                                <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
-                                </Style>
-                            </ListBox.Styles>
-                        </ListBox>
-                        <Rectangle Width="1" Fill="#ccc" Margin="5,2,10,2" VerticalAlignment="Stretch"/>
-                        <StackPanel Orientation="Horizontal" Spacing="5">
-                            <Button Command="{Binding ClearAllCommand}"
-                                    ToolTip.Tip="Clear All"
-                                    Classes="FunctionBtn">
-                                <Svg Path="/Assets/Icons/broom.svg" Width="28"/>
-                            </Button>
-                            <Button Command="{Binding OpenOptionsCommand}"
-                                    ToolTip.Tip="Open options"
-                                    Classes="FunctionBtn">
-                                <Svg Path="/Assets/Icons/gear.svg" Width="28"/>
-                            </Button>
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <Border 
-                Grid.Row="1"
-                Grid.Column="0"
-                Classes="MainBorder">
-                <Grid ClipToBounds="True">
-                    <Panel Name="CanvasContainer"
-                           Background="Transparent"
-                           PointerPressed="OnPointerPressed"
-                           PointerMoved="OnPointerMoved"
-                           PointerReleased="OnPointerReleased"
-                           Cursor="{Binding CurrentCursor}">
-                        <Canvas IsHitTestVisible="False"> 
-                            <Rectangle Canvas.Left="{Binding EraserRect.X}"
-                                       Canvas.Top="{Binding EraserRect.Y}"
-                                       Width="{Binding EraserRect.Width}"
-                                       Height="{Binding EraserRect.Height}"
-                                       IsVisible="{Binding EraserRect.IsVisible}"
-                                       Stroke="{Binding EraserRect.StrokeColor}" 
-                                       StrokeThickness="{Binding EraserRect.StrokeThickness}" 
-                                       Fill="{Binding EraserRect.Color}"/>
-                            <Canvas.RenderTransform>
-                                <TranslateTransform X="{Binding Transform.OffsetX}" Y="{Binding Transform.OffsetY}" />
-                            </Canvas.RenderTransform>
-                        </Canvas>
-                        <c:CanvasGrid 
-                            IsHitTestVisible="False"
-                            OffsetX="{Binding Transform.OffsetX}"
-                            OffsetY="{Binding Transform.OffsetY}"
-                            GridSpacing="{Binding GridSpacing}"
-                            GridType="{Binding GridType}"
-                            GridColor="{Binding GridColor}">
-                        </c:CanvasGrid>
-                        <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
-                            <ItemsControl.Styles>
-                                <Style Selector="ContentPresenter" x:DataType="m:ShapeBase">
-                                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                                </Style>
-                            </ItemsControl.Styles>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <Canvas x:Name="Canvas">
-                                        <Canvas.RenderTransform>
-                                            <TranslateTransform 
-                                                X="{Binding Transform.OffsetX}" 
-                                                Y="{Binding Transform.OffsetY}" />
-                                        </Canvas.RenderTransform>
-                                    </Canvas>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <dt:ShapeTemplateSelector>
-                                    <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
-                                        <Ellipse
-                                            Width="{Binding Width}"
-                                            Height="{Binding Height}"
-                                            Stroke="{Binding StrokeColor}"
-                                            Fill="{Binding Color}"
-                                            StrokeThickness="{Binding StrokeThickness}" />
-                                    </DataTemplate>
-                                    <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
-                                        <Line
-                                            StartPoint="{Binding StartPoint}"
-                                            EndPoint="{Binding EndPoint}"
-                                            Stroke="{Binding StrokeColor}"
-                                            StrokeThickness="{Binding StrokeThickness}" />
-                                    </DataTemplate>
-                                    <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
-                                        <Polyline
-                                            Points="{Binding Points}"
-                                            Stroke="{Binding StrokeColor}"
-                                            StrokeThickness="{Binding StrokeThickness}"
-                                            StrokeJoin="{Binding StrokeJoin}"
-                                            StrokeLineCap="{Binding StrokeCap}"/>
-                                    </DataTemplate>
-                                    <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
-                                        <Rectangle
-                                            Width="{Binding Width}"
-                                            Height="{Binding Height}"
-                                            Stroke="{Binding StrokeColor}"
-                                            Fill="{Binding Color}"
-                                            StrokeThickness="{Binding StrokeThickness}" />
-                                    </DataTemplate>
-                                    <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
-                                        <Panel>
-                                            <TextBlock Text="{Binding Text}"
-                                                       FontSize="{Binding FontSize}"
-                                                       Foreground="{Binding Color}"
-                                                       IsVisible="{Binding !IsEditing}"
-                                                       FontFamily="{Binding FontFamily}" />
-                                            <TextBox 
-                                                Classes="TbTransparent"
-                                                Text="{Binding Text, Mode=TwoWay}"
-                                                FontSize="{Binding FontSize}"
-                                                FontFamily="{Binding FontFamily}"
-                                                Foreground="{Binding Color}"
-                                                IsVisible="{Binding IsEditing}"
-                                                Background="Transparent"
-                                                BorderBrush="DeepSkyBlue"
-                                                BorderThickness="1"
-                                                MinWidth="50"
-                                                Padding="1"
-                                                Loaded="OnTextBoxLoaded"
-                                                LostFocus="OnTextBoxLostFocus"
-                                                KeyDown="OnTextBoxKeyDown"/>
-                                        </Panel>
-                                    </DataTemplate>
-                                </dt:ShapeTemplateSelector>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Panel>
-                </Grid>
-            </Border>
-            <Border 
-                Grid.Row="0"
-                Grid.RowSpan="3"
-                Grid.Column="1" 
-                Classes="MainBorder">
-                <c:CanvasToolSettings
-                    ToolSettings="{Binding SelectedToolItem.ToolSettings}" />
-            </Border>
-            <Border 
-                Grid.Row="2"
-                Grid.Column="0"
-                Classes="MainBorder"
-                Padding="4">
-                <WrapPanel>
-                    <Button Command="{Binding ResetViewCommand}"
-                            ToolTip.Tip="Reset"
-                            Classes="FunctionBtn"
-                            Margin="0,0,5,0">
-                        <Svg Path="/Assets/Icons/arrows-counter-clockwise.svg" Width="12"/>
-                    </Button>
-                    <TextBlock Text="OffsetX: " FontSize="12" />
-                    <TextBlock Text="{Binding Transform.OffsetX}" FontSize="12"/>
-                    <TextBlock Text="OffsetY: " Margin="5,0,0,0" FontSize="12"/>
-                    <TextBlock Text="{Binding Transform.OffsetY}" FontSize="12"/>
-                </WrapPanel>
-            </Border>
+    <Grid 
+        Background="#f9f9f9" 
+        ColumnDefinitions="*,Auto">
+        <Grid
+            Grid.ColumnSpan="2"
+            ClipToBounds="True">
+            <Panel Name="CanvasContainer"
+                   Background="Transparent"
+                   PointerPressed="OnPointerPressed"
+                   PointerMoved="OnPointerMoved"
+                   PointerReleased="OnPointerReleased"
+                   Cursor="{Binding CurrentCursor}">
+                <Canvas IsHitTestVisible="False"> 
+                    <Rectangle Canvas.Left="{Binding EraserRect.X}"
+                               Canvas.Top="{Binding EraserRect.Y}"
+                               Width="{Binding EraserRect.Width}"
+                               Height="{Binding EraserRect.Height}"
+                               IsVisible="{Binding EraserRect.IsVisible}"
+                               Stroke="{Binding EraserRect.StrokeColor}" 
+                               StrokeThickness="{Binding EraserRect.StrokeThickness}" 
+                               Fill="{Binding EraserRect.Color}"/>
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="{Binding Transform.OffsetX}" Y="{Binding Transform.OffsetY}" />
+                    </Canvas.RenderTransform>
+                </Canvas>
+                <c:CanvasGrid 
+                    IsHitTestVisible="False"
+                    OffsetX="{Binding Transform.OffsetX}"
+                    OffsetY="{Binding Transform.OffsetY}"
+                    GridSpacing="{Binding GridSpacing}"
+                    GridType="{Binding GridType}"
+                    GridColor="{Binding GridColor}">
+                </c:CanvasGrid>
+                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
+                    <ItemsControl.Styles>
+                        <Style Selector="ContentPresenter" x:DataType="m:ShapeBase">
+                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                        </Style>
+                    </ItemsControl.Styles>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas x:Name="Canvas">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform 
+                                        X="{Binding Transform.OffsetX}" 
+                                        Y="{Binding Transform.OffsetY}" />
+                                </Canvas.RenderTransform>
+                            </Canvas>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <dt:ShapeTemplateSelector>
+                            <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
+                                <Ellipse
+                                    Opacity="{Binding Opacity}"
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    Stroke="{Binding StrokeColor}"
+                                    Fill="{Binding Color}"
+                                    StrokeThickness="{Binding StrokeThickness}" />
+                            </DataTemplate>
+                            <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
+                                <Line
+                                    StartPoint="{Binding StartPoint}"
+                                    EndPoint="{Binding EndPoint}"
+                                    Stroke="{Binding StrokeColor}"
+                                    StrokeThickness="{Binding StrokeThickness}" 
+                                    StrokeDashArray="{Binding StrokeDashArray}" 
+                                    Opacity="{Binding Opacity}" />
+                            </DataTemplate>
+                            <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
+                                <Polyline
+                                    Points="{Binding Points}"
+                                    Stroke="{Binding StrokeColor}"
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}"
+                                    Opacity="{Binding Opacity}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
+                                <Rectangle
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    Stroke="{Binding StrokeColor}"
+                                    Fill="{Binding Color}"
+                                    StrokeThickness="{Binding StrokeThickness}" 
+                                    StrokeDashArray="{Binding StrokeDashArray}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
+                                <Panel>
+                                    <TextBlock Text="{Binding Text}"
+                                               FontSize="{Binding FontSize}"
+                                               Foreground="{Binding Color}"
+                                               IsVisible="{Binding !IsEditing}"
+                                               FontFamily="{Binding FontFamily}" />
+                                    <TextBox 
+                                        Classes="TbTransparent"
+                                        Text="{Binding Text, Mode=TwoWay}"
+                                        FontSize="{Binding FontSize}"
+                                        FontFamily="{Binding FontFamily}"
+                                        Foreground="{Binding Color}"
+                                        IsVisible="{Binding IsEditing}"
+                                        Background="Transparent"
+                                        BorderBrush="DeepSkyBlue"
+                                        BorderThickness="1"
+                                        MinWidth="50"
+                                        Padding="1"
+                                        Loaded="OnTextBoxLoaded"
+                                        LostFocus="OnTextBoxLostFocus"
+                                        KeyDown="OnTextBoxKeyDown"/>
+                                </Panel>
+                            </DataTemplate>
+                        </dt:ShapeTemplateSelector>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Panel>
         </Grid>
-    </Border>
+        <StackPanel 
+            Grid.Column="1"
+            Margin="15,0"
+            VerticalAlignment="Center"
+            Spacing="10"
+            Orientation="Horizontal">
+            <c:CanvasToolSettings 
+                ToolSettings="{Binding SelectedToolItem.ToolSettings}">
+                <c:CanvasToolSettings.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding 
+                            Path="SelectedToolItem.ToolSettings" 
+                            Converter="{x:Static ObjectConverters.IsNotNull}" />
+                        <Binding Path="IsToolSettingsOpen"/>
+                    </MultiBinding>
+                </c:CanvasToolSettings.IsVisible>
+            </c:CanvasToolSettings>
+            <StackPanel Spacing="10">
+                <Border Classes="ToolbarBorder">
+                    <ListBox 
+                        Classes="ToolbarListBox"
+                        ItemsSource="{Binding Tools}" 
+                        SelectedItem="{Binding SelectedToolItem}"
+                        Tapped="OnToolListBoxTapped">
+                    </ListBox>
+                </Border>
+                <Border Classes="ToolbarBorder">
+                    <StackPanel Orientation="Vertical">
+                        <Button Command="{Binding ClearAllCommand}"
+                                ToolTip.Tip="Clear All"
+                                Classes="FunctionBtn"
+                                BorderThickness="0,0,0,1">
+                            <Svg Path="/Assets/Icons/broom.svg" Width="20"/>
+                        </Button>
+                        <Button Command="{Binding OpenOptionsCommand}"
+                                ToolTip.Tip="Open options"
+                                Classes="FunctionBtn">
+                            <Svg Path="/Assets/Icons/gear.svg" Width="20"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

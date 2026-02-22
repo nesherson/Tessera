@@ -1,6 +1,6 @@
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using Tessera.App.ViewModels;
 using Tessera.App.Models;
 
@@ -14,10 +14,17 @@ public partial class DrawingPageView : UserControl
     {
         InitializeComponent();
     }
+
+    private ToolItem? _previouslySelectedToolItem;
     
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         var pointer = e.GetCurrentPoint(CanvasContainer);
+
+        if (ViewModel?.IsToolSettingsOpen == true)
+        {
+            ViewModel.IsToolSettingsOpen = false;
+        }
         
         ViewModel?.OnPointerPressed(pointer.Position);
     }
@@ -72,5 +79,28 @@ public partial class DrawingPageView : UserControl
                 e.Handled = true;
                 break;
         }
+    }
+
+    private void OnToolListBoxTapped(object? sender, TappedEventArgs e)
+    {
+        if (sender is not ListBox || DataContext is not DrawingPageViewModel vm) 
+            return;
+        
+        var clickedItem = (e.Source as Visual)?.FindAncestorOfType<ListBoxItem>();
+        
+        if (clickedItem?.DataContext is not ToolItem tappedTool) 
+            return;
+
+        if (_previouslySelectedToolItem == tappedTool)
+        {
+            vm.IsToolSettingsOpen = true;
+            _previouslySelectedToolItem = null;
+        }
+        else
+        {
+            _previouslySelectedToolItem = tappedTool;
+            vm.IsToolSettingsOpen = false;
+        }
+        
     }
 }

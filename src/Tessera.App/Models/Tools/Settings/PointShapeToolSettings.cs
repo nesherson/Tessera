@@ -1,13 +1,3 @@
-﻿using Avalonia.Media;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿namespace Tessera.App.Models;
 
-namespace Tessera.App.Models;
-
-public partial class PointShapeToolSettings : ObservableObject
-{
-    [ObservableProperty]
-    private double _pointThickness = 3;
-
-    [ObservableProperty]
-    private Color _pointColor = Colors.Black;
-}
+public class PointShapeToolSettings : ToolSettingsBase;

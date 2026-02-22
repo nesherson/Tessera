@@ -1,8 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Input;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -37,6 +35,9 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     [ObservableProperty]
     private Cursor _currentCursor = Cursor.Default;
     
+    [ObservableProperty]
+    private bool _isToolSettingsOpen;
+    
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     
     public DrawingPageViewModel()
@@ -55,7 +56,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Name = "Pan",
                 Icon = "/Assets/Icons/hand-grabbing.svg",
                 Tool = new PanTool(this),
-                ToolSettings = new PanToolSettings()
             },
             new ToolItem
             {
@@ -97,7 +97,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Name = "Eraser",
                 Icon = "/Assets/Icons/eraser.svg",
                 Tool = new EraserTool(this),
-                ToolSettings = new EraserToolSettings()
             },
         ];
         Transform = new CanvasTransform();

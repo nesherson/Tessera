@@ -1,7 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Media;
-using Tessera.App.Interfaces;
-using Tessera.App.ViewModels;
+﻿using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
 
@@ -24,9 +21,9 @@ public class TextShapeTool : ICanvasTool
             X = currentPoint.X,
             Y = currentPoint.Y,
             IsEditing = true,
-            FontSize = _settings.FontSize,
+            FontSize = _settings.Size.Thickness * 2,
             Color = _settings.Color,
-            FontFamily = new FontFamily(_settings.SelectedFontFamily)
+            FontFamily = new FontFamily(_settings.FontFamily.Name)
         };
     
         _canvasContext.Shapes.Add(newText);

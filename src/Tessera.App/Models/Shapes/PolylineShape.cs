@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using Avalonia;
-using Avalonia.Media;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Tessera.App.Models;
@@ -12,10 +11,7 @@ public partial class PolylineShape : ShapeBase
     private ObservableCollection<Point> _points = [];
 
     [ObservableProperty]
-    private PenLineJoin _strokeJoin;
-
-    [ObservableProperty]
-    private PenLineCap _strokeCap;
+    private AvaloniaList<double> _strokeDashArray;
     
     public override bool Intersects(Rect rect)
     {

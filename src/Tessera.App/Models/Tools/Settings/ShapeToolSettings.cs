@@ -1,25 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Tessera.App.Enumerations;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Tessera.App.Models;
 
-public partial class ShapeToolSettings : ObservableObject
+public partial class ShapeToolSettings : ToolSettingsBase
 {
     [ObservableProperty]
-    private ShapeType _selectedShapeType = ShapeType.Rectangle;
+    private ShapeType _shapeType;
+    
+    [ObservableProperty]
+    private IBrush _strokeColor =  Brushes.Black;
+    
+    [ObservableProperty]
+    private List<ShapeType> _availableShapeTypes =
+    [
+        new() { Name = "Rectangle", Description = "Rectangle", IconPath = "/Assets/Icons/square.svg" },
+        new() { Name = "Ellipse", Description = "Ellipse", IconPath = "/Assets/Icons/circle.svg" }
+    ];
 
     [ObservableProperty]
-    private double _thickness = 2.0;
+    private bool _isShapePopupOpen;
 
-    [ObservableProperty]
-    private Color _color = Colors.Transparent;
+    public ShapeToolSettings()
+    {
+        ShapeType = AvailableShapeTypes.First();
+    }
 
-    [ObservableProperty]
-    private Color _strokeColor = Colors.Black;
-
-    public List<ShapeType> AvailableShapes { get; } = Enum.GetValues<ShapeType>().ToList();
+    [RelayCommand]
+    private void OpenShapePopup()
+    {
+        IsShapePopupOpen = true;
+    }
 }

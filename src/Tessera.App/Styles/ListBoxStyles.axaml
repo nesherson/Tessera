@@ -1,0 +1,81 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:m="clr-namespace:Tessera.App.Models">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+   <Style Selector="ListBox.ToolListBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" ItemSpacing="1" />
+                </ItemsPanelTemplate>
+            </Setter>
+            <Style Selector="^ ListBoxItem">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Padding" Value="2,6" />
+                <Setter Property="Width" Value="30" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="Background" Value="White" />
+            </Style>
+            <Style Selector="^ ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="#E5E7EB" />
+            </Style>
+            <Style Selector="^ ListBoxItem:selected Border">
+                <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}" />
+            </Style>
+            <Style Selector="^ ListBoxItem:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}" />
+            </Style>
+        </Style>
+
+        <Style Selector="ListBox.ColorsListBox">
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type IBrush}">
+                    <Ellipse Fill="{Binding}" Width="14" Height="14" />
+                </DataTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="ListBox.SizeListBox">
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:ShapeSize}">
+                    <TextBlock Text="{Binding Name}" ToolTip.Tip="{Binding Description}"
+                               FontSize="12" FontWeight="DemiBold" HorizontalAlignment="Center" />
+                </DataTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="ListBox.StrokeTypeListBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:StrokeType}">
+                    <Svg Path="{Binding IconPath}" Width="14" />
+                </DataTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="ListBox.ShapeTypeListBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:ShapeType}">
+                    <Svg Path="{Binding IconPath}" Width="14" />
+                </DataTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="ListBox.FontTypeListBox">
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:FontType}">
+                    <TextBlock Text="Aa" ToolTip.Tip="{Binding Description}"
+                               FontSize="12" Height="16" FontWeight="DemiBold"
+                               FontFamily="{Binding FontFamily}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </DataTemplate>
+            </Setter>
+        </Style>
+</Styles>

@@ -1,5 +1,3 @@
-using Avalonia;
-using Avalonia.Media;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
@@ -22,9 +20,10 @@ public class PointShapeTool : ICanvasTool
         {
             X = currentPoint.X,
             Y = currentPoint.Y,
-            Width = _settings.PointThickness,
-            Height = _settings.PointThickness,
-            Color = new SolidColorBrush(_settings.PointColor)
+            Width = _settings.Size.Thickness,
+            Height = _settings.Size.Thickness,
+            Color =_settings.Color,
+            Opacity = _settings.Opacity
         };
         
         _canvasContext.Shapes.Add(newPoint);
