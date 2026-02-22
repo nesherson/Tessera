@@ -7,25 +7,6 @@
              xmlns:m="clr-namespace:Tessera.App.Models"
              xmlns:controls="clr-namespace:Tessera.App.Controls">
     <UserControl.Styles>
-        <Style Selector="TextBlock.Label">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="#374151" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-        <Style Selector="Button.Color">
-            <Setter Property="Background" Value="#ffffff" />
-            <Setter Property="Padding" Value="3" />
-            <Setter Property="Width" Value="32" />
-        </Style>
-        <Style Selector="Button.SizeButton">
-            <Setter Property="Background" Value="#ffffff" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="FontWeight" Value="DemiBold" />
-            <Setter Property="Width" Value="30" />
-            <Setter Property="FontSize" Value="14" />
-        </Style>
-        
         <Style Selector="Button.ShapeButton">
             <Setter Property="Background" Value="#f1f2f4" />
             <Setter Property="FontSize" Value="12" />
