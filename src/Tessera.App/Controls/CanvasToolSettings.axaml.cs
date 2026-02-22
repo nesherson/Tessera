@@ -20,7 +20,7 @@ public partial class CanvasToolSettings : UserControl
 
         if (Design.IsDesignMode)
         {
-            ToolSettings = new TextShapeToolSettings();
+            ToolSettings = new ShapeToolSettings();
         }
     }
 }
