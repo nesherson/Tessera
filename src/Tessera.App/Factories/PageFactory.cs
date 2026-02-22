@@ -1,5 +1,4 @@
-﻿using System;
-using Tessera.App.Data;
+﻿using Tessera.App.Data;
 using Tessera.App.ViewModels;
 
 namespace Tessera.App.Factories;

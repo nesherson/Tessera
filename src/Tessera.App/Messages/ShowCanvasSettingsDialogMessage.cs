@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Avalonia.Media;
 using Tessera.App.Enumerations;
 using Tessera.App.Results;
 

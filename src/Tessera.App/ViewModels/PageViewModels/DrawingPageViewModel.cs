@@ -1,8 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Input;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;

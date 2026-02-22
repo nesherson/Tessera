@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using Avalonia;
-using Avalonia.Media;
+﻿using System.Linq;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;

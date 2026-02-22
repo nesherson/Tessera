@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using Avalonia;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 

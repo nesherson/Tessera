@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Helpers;
 
@@ -58,7 +57,7 @@ public partial class ToolSettingsBase : ObservableObject
     [ObservableProperty]
     private double _opacity;
 
-    public ToolSettingsBase()
+    protected ToolSettingsBase()
     {
         Color = AvailableColors.First();
         StrokeType = AvailableStrokeTypes.First();

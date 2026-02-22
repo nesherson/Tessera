@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -26,9 +25,6 @@ public partial class ShapeToolSettings : ToolSettingsBase
 
     public ShapeToolSettings()
     {
-        Size = AvailableSizes.First();
-        Color = AvailableColors.First();
-        StrokeType = AvailableStrokeTypes.First();
         ShapeType = AvailableShapeTypes.First();
     }
 

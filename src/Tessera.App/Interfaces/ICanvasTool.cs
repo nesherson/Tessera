@@ -1,5 +1,3 @@
-using Avalonia;
-
 namespace Tessera.App.Interfaces;
 
 public interface ICanvasTool

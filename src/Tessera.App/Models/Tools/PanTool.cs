@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Input;
+﻿using Avalonia.Input;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;

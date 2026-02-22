@@ -1,7 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-
-namespace Tessera.App.Views;
+﻿namespace Tessera.App.Views;
 
 public partial class MainView : Window
 {

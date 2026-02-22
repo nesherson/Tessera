@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Tessera.App.Data;
 using Tessera.App.Factories;
 using Tessera.App.ViewModels;

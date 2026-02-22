@@ -1,7 +1,4 @@
-﻿using System;
-using Avalonia;
-
-namespace Tessera.App.Helpers;
+﻿namespace Tessera.App.Helpers;
 
 public class GeometryHelpers
 {

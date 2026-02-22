@@ -1,5 +1,4 @@
-﻿using Avalonia.Media;
-using Tessera.App.Enumerations;
+﻿using Tessera.App.Enumerations;
 
 namespace Tessera.App.Results;
 

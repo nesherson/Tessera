@@ -1,6 +1,4 @@
-﻿using System;
-using Avalonia.Controls;
-using Avalonia.Controls.Templates;
+﻿using Avalonia.Controls.Templates;
 using Tessera.App.ViewModels;
 
 namespace Tessera.App.MVVM;

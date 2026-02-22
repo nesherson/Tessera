@@ -1,6 +1,4 @@
-﻿using Avalonia;
-
-namespace Tessera.App.Models;
+﻿namespace Tessera.App.Models;
 
 public class RectangleShape : ShapeBase
 {

@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Avalonia;
-using Avalonia.Media;
 
 namespace Tessera.App.Helpers;
 

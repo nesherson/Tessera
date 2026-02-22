@@ -1,4 +1,3 @@
-using Avalonia;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;

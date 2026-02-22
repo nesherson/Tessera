@@ -1,7 +1,4 @@
-﻿using System;
-using Avalonia;
-
-namespace Tessera.App;
+﻿namespace Tessera.App;
 
 class Program
 {

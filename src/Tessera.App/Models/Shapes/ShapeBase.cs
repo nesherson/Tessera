@@ -1,6 +1,4 @@
-using Avalonia;
 using Avalonia.Collections;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Tessera.App.Models;

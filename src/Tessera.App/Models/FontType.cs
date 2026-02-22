@@ -1,6 +1,4 @@
-﻿using Avalonia.Media;
-
-namespace Tessera.App.Models;
+﻿namespace Tessera.App.Models;
 
 public record struct FontType
 {

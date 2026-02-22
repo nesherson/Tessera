@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Avalonia;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;

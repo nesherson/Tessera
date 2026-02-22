@@ -1,6 +1,4 @@
-﻿using Avalonia.Controls;
-
-namespace Tessera.App.Views;
+﻿namespace Tessera.App.Views;
 
 public partial class ConfirmDialogView : UserControl
 {
