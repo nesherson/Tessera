@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tessera.App.Enumerations;
-using Tessera.App.ViewModels.Results;
+using Tessera.App.Results;
 
 namespace Tessera.App.ViewModels;
 

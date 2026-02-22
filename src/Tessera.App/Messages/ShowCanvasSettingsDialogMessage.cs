@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Avalonia.Media;
 using Tessera.App.Enumerations;
-using Tessera.App.ViewModels.Results;
+using Tessera.App.Results;
 
 namespace Tessera.App.Messages;
 

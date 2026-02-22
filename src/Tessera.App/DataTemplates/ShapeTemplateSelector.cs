@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
-using Tessera.App.ViewModels;
+using Tessera.App.Models;
 
 namespace Tessera.App.DataTemplates;
 
@@ -11,7 +10,7 @@ public class ShapeTemplateSelector : IDataTemplate
     [Content]
     public Dictionary<string, IDataTemplate> Templates { get; } = new();
 
-    public Control Build(object? param)
+    public Control? Build(object? param)
     {
         if (param is null)
         {

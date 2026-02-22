@@ -2,9 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Input;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -12,11 +10,11 @@ using Tessera.App.Data;
 using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
 using Tessera.App.Messages;
-using Point = Avalonia.Point;
+using Tessera.App.Models;
 
 namespace Tessera.App.ViewModels;
 
-public partial class DrawingPageViewModel : PageViewModel
+public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 {
     [ObservableProperty] 
     private ObservableCollection<ShapeBase> _shapes = [];
@@ -24,20 +22,8 @@ public partial class DrawingPageViewModel : PageViewModel
     [ObservableProperty] 
     private ToolItem _selectedToolItem;
     
-    [ObservableProperty] 
-    private bool _isSelectionVisible;
-    
-    [ObservableProperty] 
-    private double _selectionX;
-    
-    [ObservableProperty] 
-    private double _selectionY;
-    
-    [ObservableProperty] 
-    private double _selectionWidth;
-    
-    [ObservableProperty] 
-    private double _selectionHeight;
+    [ObservableProperty]
+    private RectangleShape _eraserRect;
     
     [ObservableProperty] 
     private double _gridSpacing = 15;
@@ -49,10 +35,10 @@ public partial class DrawingPageViewModel : PageViewModel
     private IBrush _gridColor = Brushes.LightGray;
     
     [ObservableProperty]
-    private Matrix _viewMatrix = Matrix.Identity;
+    private Cursor _currentCursor = Cursor.Default;
     
     [ObservableProperty]
-    private Cursor _currentCursor = Cursor.Default;
+    private bool _isToolSettingsOpen;
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
 
@@ -76,51 +62,89 @@ public partial class DrawingPageViewModel : PageViewModel
     
     public DrawingPageViewModel()
     {
-        var pointSettings = new PointShapeToolSettings();
-        var lineSettings = new LineShapeToolSettings();
+        var pointShapeSettings = new PointShapeToolSettings();
+        var lineShapeSettings = new LineShapeToolSettings();
         var shapeSettings = new ShapeToolSettings();
-        var polylineSettings = new PolylineShapeToolSettings();
+        var polylineShapeSettings = new PolylineShapeToolSettings();
+        var textShapeSettings = new TextShapeToolSettings();
         
         PageName = ApplicationPageNames.Drawing;
-        Tools = 
+        Tools =
         [
-            new ToolItem { Name = "Pan", Icon = "/Assets/Icons/hand-grabbing.svg", Tool = new PanTool(this), ToolSettings = new PanToolSettings()},
-            new ToolItem { Name = "Point", Icon = "/Assets/Icons/point.svg", Tool = new PointShapeTool(this, pointSettings), ToolSettings = pointSettings},
-            new ToolItem { Name = "Line", Icon = "/Assets/Icons/line.svg", Tool = new LineShapeTool(this, lineSettings), ToolSettings = lineSettings},
-            new ToolItem { Name = "Free drawing", Icon = "/Assets/Icons/pen.svg", Tool = new PolylineShapeTool(this, polylineSettings), ToolSettings = polylineSettings},
-            new ToolItem { Name = "Shape", Icon = "/Assets/Icons/shapes.svg", Tool = new ShapeTool(this, shapeSettings), ToolSettings = shapeSettings},
-            new ToolItem { Name = "Eraser", Icon = "/Assets/Icons/eraser.svg", Tool = new EraserTool(this), ToolSettings = new EraserToolSettings()},
+            new ToolItem
+            {
+                Name = "Pan",
+                Icon = "/Assets/Icons/hand-grabbing.svg",
+                Tool = new PanTool(this),
+            },
+            new ToolItem
+            {
+                Name = "Point",
+                Icon = "/Assets/Icons/point.svg",
+                Tool = new PointShapeTool(this, pointShapeSettings),
+                ToolSettings = pointShapeSettings
+            },
+            new ToolItem
+            {
+                Name = "Line",
+                Icon = "/Assets/Icons/line.svg",
+                Tool = new LineShapeTool(this, lineShapeSettings),
+                ToolSettings = lineShapeSettings
+            },
+            new ToolItem
+            {
+                Name = "Free drawing",
+                Icon = "/Assets/Icons/pen.svg",
+                Tool = new PolylineShapeTool(this, polylineShapeSettings),
+                ToolSettings = polylineShapeSettings
+            },
+            new ToolItem
+            {
+                Name = "Shape",
+                Icon = "/Assets/Icons/shapes.svg",
+                Tool = new ShapeTool(this, shapeSettings),
+                ToolSettings = shapeSettings
+            },
+            new ToolItem
+            {
+                Name = "Text",
+                Icon = "/Assets/Icons/text-t.svg",
+                Tool = new TextShapeTool(this, textShapeSettings),
+                ToolSettings = textShapeSettings
+            },
+            new ToolItem
+            {
+                Name = "Eraser",
+                Icon = "/Assets/Icons/eraser.svg",
+                Tool = new EraserTool(this),
+            },
         ];
-        SelectedToolItem = Tools[0];
+        Transform = new CanvasTransform();
+        
+        ResetToolSelection();
     }
     
+    public CanvasTransform Transform { get; }
     public ObservableCollection<ToolItem> Tools { get; }
     
-    public void OnPointerPressed(Point point)
+    public void OnPointerPressed(Point screenPoint)
     {
-        CurrentTool.OnPointerPressed(point);
+        CurrentTool.OnPointerPressed(screenPoint);
     }
     
-    public void OnPointerMoved(Point point)
+    public void OnPointerMoved(Point screenPoint)
     {
-        CurrentTool.OnPointerMoved(point);
+        CurrentTool.OnPointerMoved(screenPoint);
     }
     
-    public void OnPointerReleased(Point point)
+    public void OnPointerReleased(Point screenPoint)
     {
-        CurrentTool.OnPointerReleased(point);
+        CurrentTool.OnPointerReleased(screenPoint);
     }
     
-    public Point ToWorld(Point screenPoint)
+    public void ResetToolSelection()
     {
-        // var world = !ViewMatrix.HasInverse ? screenPoint : screenPoint.Transform(ViewMatrix.Invert());
-        // Debug.WriteLine($"ScreenPoint: {screenPoint},  World: {world}");
-        // CurrentPoint = world;
-        
-        double worldX = (screenPoint.X - OffsetX) / Scale;
-        double worldY = (screenPoint.Y - OffsetY) / Scale;
-        return new Point(worldX, worldY);
-        // return world;
+        SelectedToolItem = Tools[0];
     }
     
     [RelayCommand]
@@ -143,43 +167,7 @@ public partial class DrawingPageViewModel : PageViewModel
             GridColor = result.GridColor;
         }
     }
-    
+
     [RelayCommand]
-    private void ResetView()
-    {
-        ViewMatrix = Matrix.Identity;
-    }
-    
-    public void Zoom(Point point, double delta)
-    {
-        // var zoomFactor = delta > 0 ? 1.1 : 0.9;
-        // var currentScale = ViewMatrix.M11;
-        //
-        // if (currentScale * zoomFactor < 0.1 || currentScale * zoomFactor > 10.0) 
-        //     return;
-        //
-        //
-        // ViewMatrix = ViewMatrix * Matrix.CreateTranslation(-point.X, -point.Y)
-        //                  * Matrix.CreateScale(zoomFactor, zoomFactor)
-        //                  * Matrix.CreateTranslation(point.X, point.Y);
-
-
-        // var zoomMatrix = Matrix.CreateScale(zoomFactor, zoomFactor);
-
-        // ViewMatrix = ViewMatrix *  zoomMatrix;
-        
-        double oldScale = Scale;
-        double zoomFactor = delta > 0 ? 1.1 : 0.9;
-        Scale *= zoomFactor;
-
-        // Clamp the scale
-        Scale = Math.Clamp(Scale, 0.1, 10.0);
-
-        // Adjust Offset to zoom into the mouse position
-        // Formula: Offset = ScreenPoint - (WorldPoint * NewScale)
-        var worldPoint = ToWorld(point); 
-    
-        OffsetX = point.X - (worldPoint.X * Scale);
-        OffsetY = point.Y - (worldPoint.Y * Scale);
-    }
+    private void ResetView() => Transform.Reset();
 }

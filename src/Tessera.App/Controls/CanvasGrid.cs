@@ -1,40 +1,34 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Media;
-using Tessera.App.Enumerations;
+﻿using Tessera.App.Enumerations;
 
 namespace Tessera.App.Controls;
 
 public class CanvasGrid : Control
 {
-    public static readonly StyledProperty<Matrix> MatrixProperty = AvaloniaProperty.Register<CanvasGrid, Matrix>(
-        nameof(Matrix));
-    
     public static readonly StyledProperty<double> GridSpacingProperty = AvaloniaProperty.Register<CanvasGrid, double>(
-        nameof(Matrix));
+        nameof(GridSpacing));
     
     public static readonly StyledProperty<GridType> GridTypeProperty = AvaloniaProperty.Register<CanvasGrid, GridType>(
         nameof(GridType));
     
     public static readonly StyledProperty<IBrush> GridColorProperty = AvaloniaProperty.Register<CanvasGrid, IBrush>(
-        nameof(Matrix));
+        nameof(GridColor));
+    
+    public static readonly StyledProperty<double> OffsetXProperty = AvaloniaProperty.Register<CanvasGrid, double>(
+        nameof(OffsetX));
+    
+    public static readonly StyledProperty<double> OffsetYProperty = AvaloniaProperty.Register<CanvasGrid, double>(
+        nameof(OffsetY));
     
     private const double DotRadius = 1.0;
     private IPen _pen = new Pen(Brushes.Black, thickness: 0.5);
     
     static CanvasGrid()
     {
-        AffectsRender<CanvasGrid>(MatrixProperty);
+        AffectsRender<CanvasGrid>(OffsetXProperty);
+        AffectsRender<CanvasGrid>(OffsetYProperty);
         AffectsRender<CanvasGrid>(GridSpacingProperty);
         AffectsRender<CanvasGrid>(GridTypeProperty);
         AffectsRender<CanvasGrid>(GridColorProperty);
-    }
-    
-    public Matrix Matrix
-    {
-        get => GetValue(MatrixProperty);
-        set => SetValue(MatrixProperty, value);
     }
     
     public GridType GridType
@@ -55,17 +49,26 @@ public class CanvasGrid : Control
         set => SetValue(GridColorProperty, value);
     }
     
+    public double OffsetX
+    {
+        get => GetValue(OffsetXProperty);
+        set => SetValue(OffsetXProperty, value);
+    }
+    
+    public double OffsetY
+    {
+        get => GetValue(OffsetYProperty);
+        set => SetValue(OffsetYProperty, value);
+    }
+    
     public override void Render(DrawingContext ctx)
     {
         base.Render(ctx);
         
         if (GridSpacing < 10) return; 
-        if (!Matrix.HasInverse) return;
-
-        var translateX = Matrix.M31;
-        var translateY = Matrix.M32;
-        var offsetX = translateX % GridSpacing;
-        var offsetY = translateY % GridSpacing;
+        
+        var offsetX = OffsetX % GridSpacing;
+        var offsetY = OffsetY % GridSpacing;
 
         switch (GridType)
         {

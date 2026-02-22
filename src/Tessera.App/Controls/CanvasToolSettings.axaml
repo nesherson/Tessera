@@ -4,259 +4,184 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tessera.App.Controls.CanvasToolSettings"
-             xmlns:vm="clr-namespace:Tessera.App.ViewModels"
+             xmlns:m="clr-namespace:Tessera.App.Models"
              xmlns:controls="clr-namespace:Tessera.App.Controls">
     <UserControl.Styles>
-        <Style Selector="TextBlock.Label">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="#374151"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style Selector="Button.ShapeButton">
+            <Setter Property="Background" Value="#f1f2f4" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="6, 8" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="#E5E7EB" />
+            </Style>
         </Style>
-        <Style Selector="ComboBox">
-            <Setter Property="BorderBrush" Value="#E5E7EB" />
+
+        <Style Selector="Slider.OpacitySlider">
+            <Setter Property="Minimum" Value="0.1" />
+            <Setter Property="Maximum" Value="1" />
+            <Setter Property="ToolTip.Tip" Value="Opacity" />
         </Style>
     </UserControl.Styles>
-    <Grid RowDefinitions="Auto, *">
-        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="20, 20, 20, 15">
-            <TextBlock 
-                Text="Configuration" 
-                FontSize="16" 
-                VerticalAlignment="Center"/>
+    <Border
+        Background="White"
+        BorderBrush="#E5E7EB"
+        BorderThickness="1"
+        CornerRadius="5"
+        BoxShadow="0 1 3 0 #10000000"
+        Width="134"
+        Padding="4">
+        <Grid RowDefinitions="Auto, *">
+            <ScrollViewer Grid.Row="1">
+                <ContentControl
+                    Content="{Binding ToolSettings, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}">
+                    <ContentControl.DataTemplates>
+                        <DataTemplate DataType="{x:Type m:PointShapeToolSettings}">
+                            <StackPanel>
+                                <ListBox
+                                    Classes="ToolListBox ColorsListBox"
+                                    ItemsSource="{Binding AvailableColors}"
+                                    SelectedItem="{Binding Color}" />
+                                <Slider
+                                    Classes="OpacitySlider"
+                                    Value="{Binding Opacity}" />
+                                <ListBox
+                                    Classes="ToolListBox SizeListBox"
+                                    ItemsSource="{Binding AvailableSizes}"
+                                    SelectedItem="{Binding Size}" />
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type m:LineShapeToolSettings}">
+                            <StackPanel Spacing="2">
+                                <ListBox
+                                    Classes="ToolListBox ColorsListBox"
+                                    ItemsSource="{Binding AvailableColors}"
+                                    SelectedItem="{Binding Color}" />
+                                <Slider
+                                    Classes="OpacitySlider"
+                                    Value="{Binding Opacity}" />
+                                <ListBox
+                                    Classes="ToolListBox SizeListBox"
+                                    ItemsSource="{Binding AvailableSizes}"
+                                    SelectedItem="{Binding Size}" />
+                                <ListBox
+                                    Classes="ToolListBox StrokeTypeListBox"
+                                    ItemsSource="{Binding AvailableStrokeTypes}"
+                                    SelectedItem="{Binding StrokeType}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type m:StrokeType}">
+                                            <Svg Path="{Binding IconPath}" Width="14" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type m:PolylineShapeToolSettings}">
+                            <StackPanel Spacing="2">
+                                <StackPanel Spacing="2">
+                                    <ListBox
+                                        Classes="ToolListBox ColorsListBox"
+                                        ItemsSource="{Binding AvailableColors}"
+                                        SelectedItem="{Binding Color}" />
+                                    <Slider
+                                        Classes="OpacitySlider"
+                                        Value="{Binding Opacity}" />
+                                    <ListBox
+                                        Classes="ToolListBox SizeListBox"
+                                        ItemsSource="{Binding AvailableSizes}"
+                                        SelectedItem="{Binding Size}" />
+                                    <ListBox
+                                        Classes="ToolListBox StrokeTypeListBox"
+                                        ItemsSource="{Binding AvailableStrokeTypes}"
+                                        SelectedItem="{Binding StrokeType}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type m:ShapeToolSettings}">
+                            <StackPanel Spacing="2">
+                                <ListBox
+                                    Classes="ToolListBox ColorsListBox"
+                                    ItemsSource="{Binding AvailableColors}"
+                                    SelectedItem="{Binding Color}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type IBrush}">
+                                            <Ellipse Fill="{Binding}" Width="14" Height="14" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Slider
+                                    Classes="OpacitySlider"
+                                    Value="{Binding Opacity}" />
+                                <ListBox
+                                    Classes="ToolListBox SizeListBox"
+                                    ItemsSource="{Binding AvailableSizes}"
+                                    SelectedItem="{Binding Size}" />
+                                <ListBox
+                                    Classes="ToolListBox StrokeTypeListBox"
+                                    ItemsSource="{Binding AvailableStrokeTypes}"
+                                    SelectedItem="{Binding StrokeType}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type m:StrokeType}">
+                                            <Svg Path="{Binding IconPath}" Width="14" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Button
+                                    Name="ShapeButton"
+                                    Classes="ShapeButton"
+                                    Command="{Binding OpenShapePopupCommand}">
+                                    <Grid ColumnDefinitions="*,Auto" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="Shape"
+                                                   VerticalAlignment="Center" />
+                                        <Svg Grid.Column="1"
+                                             Path="{Binding Path=ShapeType.IconPath}"
+                                             Width="14"
+                                             VerticalAlignment="Center" />
+                                    </Grid>
+                                </Button>
+                                <Popup IsOpen="{Binding IsShapePopupOpen, Mode=TwoWay}"
+                                       Placement="Left"
+                                       HorizontalOffset="-10"
+                                       PlacementTarget="{Binding #ShapeButton}"
+                                       IsLightDismissEnabled="True">
+                                    <Border Background="White"
+                                            BorderBrush="#E5E7EB"
+                                            BorderThickness="1"
+                                            CornerRadius="5"
+                                            BoxShadow="0 1 3 0 #10000000"
+                                            Padding="2"
+                                            Width="134">
+                                        <ListBox
+                                            Classes="ToolListBox ShapeTypeListBox"
+                                            ItemsSource="{Binding AvailableShapeTypes}"
+                                            SelectedItem="{Binding ShapeType}" />
+                                    </Border>
+                                </Popup>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type m:TextShapeToolSettings}">
+                            <StackPanel Spacing="2">
+                                <ListBox
+                                    Classes="ToolListBox ColorsListBox"
+                                    ItemsSource="{Binding AvailableColors}"
+                                    SelectedItem="{Binding Color}" />
+                                <Slider
+                                    Classes="OpacitySlider"
+                                    Value="{Binding Opacity}" />
+                                <ListBox
+                                    Classes="ToolListBox SizeListBox"
+                                    ItemsSource="{Binding AvailableSizes}"
+                                    SelectedItem="{Binding Size}" />
+                                <ListBox
+                                    Classes="ToolListBox FontTypeListBox"
+                                    ItemsSource="{Binding AvailableFontFamilies}"
+                                    SelectedItem="{Binding FontFamily}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ContentControl.DataTemplates>
+                </ContentControl>
+            </ScrollViewer>
         </Grid>
-        <ScrollViewer Grid.Row="1">
-            <ContentControl Content="{Binding ToolSettings, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}">
-                <ContentControl.DataTemplates>
-                    <DataTemplate DataType="{x:Type vm:EraserToolSettings}">
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,1"
-                            Padding="20, 7"
-                            VerticalAlignment="Top">
-                            <TextBlock
-                                Classes="Label"
-                                Text="None" />
-                        </Border>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:PanToolSettings}">
-                        <Border
-                            BorderBrush="#E5E7EB"
-                            BorderThickness="0,1"
-                            Padding="20, 7"
-                            VerticalAlignment="Top">
-                            <TextBlock
-                                Classes="Label"
-                                Text="None" />
-                        </Border>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:PointShapeToolSettings}">
-                        <StackPanel>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Classes="Label"
-                                        Text="Thickness" />
-                                    <NumericUpDown
-                                        Grid.Column="1"
-                                        Value="{Binding PointThickness}"
-                                        BorderBrush="#E5E7EB"
-                                        CornerRadius="5"
-                                        ShowButtonSpinner="False"
-                                        Padding="8,8,0,0"/>
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,0, 0, 1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                    <ColorPicker
-                                        Grid.Column="1"
-                                        Color="{Binding PointColor}"
-                                        HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:LineShapeToolSettings}">
-                        <StackPanel>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Classes="Label"
-                                        Text="Thickness" />
-                                    <NumericUpDown
-                                        Grid.Column="1"
-                                        Value="{Binding StrokeThickness}"
-                                        BorderBrush="#E5E7EB"
-                                        CornerRadius="5"
-                                        ShowButtonSpinner="False"
-                                        Padding="8,8,0,0"/>
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,0, 0, 1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                    <ColorPicker
-                                        Grid.Column="1"
-                                        Color="{Binding StrokeColor}"
-                                        HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:PolylineShapeToolSettings}">
-                        <StackPanel>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Classes="Label"
-                                        Text="Thickness" />
-                                    <NumericUpDown
-                                        Grid.Column="1"
-                                        Value="{Binding StrokeThickness}"
-                                        BorderBrush="#E5E7EB"
-                                        CornerRadius="5"
-                                        ShowButtonSpinner="False"
-                                        Padding="8,8,0,0"/>
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,0, 0, 1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                    <ColorPicker
-                                        Grid.Column="1"
-                                        Color="{Binding StrokeColor}"
-                                        HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,0,0,1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Classes="Label"
-                                        Text="Stroke join" />
-                                    <ComboBox Grid.Column="1" 
-                                              ItemsSource="{Binding AvailableStrokeJoins}"
-                                              SelectedItem="{Binding SelectedStrokeJoin}"
-                                              HorizontalAlignment="Stretch" />
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,0,0,1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Classes="Label"
-                                        Text="Stroke cap" />
-                                    <ComboBox Grid.Column="1" 
-                                              ItemsSource="{Binding AvailableStrokeCaps}"
-                                              SelectedItem="{Binding SelectedStrokeCap}"
-                                              HorizontalAlignment="Stretch"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:ShapeToolSettings}">
-                        <StackPanel>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,1,0,0"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Classes="Label"
-                                        Text="Thickness" />
-                                    <ComboBox Grid.Column="1" 
-                                              ItemsSource="{Binding AvailableShapes}"
-                                              SelectedItem="{Binding SelectedShapeType}"
-                                              HorizontalAlignment="Stretch"/>
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Classes="Label"
-                                        Text="Thickness" />
-                                    <NumericUpDown
-                                        Grid.Column="1"
-                                        Value="{Binding Thickness}"
-                                        BorderBrush="#E5E7EB"
-                                        CornerRadius="5"
-                                        ShowButtonSpinner="False"
-                                        Padding="8,8,0,0"/>
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,0, 0, 1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                    <ColorPicker
-                                        Grid.Column="1"
-                                        Color="{Binding Color}"
-                                        HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
-                            <Border
-                                BorderBrush="#E5E7EB"
-                                BorderThickness="0,0, 0, 1"
-                                Padding="20, 7">
-                                <Grid ColumnDefinitions="*,*"
-                                      Margin="0">
-                                    <TextBlock Grid.Column="0" Classes="Label" Text="Stroke Color" Margin="0,10,0,6"/>
-                                    <ColorPicker
-                                        Grid.Column="1"
-                                        Color="{Binding StrokeColor}"
-                                        HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-                    </DataTemplate>
-                </ContentControl.DataTemplates>
-            </ContentControl>
-        </ScrollViewer>
-    </Grid>
-  
+    </Border>
 </UserControl>
