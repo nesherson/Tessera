@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Models;
 
@@ -21,6 +20,9 @@ public partial class CanvasToolSettings : UserControl
     {
         InitializeComponent();
 
-        ToolSettings = new ShapeToolSettings();
+        if (Design.IsDesignMode)
+        {
+            ToolSettings = new TextShapeToolSettings();
+        }
     }
 }

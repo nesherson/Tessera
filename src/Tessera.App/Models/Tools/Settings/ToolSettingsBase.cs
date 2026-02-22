@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Helpers;
@@ -55,5 +56,13 @@ public partial class ToolSettingsBase : ObservableObject
     private ShapeSize _size;
     
     [ObservableProperty]
-    private double _opacity = 1;
+    private double _opacity;
+
+    public ToolSettingsBase()
+    {
+        Color = AvailableColors.First();
+        StrokeType = AvailableStrokeTypes.First();
+        Size = AvailableSizes.First();
+        Opacity = 1;
+    }
 }

@@ -110,6 +110,29 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
         </Style>
+        <Style Selector="ListBox.FontTypeListBox">
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <WrapPanel 
+                        Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:FontType}">
+                    <TextBlock
+                        Text="Aa"
+                        ToolTip.Tip="{Binding Description}"
+                        FontSize="12"
+                        Height="16"
+                        FontWeight="DemiBold"
+                        FontFamily="{Binding FontFamily}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </DataTemplate>
+            </Setter>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
         <Style Selector="Button.ShapeButton">
             <Setter Property="Background" Value="#f1f2f4" />
             <Setter Property="FontSize" Value="12" />
@@ -255,56 +278,25 @@
                             </StackPanel>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type m:TextShapeToolSettings}">
-                            <StackPanel>
-                                <Border
-                                    BorderBrush="#E5E7EB"
-                                    BorderThickness="0,1"
-                                    Padding="20, 7">
-                                    <Grid ColumnDefinitions="*,*"
-                                          Margin="0">
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Classes="Label"
-                                            Text="Font size" />
-                                        <NumericUpDown
-                                            Grid.Column="1"
-                                            Value="{Binding FontSize}"
-                                            BorderBrush="#E5E7EB"
-                                            CornerRadius="5"
-                                            ShowButtonSpinner="False"
-                                            Padding="8,8,0,0"/>
-                                    </Grid>
-                                </Border>
-                                <Border
-                                    BorderBrush="#E5E7EB"
-                                    BorderThickness="0,0,0,1"
-                                    Padding="20, 7">
-                                    <Grid ColumnDefinitions="*,*"
-                                          Margin="0">
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Classes="Label"
-                                            Text="Font family" />
-                                        <ComboBox Grid.Column="1" 
-                                                  ItemsSource="{Binding AvailableFontFamilies}"
-                                                  SelectedItem="{Binding SelectedFontFamily}"
-                                                  HorizontalAlignment="Stretch">
-                                        </ComboBox>
-                                    </Grid>
-                                </Border>
-                                <Border
-                                    BorderBrush="#E5E7EB"
-                                    BorderThickness="0,0,0,1"
-                                    Padding="20, 7">
-                                    <Grid ColumnDefinitions="*,*"
-                                          Margin="0">
-                                        <TextBlock Grid.Column="0" Classes="Label" Text="Color" Margin="0,10,0,6"/>
-                                        <ColorPicker
-                                            Grid.Column="1"
-                                            Color="{Binding Color, Converter={StaticResource ColorToBrushConverter}}"
-                                            HorizontalAlignment="Right"/>
-                                    </Grid>
-                                </Border>
+                            <StackPanel Spacing="2">
+                                <ListBox 
+                                    Classes="ColorsListBox"
+                                    ItemsSource="{Binding AvailableColors}" 
+                                    SelectedItem="{Binding Color}">
+                                </ListBox>
+                                <Slider 
+                                    Value="{Binding Opacity}"
+                                    ToolTip.Tip="Opacity"
+                                    Minimum="0.1"
+                                    Maximum="1" />
+                                <ListBox 
+                                    Classes="SizeListBox"
+                                    ItemsSource="{Binding AvailableSizes}" 
+                                    SelectedItem="{Binding Size}" />
+                                <ListBox 
+                                    Classes="FontTypeListBox"
+                                    ItemsSource="{Binding AvailableFontFamilies}" 
+                                    SelectedItem="{Binding FontFamily}" />
                             </StackPanel>
                         </DataTemplate>
                     </ContentControl.DataTemplates>
