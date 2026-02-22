@@ -1,7 +1,5 @@
 ﻿using System;
 using Avalonia;
-using Avalonia.Media;
-using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;

@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using Avalonia;
-using Avalonia.Media;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
