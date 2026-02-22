@@ -11,17 +11,10 @@
         Title="{Binding Title}"
         Width="1200"
         Height="720"
-        Icon="/Assets/app-icon.png">
-    <Window.Styles>
-        <Style Selector="Button.LogoWrapper:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-    </Window.Styles>
-        
+        Icon="/Assets/app-icon.png">        
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
-    
     <Grid ColumnDefinitions="*, *">
         <SplitView IsPaneOpen="{Binding IsPaneOpen}"
                    DisplayMode="CompactInline"
@@ -55,8 +48,8 @@
                             <Border Padding="5,0">
                                 <StackPanel>
                                     <c:IconButton
+                                        Classes="NavBtn"
                                         Classes.active="{Binding DrawingPageIsActive}"
-                                        Background="Transparent"
                                         HorizontalAlignment="Stretch"
                                         Command="{Binding GoToPageCommand}"
                                         CommandParameter="{x:Static data:ApplicationPageNames.Drawing}"
@@ -70,6 +63,7 @@
                             Grid.Row="1"
                             Padding="5,0,5,10">
                             <c:IconButton
+                                Classes="NavBtn"
                                 Command="{Binding ExitApplicationCommand}"
                                 Background="Transparent"
                                 Content="Exit"

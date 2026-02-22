@@ -1,14 +1,19 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Tessera.App.Controls">
     <Design.PreviewWith>
         <Border Padding="20">
-          <StackPanel>
-              <Button Content="Hello World" FontSize="32"/>
-              <Button Classes="danger" Content="Danger" />
-              <Button Classes="accent" Content="Accent" />
-              <Button Classes="accent outline" Content="Accent outline" />
-              <Button Classes="danger outline" Content="Danger outline" />
-          </StackPanel>
+            <StackPanel>
+                <Button Content="Hello World" FontSize="32"/>
+                <Button Classes="danger" Content="Danger" />
+                <Button Classes="accent" Content="Accent" />
+                <Button Classes="accent outline" Content="Accent outline" />
+                <controls:IconButton
+                    Classes="NavBtn"
+                    Content="Danger outline"
+                    IconPath="/Assets/Icons/pencil-simple.svg" 
+                    Classes.active="True"/>
+            </StackPanel>
         </Border>
     </Design.PreviewWith>
     
@@ -61,5 +66,20 @@
     <Style Selector="Button.outline.danger:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="#10E81123"/> <Setter Property="BorderBrush" Value="#B40E1F"/>
         <Setter Property="Foreground" Value="#B40E1F"/>
+    </Style>
+    
+        
+    <Style Selector="controls|IconButton.NavBtn">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style Selector="controls|IconButton.NavBtn.active">
+        <Setter Property="Background" Value="{DynamicResource NavButtonBackgroundActive}"/>
+    </Style>
+    <Style Selector="controls|IconButton.NavBtn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource NavButtonBackgroundPointerOver}" />
+    </Style>
+    
+    <Style Selector="Button.LogoWrapper:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 </Styles>

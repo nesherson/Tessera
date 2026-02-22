@@ -30,8 +30,13 @@
         
         <!-- Button Brushes -->
         <SolidColorBrush x:Key="DangerBackground">#FF0000</SolidColorBrush>
-		<SolidColorBrush x:Key="DangerHoverBackground">#ff1a1a</SolidColorBrush>
-		
+        <SolidColorBrush x:Key="DangerHoverBackground">#ff1a1a</SolidColorBrush>
+        
+        <SolidColorBrush x:Key="NavButtonBackgroundPointerOver">#e2e4e9</SolidColorBrush>
+		<SolidColorBrush x:Key="NavButtonBorderBrushPointerOver">#e2e4e9</SolidColorBrush>
+		<SolidColorBrush x:Key="NavForegroundPointerOver">#000000</SolidColorBrush>
+        <SolidColorBrush x:Key="NavButtonBackgroundActive">#e2e4e9</SolidColorBrush>
+        
 		<!-- Split View Brushes -->
         <SolidColorBrush x:Key="SplitViewPaneBackground">#f1f3f4</SolidColorBrush>
 		<SolidColorBrush x:Key="SplitViewBorderBrush">#E5E7EB</SolidColorBrush>

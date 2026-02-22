@@ -76,7 +76,7 @@
             <Setter Property="BorderBrush" Value="#E5E7EB" />
             <Setter Property="Background" Value="White" />
             <Style Selector="^:selected /template/ ContentPresenter">
-                <Setter Property="Background" Value="Transparent"/>	
+                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
             </Style>
             <Style Selector="^:pointerover /template/ ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
