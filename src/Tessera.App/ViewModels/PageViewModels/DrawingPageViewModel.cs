@@ -1,6 +1,4 @@
-using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,6 +14,10 @@ namespace Tessera.App.ViewModels;
 
 public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 {
+    private const double ZoomFactor = 1.1;
+    private const double MinScale = 0.1;
+    private const double MaxScale = 10.0;
+    
     [ObservableProperty] 
     private ObservableCollection<ShapeBase> _shapes = [];
     
@@ -41,24 +43,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private bool _isToolSettingsOpen;
     
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
-
-    [ObservableProperty] private Point _currentPoint;
-    [ObservableProperty] private double _offsetX = 0;
-    [ObservableProperty] private double _offsetY = 0;
-    [ObservableProperty] private double _scale = 1;
-    
-    [ObservableProperty] private string _debugScreenPoint = "0, 0";
-    [ObservableProperty] private string _debugWorldPoint = "0, 0";
-
-    public void UpdateDebugInfo(Point screenPoint)
-    {
-        // Capture exactly what the screen sees
-        DebugScreenPoint = $"{screenPoint.X:F0}, {screenPoint.Y:F0}";
-    
-        // Capture exactly what the math world calculates
-        var world = ToWorld(screenPoint);
-        DebugWorldPoint = $"{world.X:F1}, {world.Y:F1}";
-    }
     
     public DrawingPageViewModel()
     {
@@ -122,6 +106,8 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         Transform = new CanvasTransform();
         
         ResetToolSelection();
+        
+        Shapes.Add(new EllipseShape() { X = 0, Y = 0, Width = 4, Height = 4, Color = Brushes.LightGray });
     }
     
     public CanvasTransform Transform { get; }
@@ -140,6 +126,17 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     public void OnPointerReleased(Point screenPoint)
     {
         CurrentTool.OnPointerReleased(screenPoint);
+    }
+    
+    public void OnPointerWheelChanged(Point screenPoint, double delta)
+    {
+        var factor = delta > 0 ? ZoomFactor : 1.0 / ZoomFactor;
+        var newScale = Transform.Scale * factor;
+
+        if (newScale < MinScale || newScale > MaxScale)
+            return;
+        
+        Transform.ZoomAt(screenPoint, factor);
     }
     
     public void ResetToolSelection()

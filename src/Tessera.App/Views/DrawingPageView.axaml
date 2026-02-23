@@ -89,11 +89,15 @@
         <Grid
             Grid.ColumnSpan="2"
             ClipToBounds="True">
+            <TextBlock Text="{Binding Transform.Scale, StringFormat={}{0:P0}}" />
+            <TextBlock Text="{Binding Transform.OffsetX}" Margin="0,15,0,0" />
+            <TextBlock Text="{Binding Transform.OffsetY}" Margin="0,30,0,0"  />
             <Panel Name="CanvasContainer"
                    Background="Transparent"
                    PointerPressed="OnPointerPressed"
                    PointerMoved="OnPointerMoved"
                    PointerReleased="OnPointerReleased"
+                   PointerWheelChanged="OnPointerWheelChanged"
                    Cursor="{Binding CurrentCursor}">
                 <Canvas IsHitTestVisible="False"> 
                     <Rectangle Canvas.Left="{Binding EraserRect.X}"
@@ -105,7 +109,14 @@
                                StrokeThickness="{Binding EraserRect.StrokeThickness}" 
                                Fill="{Binding EraserRect.Color}"/>
                     <Canvas.RenderTransform>
-                        <TranslateTransform X="{Binding Transform.OffsetX}" Y="{Binding Transform.OffsetY}" />
+                        <TransformGroup>
+                            <ScaleTransform 
+                                ScaleX="{Binding Transform.Scale}"
+                                ScaleY="{Binding Transform.Scale}"/>
+                            <TranslateTransform 
+                                X="{Binding Transform.OffsetX}"
+                                Y="{Binding Transform.OffsetY}" />
+                        </TransformGroup>
                     </Canvas.RenderTransform>
                 </Canvas>
                 <c:CanvasGrid 
@@ -116,21 +127,28 @@
                     GridType="{Binding GridType}"
                     GridColor="{Binding GridColor}">
                 </c:CanvasGrid>
-                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
+                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False"  Padding="0" 
+                              Margin="0" 
+                              BorderThickness="0" >
                     <ItemsControl.Styles>
                         <Style Selector="ContentPresenter" x:DataType="m:ShapeBase">
                             <Setter Property="Canvas.Left" Value="{Binding X}"/>
                             <Setter Property="Canvas.Top" Value="{Binding Y}"/>
                         </Style>
                     </ItemsControl.Styles>
+                    <ItemsControl.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform 
+                                ScaleX="{Binding Transform.Scale}"
+                                ScaleY="{Binding Transform.Scale}"/>
+                            <TranslateTransform 
+                                X="{Binding Transform.OffsetX}"
+                                Y="{Binding Transform.OffsetY}" />
+                        </TransformGroup>
+                    </ItemsControl.RenderTransform>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas x:Name="Canvas">
-                                <Canvas.RenderTransform>
-                                    <TranslateTransform 
-                                        X="{Binding Transform.OffsetX}" 
-                                        Y="{Binding Transform.OffsetY}" />
-                                </Canvas.RenderTransform>
                             </Canvas>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>

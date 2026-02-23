@@ -19,28 +19,36 @@ public partial class DrawingPageView : UserControl
     
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        var pointer = e.GetCurrentPoint(CanvasContainer);
-
+        var pointer = e.GetPosition(CanvasContainer);
+        
         if (ViewModel?.IsToolSettingsOpen == true)
         {
             ViewModel.IsToolSettingsOpen = false;
         }
         
-        ViewModel?.OnPointerPressed(pointer.Position);
+        ViewModel?.OnPointerPressed(pointer);
     }
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        var currentPoint = e.GetCurrentPoint(CanvasContainer).Position;
+        var currentPoint = e.GetPosition(CanvasContainer);
         
         ViewModel?.OnPointerMoved(currentPoint);
     }
 
     private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        var currentPoint = e.GetCurrentPoint(CanvasContainer).Position;
+        var currentPoint = e.GetPosition(CanvasContainer);
         
         ViewModel?.OnPointerReleased(currentPoint);
+    }
+    
+    private void OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        var currentPoint = e.GetPosition(CanvasContainer);
+        var delta =  e.Delta.Y;
+        
+        ViewModel?.OnPointerWheelChanged(currentPoint, delta);
     }
 
     private void OnTextBoxLoaded(object? sender, RoutedEventArgs e)
