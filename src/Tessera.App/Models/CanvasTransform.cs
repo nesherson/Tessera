@@ -15,10 +15,8 @@ public partial class CanvasTransform : ObservableObject
 
     public Point ToWorld(Point screenPoint)
     {
-        // if zoomed out
-        // then 
-        var x = screenPoint.X - OffsetX * Scale;
-        var y = screenPoint.Y - OffsetY * Scale;
+        var x = (screenPoint.X - OffsetX) / Scale;
+        var y = (screenPoint.Y - OffsetY) / Scale;
 
         return new Point(x, y);
     }

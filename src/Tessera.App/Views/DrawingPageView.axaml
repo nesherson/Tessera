@@ -136,19 +136,19 @@
                             <Setter Property="Canvas.Top" Value="{Binding Y}"/>
                         </Style>
                     </ItemsControl.Styles>
-                    <ItemsControl.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform 
-                                ScaleX="{Binding Transform.Scale}"
-                                ScaleY="{Binding Transform.Scale}"/>
-                            <TranslateTransform 
-                                X="{Binding Transform.OffsetX}"
-                                Y="{Binding Transform.OffsetY}" />
-                        </TransformGroup>
-                    </ItemsControl.RenderTransform>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas x:Name="Canvas">
+                            <Canvas x:Name="Canvas" RenderTransformOrigin="0,0">
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform 
+                                            ScaleX="{Binding Transform.Scale}"
+                                            ScaleY="{Binding Transform.Scale}"/>
+                                        <TranslateTransform 
+                                            X="{Binding Transform.OffsetX}"
+                                            Y="{Binding Transform.OffsetY}" />
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
                             </Canvas>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
