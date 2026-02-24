@@ -120,12 +120,24 @@
                     </Canvas.RenderTransform>
                 </Canvas>
                 <c:CanvasGrid 
+                    RenderTransformOrigin="0,0"
                     IsHitTestVisible="False"
                     OffsetX="{Binding Transform.OffsetX}"
                     OffsetY="{Binding Transform.OffsetY}"
+                    Scale="{Binding Transform.Scale}"
                     GridSpacing="{Binding GridSpacing}"
                     GridType="{Binding GridType}"
-                    GridColor="{Binding GridColor}">
+                    GridColor="{Binding GridColor}" >
+                    <c:CanvasGrid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform 
+                                ScaleX="{Binding Transform.Scale}"
+                                ScaleY="{Binding Transform.Scale}"/>
+                            <TranslateTransform 
+                                X="{Binding Transform.OffsetX}"
+                                Y="{Binding Transform.OffsetY}" />
+                        </TransformGroup>
+                    </c:CanvasGrid.RenderTransform>
                 </c:CanvasGrid>
                 <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False"  Padding="0" 
                               Margin="0" 
