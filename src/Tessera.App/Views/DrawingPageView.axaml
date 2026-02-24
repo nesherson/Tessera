@@ -99,7 +99,7 @@
                    PointerReleased="OnPointerReleased"
                    PointerWheelChanged="OnPointerWheelChanged"
                    Cursor="{Binding CurrentCursor}">
-                <Canvas IsHitTestVisible="False"> 
+                <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0"> 
                     <Rectangle Canvas.Left="{Binding EraserRect.X}"
                                Canvas.Top="{Binding EraserRect.Y}"
                                Width="{Binding EraserRect.Width}"
