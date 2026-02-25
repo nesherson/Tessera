@@ -237,7 +237,8 @@
             Spacing="10"
             Orientation="Horizontal">
             <c:CanvasToolSettings 
-                ToolSettings="{Binding SelectedToolItem.ToolSettings}">
+                ToolSettings="{Binding SelectedToolItem.ToolSettings}"
+                VerticalAlignment="Top">
                 <c:CanvasToolSettings.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                         <Binding 
