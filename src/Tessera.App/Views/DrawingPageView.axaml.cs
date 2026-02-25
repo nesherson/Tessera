@@ -16,7 +16,17 @@ public partial class DrawingPageView : UserControl
     }
 
     private ToolItem? _previouslySelectedToolItem;
-    
+
+    protected override void OnSizeChanged(SizeChangedEventArgs e)
+    {
+        base.OnSizeChanged(e);
+        
+        if (ViewModel == null) return;
+        
+        ViewModel.ViewportWidth = CanvasContainer.Bounds.Width;
+        ViewModel.ViewportHeight = CanvasContainer.Bounds.Height;
+    }
+
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         var pointer = e.GetPosition(CanvasContainer);
@@ -109,6 +119,5 @@ public partial class DrawingPageView : UserControl
             _previouslySelectedToolItem = tappedTool;
             vm.IsToolSettingsOpen = false;
         }
-        
     }
 }

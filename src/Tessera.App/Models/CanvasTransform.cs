@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Tessera.App.Models;
 
@@ -12,7 +13,7 @@ public partial class CanvasTransform : ObservableObject
     
     [ObservableProperty]
     private double _scale = 1;
-
+    
     public Point ToWorld(Point screenPoint)
     {
         var x = (screenPoint.X - OffsetX) / Scale;
@@ -49,5 +50,15 @@ public partial class CanvasTransform : ObservableObject
         OffsetX = 0;
         OffsetY = 0;
         Scale = 1;
+    }
+    
+    public void ResetZoom(Point screenPoint)
+    {
+        var worldCenter = ToWorld(screenPoint);
+    
+        Scale = 1.0;
+    
+        OffsetX = screenPoint.X - worldCenter.X;
+        OffsetY = screenPoint.Y - worldCenter.Y;
     }
 }

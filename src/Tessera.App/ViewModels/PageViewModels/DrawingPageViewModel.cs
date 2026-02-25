@@ -16,7 +16,13 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 {
     private const double ZoomFactor = 1.1;
     private const double MinScale = 0.1;
-    private const double MaxScale = 10.0;
+    private const double MaxScale = 8.0;
+    
+    [ObservableProperty] 
+    private double _viewportWidth;
+    
+    [ObservableProperty] 
+    private double _viewportHeight;
     
     [ObservableProperty] 
     private ObservableCollection<ShapeBase> _shapes = [];
@@ -130,26 +136,27 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     
     public void OnPointerWheelChanged(Point screenPoint, double delta)
     {
+        Zoom(screenPoint, delta);
+    }
+    
+    public void ResetToolSelection() => SelectedToolItem = Tools[0];
+
+    private void Zoom(Point screenPoint, double delta)
+    {
         var factor = delta > 0 ? ZoomFactor : 1.0 / ZoomFactor;
         var newScale = Transform.Scale * factor;
 
-        if (newScale < MinScale || newScale > MaxScale)
+        if (newScale is < MinScale or > MaxScale)
             return;
         
         Transform.ZoomAt(screenPoint, factor);
     }
     
-    public void ResetToolSelection()
-    {
-        SelectedToolItem = Tools[0];
-    }
-    
+    private Point GetViewportCenter() => new(ViewportWidth / 2, ViewportHeight / 2);
+
     [RelayCommand]
-    private void ClearAll()
-    {
-        Shapes.Clear();
-    }
-    
+    private void ClearAll() => Shapes.Clear();
+
     [RelayCommand]
     private async Task OpenOptions()
     {
@@ -167,4 +174,16 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     [RelayCommand]
     private void ResetView() => Transform.Reset();
+
+    [RelayCommand]
+    private void ZoomIn() => Zoom(GetViewportCenter(), 1);
+    
+    [RelayCommand]
+    private void ZoomOut() => Zoom(GetViewportCenter(), 0);
+
+    [RelayCommand]
+    private void ResetZoom()
+    {
+        Transform.ResetZoom(GetViewportCenter());
+    }
 }
