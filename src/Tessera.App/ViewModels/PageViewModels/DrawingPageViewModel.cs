@@ -144,7 +144,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private void Zoom(Point screenPoint, double delta)
     {
         var factor = delta > 0 ? ZoomFactor : 1.0 / ZoomFactor;
-        var newScale = Transform.Scale * factor;
+        var newScale = Transform.Matrix.M22 * factor;
 
         if (newScale is < MinScale or > MaxScale)
             return;
