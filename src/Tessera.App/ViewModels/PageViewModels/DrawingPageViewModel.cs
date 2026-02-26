@@ -112,8 +112,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         Transform = new CanvasTransform();
         
         ResetToolSelection();
-        
-        Shapes.Add(new EllipseShape() { X = 0, Y = 0, Width = 4, Height = 4, Color = Brushes.LightGray });
     }
     
     public CanvasTransform Transform { get; }

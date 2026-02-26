@@ -13,25 +13,17 @@ public class CanvasGrid : Control
     public static readonly StyledProperty<IBrush> GridColorProperty =
         AvaloniaProperty.Register<CanvasGrid, IBrush>(nameof(GridColor));
 
-    public static readonly StyledProperty<double> OffsetXProperty =
-        AvaloniaProperty.Register<CanvasGrid, double>(nameof(OffsetX));
-
-    public static readonly StyledProperty<double> OffsetYProperty =
-        AvaloniaProperty.Register<CanvasGrid, double>(nameof(OffsetY));
-
-    public static readonly StyledProperty<double> ScaleProperty =
-        AvaloniaProperty.Register<CanvasGrid, double>(nameof(Scale));
+    public static readonly StyledProperty<Matrix> MatrixProperty =
+        AvaloniaProperty.Register<CanvasGrid, Matrix>(nameof(Matrix));
 
     private const double DotRadius = 1.0;
     private IPen _pen = new Pen(Brushes.Black, thickness: 0.5);
 
     static CanvasGrid()
     {
-        AffectsRender<CanvasGrid>(OffsetXProperty);
-        AffectsRender<CanvasGrid>(OffsetYProperty);
+        AffectsRender<CanvasGrid>(MatrixProperty);
         AffectsRender<CanvasGrid>(GridSpacingProperty);
         AffectsRender<CanvasGrid>(GridTypeProperty);
-        AffectsRender<CanvasGrid>(ScaleProperty);
     }
 
     public GridType GridType
@@ -51,33 +43,21 @@ public class CanvasGrid : Control
         get => GetValue(GridColorProperty);
         set => SetValue(GridColorProperty, value);
     }
-
-    public double OffsetX
+    
+    public Matrix Matrix
     {
-        get => GetValue(OffsetXProperty);
-        set => SetValue(OffsetXProperty, value);
-    }
-
-    public double OffsetY
-    {
-        get => GetValue(OffsetYProperty);
-        set => SetValue(OffsetYProperty, value);
-    }
-
-    public double Scale
-    {
-        get => GetValue(ScaleProperty);
-        set => SetValue(ScaleProperty, value);
+        get => GetValue(MatrixProperty);
+        set => SetValue(MatrixProperty, value);
     }
 
     public override void Render(DrawingContext ctx)
     {
         base.Render(ctx);
 
-        var viewWidth = Bounds.Width / Scale;
-        var viewHeight = Bounds.Height / Scale;
-        var worldLeft = -OffsetX / Scale;
-        var worldTop = -OffsetY / Scale;
+        var viewWidth = Bounds.Width / Matrix.M11;
+        var viewHeight = Bounds.Height / Matrix.M22;
+        var worldLeft = -Matrix.M31 / Matrix.M22;
+        var worldTop = -Matrix.M32 / Matrix.M22;
 
         var startX = Math.Floor(worldLeft / GridSpacing) * GridSpacing;
         var startY = Math.Floor(worldTop / GridSpacing) * GridSpacing;
