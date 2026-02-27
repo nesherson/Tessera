@@ -142,12 +142,12 @@
                         <dt:ShapeTemplateSelector>
                             <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
                                 <Ellipse
-                                    Opacity="{Binding Opacity}"
                                     Width="{Binding Width}"
                                     Height="{Binding Height}"
                                     Stroke="{Binding StrokeColor}"
                                     Fill="{Binding Color}"
-                                    StrokeThickness="{Binding StrokeThickness}" />
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    Opacity="{Binding Opacity}" />
                             </DataTemplate>
                             <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
                                 <Line
@@ -173,7 +173,8 @@
                                     Stroke="{Binding StrokeColor}"
                                     Fill="{Binding Color}"
                                     StrokeThickness="{Binding StrokeThickness}" 
-                                    StrokeDashArray="{Binding StrokeDashArray}"/>
+                                    StrokeDashArray="{Binding StrokeDashArray}" 
+                                    Opacity="{Binding Opacity}" />
                             </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                 <Panel>
