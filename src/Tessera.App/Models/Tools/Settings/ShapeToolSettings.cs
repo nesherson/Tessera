@@ -11,6 +11,9 @@ public partial class ShapeToolSettings : ToolSettingsBase
     private ShapeType _shapeType;
     
     [ObservableProperty]
+    private FillType _fillType;
+    
+    [ObservableProperty]
     private IBrush _strokeColor =  Brushes.Black;
     
     [ObservableProperty]
@@ -21,11 +24,20 @@ public partial class ShapeToolSettings : ToolSettingsBase
     ];
 
     [ObservableProperty]
+    private List<FillType> _availableFillTypes =
+    [
+        new() { Name = "None", Description = "Fill - None", IconPath = "/Assets/Icons/square.svg" },
+        new() { Name = "Semi", Description = "Fill - Semi", IconPath = "/Assets/Icons/square-duotone.svg" },
+        new() { Name = "Solid", Description = "Fill - Solid", IconPath = "/Assets/Icons/square-fill.svg" },
+    ];
+
+    [ObservableProperty]
     private bool _isShapePopupOpen;
 
     public ShapeToolSettings()
     {
         ShapeType = AvailableShapeTypes.First();
+        FillType = AvailableFillTypes.First();
     }
 
     [RelayCommand]

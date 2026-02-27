@@ -1,6 +1,6 @@
 ﻿namespace Tessera.App.Models;
 
-public record struct ShapeType
+public record struct FillType
 {
     public string Name { get; set; }
     public string Description { get; set; }

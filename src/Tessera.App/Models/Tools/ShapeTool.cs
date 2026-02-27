@@ -1,4 +1,5 @@
-﻿using Tessera.App.Interfaces;
+﻿using Tessera.App.Constants;
+using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
 
@@ -14,6 +15,7 @@ public class ShapeTool : ICanvasTool
         _canvasContext = canvasContext;
         _settings = settings;
     }
+
     public void OnPointerPressed(Point p)
     {
         _startPoint = _canvasContext.Transform.ToWorld(p);
@@ -22,11 +24,29 @@ public class ShapeTool : ICanvasTool
         _previewShape.Y = _startPoint.Y;
         _previewShape.Width = 0;
         _previewShape.Height = 0;
-        _previewShape.StrokeColor = _settings.StrokeColor;
-        _previewShape.Color = _settings.Color;
-        _previewShape.StrokeThickness = _settings.Size.Thickness;
         _previewShape.StrokeDashArray = _settings.StrokeType.DashArray;
+        _previewShape.StrokeThickness = _settings.Size.Thickness;
         _previewShape.Opacity = _settings.Opacity;
+
+        switch (_settings.FillType.Name)
+        {
+            case "None":
+                _previewShape.StrokeColor = _settings.Color;
+                _previewShape.Color = Brushes.Transparent;
+
+                break;
+            case "Semi":
+                _previewShape.StrokeColor = _settings.Color;
+
+                if (_settings.Color is SolidColorBrush scb) _previewShape.Color = new SolidColorBrush(scb.Color, AppConstants.SemiFillOpacity);
+
+                break;
+            case "Solid":
+                _previewShape.StrokeColor = _settings.Color;
+                _previewShape.Color = _settings.Color;
+
+                break;
+        }
 
         _canvasContext.Shapes.Add(_previewShape);
     }
@@ -34,7 +54,7 @@ public class ShapeTool : ICanvasTool
     public void OnPointerMoved(Point p)
     {
         if (_previewShape == null) return;
-        
+
         var currentPoint = _canvasContext.Transform.ToWorld(p);
         var x = Math.Min(currentPoint.X, _startPoint.X);
         var y = Math.Min(currentPoint.Y, _startPoint.Y);
@@ -51,7 +71,7 @@ public class ShapeTool : ICanvasTool
     {
         _previewShape = null;
     }
-    
+
     private ShapeBase CreateShape(ShapeType type)
     {
         return type.Name switch

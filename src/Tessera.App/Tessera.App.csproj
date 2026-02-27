@@ -70,6 +70,10 @@
       <AvaloniaResource Include="Assets\Icons\minus.svg" />
       <None Remove="Assets\Icons\plus.svg" />
       <AvaloniaResource Include="Assets\Icons\plus.svg" />
+      <None Remove="Assets\Icons\square-fill.svg" />
+      <AvaloniaResource Include="Assets\Icons\square-fill.svg" />
+      <None Remove="Assets\Icons\square-duotone.svg" />
+      <AvaloniaResource Include="Assets\Icons\square-duotone.svg" />
     </ItemGroup>
 
     <ItemGroup>

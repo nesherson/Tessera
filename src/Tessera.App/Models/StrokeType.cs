@@ -2,7 +2,7 @@
 
 namespace Tessera.App.Models;
 
-public struct StrokeType
+public record struct StrokeType
 {
     public string Name { get; set; }
     public string Description { get; set; }
