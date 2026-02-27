@@ -34,21 +34,13 @@
                                     Background="Transparent"
                                     IsVisible="{Binding !IsPaneOpen}"
                                     Classes="LogoWrapper">
-                                <!-- <Image -->
-                                <!--     Source="{SvgImage /Assets/Logo/logo-small.svg}" -->
-                                <!--     Width="40"/> -->
                                 <Svg Path="{x:Static helpers:Icons.LogoSmall}" Width="40"/>
-                                
                             </Button>
                             <Button Background="Transparent"
                                     IsVisible="{Binding IsPaneOpen}"
                                     Command="{Binding ToggleSideMenuCommand}"
                                     Classes="LogoWrapper">
-                                <!-- <Image -->
-                                <!--     Source="{SvgImage /Assets/Logo/logo-large.svg}" -->
-                                <!--     Width="110"/> -->
                                 <Svg Path="{x:Static helpers:Icons.LogoLarge}" Width="110"/>
-                                
                             </Button>
                             <Border Padding="5,0">
                                 <StackPanel>
