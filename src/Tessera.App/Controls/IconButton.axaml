@@ -1,14 +1,15 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:c="clr-namespace:Tessera.App.Controls"
+                    xmlns:helpers="clr-namespace:Tessera.App.Helpers"
                     x:ClassModifier="internal">
   <Design.PreviewWith>
     <Border Padding="20">
       <StackPanel Spacing="20">
-        <c:IconButton Content="Click Me!" IconPath="/Assets/Icons/point.svg" IsTextVisible="True" />
-        <c:IconButton Classes="accent" Content="Click Me!" IconPath="/Assets/Icons/point.svg" />
-        <c:IconButton Classes="accent" Content="Click Me!" IconPath="/Assets/Icons/point.svg" Height="100" />
-        <c:IconButton Classes="accent" Content="Click!" IconPath="/Assets/Icons/point.svg" IsTextVisible="False" />
+        <c:IconButton Content="Click Me!" IconPath="{x:Static helpers:Icons.PencilSimple}" IsTextVisible="True" />
+        <c:IconButton Classes="accent" Content="Click Me!" IconPath="{x:Static helpers:Icons.PencilSimple}" />
+        <c:IconButton Classes="accent" Content="Click Me!" IconPath="{x:Static helpers:Icons.PencilSimple}" Height="100" />
+        <c:IconButton Classes="accent" Content="Click!" IconPath="{x:Static helpers:Icons.PencilSimple}" IsTextVisible="False" />
         <Button Content="Click Me!" />
         <Button Classes="accent" Content="Click Me!" />
       </StackPanel>

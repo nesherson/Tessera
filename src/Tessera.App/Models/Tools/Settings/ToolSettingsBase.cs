@@ -26,21 +26,21 @@ public partial class ToolSettingsBase : ObservableObject
         {
             Name = "Solid",
             Description = "Solid stroke",
-            IconPath = "/Assets/Icons/circle.svg",
+            IconPath = Icons.Circle,
             DashArray = []
         },
         new()
         {
             Name = "Dotted",
             Description = "Dotted stroke",
-            IconPath = "/Assets/Icons/circle-dotted.svg",
+            IconPath = Icons.CircleDotted,
             DashArray = [1, 2]
         },
         new()
         {
             Name = "Dashed",
             Description = "Dashed stroke",
-            IconPath = "/Assets/Icons/circle-dashed.svg",
+            IconPath = Icons.CircleDashed,
             DashArray = [4, 4]
         }
     ];

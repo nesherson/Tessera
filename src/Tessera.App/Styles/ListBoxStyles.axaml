@@ -67,6 +67,15 @@
                 </DataTemplate>
             </Setter>
         </Style>
+    
+        <Style Selector="ListBox.FillTypeListBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="ItemTemplate">
+                <DataTemplate DataType="{x:Type m:FillType}">
+                    <Svg Path="{Binding IconPath}" Width="14" />
+                </DataTemplate>
+            </Setter>
+        </Style>
 
         <Style Selector="ListBox.FontTypeListBox">
             <Setter Property="ItemTemplate">

@@ -104,11 +104,6 @@
                                     Classes="ToolListBox ColorsListBox"
                                     ItemsSource="{Binding AvailableColors}"
                                     SelectedItem="{Binding Color}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type IBrush}">
-                                            <Ellipse Fill="{Binding}" Width="14" Height="14" />
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
                                 </ListBox>
                                 <Slider
                                     Classes="OpacitySlider"
@@ -121,11 +116,11 @@
                                     Classes="ToolListBox StrokeTypeListBox"
                                     ItemsSource="{Binding AvailableStrokeTypes}"
                                     SelectedItem="{Binding StrokeType}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type m:StrokeType}">
-                                            <Svg Path="{Binding IconPath}" Width="14" />
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <ListBox
+                                    Classes="ToolListBox FillTypeListBox"
+                                    ItemsSource="{Binding AvailableFillTypes}"
+                                    SelectedItem="{Binding FillType}">
                                 </ListBox>
                                 <Button
                                     Name="ShapeButton"

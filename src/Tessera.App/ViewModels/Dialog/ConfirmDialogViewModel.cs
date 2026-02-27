@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Tessera.App.Helpers;
 
 namespace Tessera.App.ViewModels;
 
@@ -14,7 +15,7 @@ public partial class ConfirmDialogViewModel : DialogViewModelBase
     [ObservableProperty]
     private string _cancelText = "No";
     [ObservableProperty]
-    private string _iconPath = "/Assets/Icons/info.svg";
+    private string _iconPath = Icons.Info;
     [ObservableProperty]
     private bool _confirmed;
     
