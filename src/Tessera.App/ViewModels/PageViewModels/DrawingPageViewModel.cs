@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Tessera.App.Data;
 using Tessera.App.Enumerations;
+using Tessera.App.Helpers;
 using Tessera.App.Interfaces;
 using Tessera.App.Messages;
 using Tessera.App.Models;
@@ -61,48 +62,48 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
             new ToolItem
             {
                 Name = "Pan",
-                Icon = "/Assets/Icons/hand-grabbing.svg",
+                IconPath = Icons.HandGrabbing,
                 Tool = new PanTool(this),
             },
             new ToolItem
             {
                 Name = "Point",
-                Icon = "/Assets/Icons/point.svg",
+                IconPath = Icons.Point,
                 Tool = new PointShapeTool(this, pointShapeSettings),
                 ToolSettings = pointShapeSettings
             },
             new ToolItem
             {
                 Name = "Line",
-                Icon = "/Assets/Icons/line.svg",
+                IconPath = Icons.Line,
                 Tool = new LineShapeTool(this, lineShapeSettings),
                 ToolSettings = lineShapeSettings
             },
             new ToolItem
             {
                 Name = "Free drawing",
-                Icon = "/Assets/Icons/pen.svg",
+                IconPath = Icons.Pen,
                 Tool = new PolylineShapeTool(this, polylineShapeSettings),
                 ToolSettings = polylineShapeSettings
             },
             new ToolItem
             {
                 Name = "Shape",
-                Icon = "/Assets/Icons/shapes.svg",
+                IconPath = Icons.Shapes,
                 Tool = new ShapeTool(this, shapeSettings),
                 ToolSettings = shapeSettings
             },
             new ToolItem
             {
                 Name = "Text",
-                Icon = "/Assets/Icons/text-t.svg",
+                IconPath = Icons.TextT,
                 Tool = new TextShapeTool(this, textShapeSettings),
                 ToolSettings = textShapeSettings
             },
             new ToolItem
             {
                 Name = "Eraser",
-                Icon = "/Assets/Icons/eraser.svg",
+                IconPath = Icons.Eraser,
                 Tool = new EraserTool(this),
             },
         ];

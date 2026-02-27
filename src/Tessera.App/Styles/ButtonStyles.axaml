@@ -1,6 +1,7 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:Tessera.App.Controls">
+        xmlns:controls="clr-namespace:Tessera.App.Controls"
+        xmlns:helpers="clr-namespace:Tessera.App.Helpers">
     <Design.PreviewWith>
         <Border Padding="20">
             <StackPanel>
@@ -11,7 +12,7 @@
                 <controls:IconButton
                     Classes="NavBtn"
                     Content="Danger outline"
-                    IconPath="/Assets/Icons/pencil-simple.svg" 
+                    IconPath="{x:Static helpers:Icons.PencilSimple}"
                     Classes.active="True"/>
             </StackPanel>
         </Border>

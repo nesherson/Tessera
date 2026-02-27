@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:Tessera.App.ViewModels"
         xmlns:data="clr-namespace:Tessera.App.Data"
         xmlns:c="clr-namespace:Tessera.App.Controls"
+        xmlns:helpers="clr-namespace:Tessera.App.Helpers"
         x:DataType="vm:MainViewModel"
         Title="{Binding Title}"
         Width="1200"
@@ -33,17 +34,21 @@
                                     Background="Transparent"
                                     IsVisible="{Binding !IsPaneOpen}"
                                     Classes="LogoWrapper">
-                                <Image
-                                    Source="{SvgImage /Assets/Logo/logo-small.svg}"
-                                    Width="40"/>
+                                <!-- <Image -->
+                                <!--     Source="{SvgImage /Assets/Logo/logo-small.svg}" -->
+                                <!--     Width="40"/> -->
+                                <Svg Path="{x:Static helpers:Icons.LogoSmall}" Width="40"/>
+                                
                             </Button>
                             <Button Background="Transparent"
                                     IsVisible="{Binding IsPaneOpen}"
                                     Command="{Binding ToggleSideMenuCommand}"
                                     Classes="LogoWrapper">
-                                <Image
-                                    Source="{SvgImage /Assets/Logo/logo-large.svg}"
-                                    Width="110"/>
+                                <!-- <Image -->
+                                <!--     Source="{SvgImage /Assets/Logo/logo-large.svg}" -->
+                                <!--     Width="110"/> -->
+                                <Svg Path="{x:Static helpers:Icons.LogoLarge}" Width="110"/>
+                                
                             </Button>
                             <Border Padding="5,0">
                                 <StackPanel>
@@ -55,7 +60,7 @@
                                         CommandParameter="{x:Static data:ApplicationPageNames.Drawing}"
                                         Content="Drawing"
                                         IsTextVisible="{Binding IsPaneOpen}"
-                                        IconPath="/Assets/Icons/pencil-simple.svg" />
+                                        IconPath="{x:Static helpers:Icons.PencilSimple}" />
                                 </StackPanel>
                             </Border>
                         </StackPanel>
@@ -68,7 +73,7 @@
                                 Background="Transparent"
                                 Content="Exit"
                                 IsTextVisible="{Binding IsPaneOpen}"
-                                IconPath="/Assets/Icons/exit.svg" />
+                                IconPath="{x:Static helpers:Icons.Exit}" />
                         </Border>
                    </Grid>
                 </Border>  

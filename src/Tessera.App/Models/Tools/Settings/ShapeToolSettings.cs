@@ -2,6 +2,7 @@
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Tessera.App.Helpers;
 
 namespace Tessera.App.Models;
 
@@ -19,16 +20,16 @@ public partial class ShapeToolSettings : ToolSettingsBase
     [ObservableProperty]
     private List<ShapeType> _availableShapeTypes =
     [
-        new() { Name = "Rectangle", Description = "Rectangle", IconPath = "/Assets/Icons/square.svg" },
-        new() { Name = "Ellipse", Description = "Ellipse", IconPath = "/Assets/Icons/circle.svg" }
+        new() { Name = "Rectangle", Description = "Rectangle", IconPath = Icons.Square },
+        new() { Name = "Ellipse", Description = "Ellipse", IconPath = Icons.Circle }
     ];
 
     [ObservableProperty]
     private List<FillType> _availableFillTypes =
     [
-        new() { Name = "None", Description = "Fill - None", IconPath = "/Assets/Icons/square.svg" },
-        new() { Name = "Semi", Description = "Fill - Semi", IconPath = "/Assets/Icons/square-duotone.svg" },
-        new() { Name = "Solid", Description = "Fill - Solid", IconPath = "/Assets/Icons/square-fill.svg" },
+        new() { Name = "None", Description = "Fill - None", IconPath = Icons.Square },
+        new() { Name = "Semi", Description = "Fill - Semi", IconPath = Icons.SquareDuotone },
+        new() { Name = "Solid", Description = "Fill - Solid", IconPath = Icons.SquareFill },
     ];
 
     [ObservableProperty]

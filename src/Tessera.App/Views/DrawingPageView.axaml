@@ -7,6 +7,7 @@
              xmlns:dt="clr-namespace:Tessera.App.DataTemplates"
              xmlns:c="clr-namespace:Tessera.App.Controls"
              xmlns:m="clr-namespace:Tessera.App.Models"
+             xmlns:helpers="clr-namespace:Tessera.App.Helpers"
              x:Class="Tessera.App.Views.DrawingPageView"
              x:DataType="vm:DrawingPageViewModel">
     <Design.DataContext>
@@ -63,7 +64,7 @@
                 <DataTemplate DataType="{x:Type m:ToolItem}">
                     <Border 
                         ToolTip.Tip="{Binding Name}">
-                        <Svg Path="{Binding Icon}" Width="20" />
+                        <Svg Path="{Binding IconPath}" Width="20" />
                     </Border>
                 </DataTemplate>
             </Setter>
@@ -240,12 +241,12 @@
                                 ToolTip.Tip="Clear All"
                                 Classes="FunctionBtn"
                                 BorderThickness="0,0,0,1">
-                            <Svg Path="/Assets/Icons/broom.svg" Width="20"/>
+                            <Svg Path="{x:Static helpers:Icons.Broom}" Width="20"/>
                         </Button>
                         <Button Command="{Binding OpenOptionsCommand}"
                                 ToolTip.Tip="Open options"
                                 Classes="FunctionBtn">
-                            <Svg Path="/Assets/Icons/gear.svg" Width="20"/>
+                            <Svg Path="{x:Static helpers:Icons.Gear}" Width="20"/>
                         </Button>
                     </StackPanel>
                 </Border>
@@ -263,7 +264,7 @@
                     Background="Transparent"
                     Command="{Binding ZoomInCommand}"
                 >
-                    <Svg Path="/Assets/Icons/plus.svg" Width="16"/>
+                    <Svg Path="{x:Static helpers:Icons.Plus}" Width="16"/>
                 </Button>
                 <Button
                     ToolTip.Tip="Zoom out"
@@ -271,7 +272,7 @@
                     Margin="3"
                     Background="Transparent"
                     Command="{Binding ZoomOutCommand}">
-                    <Svg Path="/Assets/Icons/minus.svg" Width="16"/>
+                    <Svg Path="{x:Static helpers:Icons.Minus}" Width="16"/>
                 </Button>
                 <Border 
                     BorderBrush="#E5E7EB" 

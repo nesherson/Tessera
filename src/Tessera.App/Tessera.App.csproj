@@ -74,6 +74,8 @@
       <AvaloniaResource Include="Assets\Icons\square-fill.svg" />
       <None Remove="Assets\Icons\square-duotone.svg" />
       <AvaloniaResource Include="Assets\Icons\square-duotone.svg" />
+      <None Remove="Assets\Icons\info.svg" />
+      <AvaloniaResource Include="Assets\Icons\info.svg" />
     </ItemGroup>
 
     <ItemGroup>
