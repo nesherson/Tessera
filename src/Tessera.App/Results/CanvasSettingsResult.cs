@@ -2,4 +2,4 @@
 
 namespace Tessera.App.Results;
 
-public record CanvasSettingsResult(double GridSpacing, GridType GridType, IBrush GridColor);
+public record CanvasSettingsResult(double GridSpacing, GridType GridType);

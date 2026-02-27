@@ -115,8 +115,7 @@
                     IsHitTestVisible="False"
                     Matrix="{Binding Transform.Matrix}"
                     GridSpacing="{Binding GridSpacing}"
-                    GridType="{Binding GridType}"
-                    GridColor="{Binding GridColor}" >
+                    GridType="{Binding GridType}">
                     <c:CanvasGrid.RenderTransform>
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </c:CanvasGrid.RenderTransform>

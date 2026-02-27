@@ -17,9 +17,6 @@ public partial class CanvasSettingsViewModel : DialogViewModelBase
     [ObservableProperty]
     private bool _gridSnapping;
     
-    [ObservableProperty]
-    private IBrush? _selectedGridColor;
-
     public IEnumerable<GridType> GridTypes => Enum.GetValues<GridType>();
     public Action<CanvasSettingsResult?>? OnResult { get; init; }
     
@@ -35,8 +32,7 @@ public partial class CanvasSettingsViewModel : DialogViewModelBase
     private void Save()
     {
         OnResult?.Invoke(new CanvasSettingsResult(GridSpacing ?? 20, 
-            SelectedGridType, 
-            SelectedGridColor ?? new SolidColorBrush(Colors.Black)));
+            SelectedGridType));
     }
 
     [RelayCommand]

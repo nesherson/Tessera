@@ -66,7 +66,6 @@ public partial class MainViewModel : ViewModelBase
         {
             GridSpacing =  m.GridSpacing,
             SelectedGridType = m.GridType,
-            SelectedGridColor = m.GridColor,
             OnResult = result =>
             {
                 m.Tcs.SetResult(result);

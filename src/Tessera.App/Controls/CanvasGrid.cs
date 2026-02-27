@@ -9,15 +9,12 @@ public class CanvasGrid : Control
 
     public static readonly StyledProperty<GridType> GridTypeProperty =
         AvaloniaProperty.Register<CanvasGrid, GridType>(nameof(GridType));
-
-    public static readonly StyledProperty<IBrush> GridColorProperty =
-        AvaloniaProperty.Register<CanvasGrid, IBrush>(nameof(GridColor));
-
+    
     public static readonly StyledProperty<Matrix> MatrixProperty =
         AvaloniaProperty.Register<CanvasGrid, Matrix>(nameof(Matrix));
 
     private const double DotRadius = 1.0;
-    private IPen _pen = new Pen(Brushes.Black, thickness: 0.5);
+    private IPen _pen = new Pen(Brushes.LightGray, thickness: 0.5);
 
     static CanvasGrid()
     {
@@ -36,12 +33,6 @@ public class CanvasGrid : Control
     {
         get => GetValue(GridSpacingProperty);
         set => SetValue(GridSpacingProperty, value);
-    }
-
-    public IBrush GridColor
-    {
-        get => GetValue(GridColorProperty);
-        set => SetValue(GridColorProperty, value);
     }
     
     public Matrix Matrix
@@ -79,19 +70,7 @@ public class CanvasGrid : Control
                 throw new ArgumentOutOfRangeException();
         }
     }
-
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (change.Property == GridColorProperty)
-        {
-            var newBrush = change.GetNewValue<IBrush>();
-
-            _pen = new Pen(newBrush, 0.5);
-        }
-    }
-
+    
     private void DrawLineGrid(DrawingContext ctx, double startX, double startY, double endX, double endY)
     {
         for (var x = startX; x < endX; x += GridSpacing)
@@ -115,7 +94,7 @@ public class CanvasGrid : Control
         {
             for (var y = startY; y < endY; y += GridSpacing)
             {
-                ctx.DrawEllipse(GridColor, null, new Point(x, y), DotRadius, DotRadius);
+                ctx.DrawEllipse(Brushes.LightGray, null, new Point(x, y), DotRadius, DotRadius);
             }
         }
     }

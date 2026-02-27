@@ -40,9 +40,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private GridType _gridType = GridType.Dots;
     
     [ObservableProperty]
-    private IBrush _gridColor = Brushes.LightGray;
-    
-    [ObservableProperty]
     private Cursor _currentCursor = Cursor.Default;
     
     [ObservableProperty]
@@ -160,13 +157,12 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     {
         var result = await WeakReferenceMessenger
             .Default
-            .Send(new ShowCanvasSettingsDialogMessage(GridSpacing, GridType, GridColor)).Tcs.Task;
+            .Send(new ShowCanvasSettingsDialogMessage(GridSpacing, GridType)).Tcs.Task;
 
         if (result is not null)
         {
             GridSpacing = result.GridSpacing;
             GridType = result.GridType;
-            GridColor = result.GridColor;
         }
     }
 
