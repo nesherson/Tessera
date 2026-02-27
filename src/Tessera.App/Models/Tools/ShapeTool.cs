@@ -18,8 +18,8 @@ public class ShapeTool : ICanvasTool
     {
         _startPoint = _canvasContext.Transform.ToWorld(p);
         _previewShape = CreateShape(_settings.ShapeType);
-        _previewShape.X = p.X;
-        _previewShape.Y = p.Y;
+        _previewShape.X = _startPoint.X;
+        _previewShape.Y = _startPoint.Y;
         _previewShape.Width = 0;
         _previewShape.Height = 0;
         _previewShape.StrokeColor = _settings.StrokeColor;

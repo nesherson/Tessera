@@ -32,10 +32,10 @@
             <Setter Property="Padding" Value="0,5" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
-        <Style Selector="Button.FunctionBtn:pointerover /template/ ContentPresenter">
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>
         </Style>
-        <Style Selector="Button.FunctionBtn:pointerover /template/ ContentPresenter">
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>
         </Style>
         <Style Selector="Border.ToolbarBorder">
@@ -43,7 +43,6 @@
             <Setter Property="BorderBrush" Value="#E5E7EB" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="5" />
-            <Setter Property="Width" Value="36" />
             <Setter Property="BoxShadow" Value="0 1 3 0 #10000000" />
         </Style>
         <Style Selector="TextBox.TbTransparent:pointerover /template/ Border#PART_BorderElement">
@@ -85,38 +84,46 @@
     </UserControl.Styles>
     <Grid 
         Background="#f9f9f9" 
-        ColumnDefinitions="*,Auto">
+        ColumnDefinitions="*,Auto"
+        RowDefinitions="*,Auto">
         <Grid
             Grid.ColumnSpan="2"
+            Grid.RowSpan="2"
             ClipToBounds="True">
             <Panel Name="CanvasContainer"
                    Background="Transparent"
                    PointerPressed="OnPointerPressed"
                    PointerMoved="OnPointerMoved"
                    PointerReleased="OnPointerReleased"
+                   PointerWheelChanged="OnPointerWheelChanged"
                    Cursor="{Binding CurrentCursor}">
-                <Canvas IsHitTestVisible="False"> 
+                <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
                     <Rectangle Canvas.Left="{Binding EraserRect.X}"
                                Canvas.Top="{Binding EraserRect.Y}"
                                Width="{Binding EraserRect.Width}"
                                Height="{Binding EraserRect.Height}"
                                IsVisible="{Binding EraserRect.IsVisible}"
-                               Stroke="{Binding EraserRect.StrokeColor}" 
-                               StrokeThickness="{Binding EraserRect.StrokeThickness}" 
+                               Stroke="{Binding EraserRect.StrokeColor}"
+                               StrokeThickness="{Binding EraserRect.StrokeThickness}"
                                Fill="{Binding EraserRect.Color}"/>
                     <Canvas.RenderTransform>
-                        <TranslateTransform X="{Binding Transform.OffsetX}" Y="{Binding Transform.OffsetY}" />
+                        <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
                 </Canvas>
-                <c:CanvasGrid 
+                <c:CanvasGrid
+                    RenderTransformOrigin="0,0"
                     IsHitTestVisible="False"
-                    OffsetX="{Binding Transform.OffsetX}"
-                    OffsetY="{Binding Transform.OffsetY}"
+                    Matrix="{Binding Transform.Matrix}"
                     GridSpacing="{Binding GridSpacing}"
                     GridType="{Binding GridType}"
-                    GridColor="{Binding GridColor}">
+                    GridColor="{Binding GridColor}" >
+                    <c:CanvasGrid.RenderTransform>
+                        <MatrixTransform Matrix="{Binding Transform.Matrix}" />
+                    </c:CanvasGrid.RenderTransform>
                 </c:CanvasGrid>
-                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" >
+                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False"  Padding="0" 
+                              Margin="0" 
+                              BorderThickness="0" >
                     <ItemsControl.Styles>
                         <Style Selector="ContentPresenter" x:DataType="m:ShapeBase">
                             <Setter Property="Canvas.Left" Value="{Binding X}"/>
@@ -125,11 +132,9 @@
                     </ItemsControl.Styles>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas x:Name="Canvas">
+                            <Canvas x:Name="Canvas" RenderTransformOrigin="0,0">
                                 <Canvas.RenderTransform>
-                                    <TranslateTransform 
-                                        X="{Binding Transform.OffsetX}" 
-                                        Y="{Binding Transform.OffsetY}" />
+                                    <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                                 </Canvas.RenderTransform>
                             </Canvas>
                         </ItemsPanelTemplate>
@@ -202,12 +207,15 @@
         </Grid>
         <StackPanel 
             Grid.Column="1"
+            Grid.Row="0"
+            Grid.RowSpan="2"
             Margin="15,0"
             VerticalAlignment="Center"
             Spacing="10"
             Orientation="Horizontal">
             <c:CanvasToolSettings 
-                ToolSettings="{Binding SelectedToolItem.ToolSettings}">
+                ToolSettings="{Binding SelectedToolItem.ToolSettings}"
+                VerticalAlignment="Top">
                 <c:CanvasToolSettings.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                         <Binding 
@@ -218,7 +226,7 @@
                 </c:CanvasToolSettings.IsVisible>
             </c:CanvasToolSettings>
             <StackPanel Spacing="10">
-                <Border Classes="ToolbarBorder">
+                <Border Classes="ToolbarBorder" Width="36">
                     <ListBox 
                         Classes="ToolbarListBox"
                         ItemsSource="{Binding Tools}" 
@@ -243,5 +251,44 @@
                 </Border>
             </StackPanel>
         </StackPanel>
+        <Border Grid.Column="0"
+                Grid.Row="1" Classes="ToolbarBorder" Margin="15"
+                HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <Button
+                    ToolTip.Tip="Zoom in"
+                    Padding="5"
+                    Margin="3"
+                    CornerRadius="5"
+                    Background="Transparent"
+                    Command="{Binding ZoomInCommand}"
+                >
+                    <Svg Path="/Assets/Icons/plus.svg" Width="16"/>
+                </Button>
+                <Button
+                    ToolTip.Tip="Zoom out"
+                    Padding="5"
+                    Margin="3"
+                    Background="Transparent"
+                    Command="{Binding ZoomOutCommand}">
+                    <Svg Path="/Assets/Icons/minus.svg" Width="16"/>
+                </Button>
+                <Border 
+                    BorderBrush="#E5E7EB" 
+                    BorderThickness="1,0,0,0" 
+                    VerticalAlignment="Center" 
+                    Padding="0, 12"
+                    Margin="3"/>
+                <Button
+                    Padding="5"
+                    Margin="3"
+                    Background="Transparent"
+                    Command="{Binding ResetZoomCommand}">
+                    <TextBlock 
+                        Text="{Binding Transform.Matrix.M22, StringFormat={}{0:P0}}"
+                        FontSize="14"/>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

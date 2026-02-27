@@ -15,9 +15,9 @@ public class LineShapeTool : ICanvasTool
         _settings = settings;
     }
     
-    public void OnPointerPressed(Point p)
+    public void OnPointerPressed(Point screenPoint)
     {
-        var currentPoint = _canvasContext.Transform.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
         
         _line = new LineShape
         {

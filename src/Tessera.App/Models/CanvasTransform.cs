@@ -5,36 +5,31 @@ namespace Tessera.App.Models;
 public partial class CanvasTransform : ObservableObject
 {
     [ObservableProperty]
-    private double _offsetX;
+    private Matrix _matrix = Matrix.Identity;
 
-    [ObservableProperty]
-    private double _offsetY;
+    public Point ToWorld(Point screenPoint) =>
+        !Matrix.HasInverse ? screenPoint : screenPoint.Transform(Matrix.Invert());
 
-    public Point ToWorld(Point screenPoint)
+    public void Pan(double deltaX, double deltaY) => Matrix *= Matrix.CreateTranslation(deltaX, deltaY);
+
+    public void ZoomAt(Point screenPoint, double zoomFactor)
     {
-        var x = screenPoint.X - OffsetX;
-        var y = screenPoint.Y - OffsetY;
-
-        return new Point(x, y);
-    }
-
-    public Point ToScreen(Point worldPoint)
-    {
-        var x = worldPoint.X + OffsetX;
-        var y = worldPoint.Y + OffsetY;
-
-        return new Point(x, y);
-    }
-
-    public void Pan(double deltaX, double deltaY)
-    {
-        OffsetX += deltaX;
-        OffsetY += deltaY;
+        Matrix *= Matrix.CreateTranslation(-screenPoint.X, -screenPoint.Y) *
+                  Matrix.CreateScale(zoomFactor, zoomFactor) * Matrix.CreateTranslation(screenPoint.X, screenPoint.Y);
     }
 
     public void Reset()
     {
-        OffsetX = 0;
-        OffsetY = 0;
+        Matrix = Matrix.Identity;
+    }
+
+    public void ResetZoom(Point screenPoint)
+    {
+        var worldCenter = ToWorld(screenPoint);
+
+        var offsetX = screenPoint.X - worldCenter.X;
+        var offsetY = screenPoint.Y - worldCenter.Y;
+
+        Matrix = Matrix.CreateTranslation(offsetX, offsetY);
     }
 }
