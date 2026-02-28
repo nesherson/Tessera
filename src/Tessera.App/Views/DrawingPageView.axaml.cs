@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
@@ -29,6 +30,8 @@ public partial class DrawingPageView : UserControl
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        if (e.Properties.IsMiddleButtonPressed) return;
+        
         var pointer = e.GetPosition(CanvasContainer);
         
         if (ViewModel?.IsToolSettingsOpen == true)
@@ -41,6 +44,8 @@ public partial class DrawingPageView : UserControl
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
+        if (e.Properties.IsMiddleButtonPressed) return;
+        
         var currentPoint = e.GetPosition(CanvasContainer);
         
         ViewModel?.OnPointerMoved(currentPoint);
@@ -48,6 +53,8 @@ public partial class DrawingPageView : UserControl
 
     private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
+        if (e.Properties.IsMiddleButtonPressed) return;
+        
         var currentPoint = e.GetPosition(CanvasContainer);
         
         ViewModel?.OnPointerReleased(currentPoint);
