@@ -25,7 +25,7 @@ public class TextShapeTool : ICanvasTool
             Color = _settings.Color,
             FontFamily = new FontFamily(_settings.FontFamily.Name)
         };
-    
+
         _canvasContext.Shapes.Add(newText);
     }
 

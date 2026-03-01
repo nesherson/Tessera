@@ -10,37 +10,37 @@ namespace Tessera.App.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-     private readonly IPageFactory _pageFactory;
+    private readonly IPageFactory _pageFactory;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DrawingPageIsActive))]
     private PageViewModel _currentPage;
-    
+
     [ObservableProperty]
     private bool _isPaneOpen;
-    
+
     [ObservableProperty]
     private DialogViewModelBase? _dialog;
-    
+
     public MainViewModel()
     {
-        if (!Design.IsDesignMode) 
+        if (!Design.IsDesignMode)
             return;
-        
+
         _pageFactory = new DesignerPageFactory();
         CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Dummy);
         Title = "Tessera";
-        
     }
-    
+
     public MainViewModel(IPageFactory pageFactory)
     {
         _pageFactory = pageFactory;
         CurrentPage = pageFactory.GetPageViewModel(ApplicationPageNames.Drawing);
         Title = "Tessera";
-        
+
         WeakReferenceMessenger.Default.Register<ShowConfirmDialogMessage>(this, HandleShowConfirmDialogMessage);
-        WeakReferenceMessenger.Default.Register<ShowCanvasSettingsDialogMessage>(this, HandleShowCanvasOptionsDialogMessage);
+        WeakReferenceMessenger.Default.Register<ShowCanvasSettingsDialogMessage>(this,
+            HandleShowCanvasOptionsDialogMessage);
     }
 
     private void HandleShowConfirmDialogMessage(object r, ShowConfirmDialogMessage m)
@@ -56,15 +56,15 @@ public partial class MainViewModel : ViewModelBase
                 Dialog = null;
             }
         };
-        
+
         Dialog.Show();
     }
-    
+
     private void HandleShowCanvasOptionsDialogMessage(object r, ShowCanvasSettingsDialogMessage m)
     {
         Dialog = new CanvasSettingsViewModel
         {
-            GridSpacing =  m.GridSpacing,
+            GridSpacing = m.GridSpacing,
             SelectedGridType = m.GridType,
             OnResult = result =>
             {
@@ -73,25 +73,25 @@ public partial class MainViewModel : ViewModelBase
                 Dialog = null;
             }
         };
-        
+
         Dialog.Show();
     }
 
-    public string Title { get; set; } 
+    public string Title { get; set; }
     public bool DrawingPageIsActive => CurrentPage.PageName == ApplicationPageNames.Drawing;
-    
+
     [RelayCommand]
     private void GoToPage(ApplicationPageNames applicationPage)
     {
         CurrentPage = _pageFactory.GetPageViewModel(applicationPage);
     }
-    
+
     [RelayCommand]
     private void ToggleSideMenu()
     {
         IsPaneOpen = !IsPaneOpen;
     }
-    
+
     [RelayCommand]
     private void ExitApplication()
     {

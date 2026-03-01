@@ -11,15 +11,15 @@ public partial class CanvasSettingsViewModel : DialogViewModelBase
 {
     private double? _gridSpacing;
 
-    [ObservableProperty] 
+    [ObservableProperty]
     private GridType _selectedGridType;
-    
+
     [ObservableProperty]
     private bool _gridSnapping;
-    
+
     public IEnumerable<GridType> GridTypes => Enum.GetValues<GridType>();
     public Action<CanvasSettingsResult?>? OnResult { get; init; }
-    
+
     [Required(ErrorMessage = "Grid spacing is required.")]
     [Range(10, 125, ErrorMessage = "Spacing must be between 10 and 125.")]
     public double? GridSpacing
@@ -31,7 +31,7 @@ public partial class CanvasSettingsViewModel : DialogViewModelBase
     [RelayCommand]
     private void Save()
     {
-        OnResult?.Invoke(new CanvasSettingsResult(GridSpacing ?? 20, 
+        OnResult?.Invoke(new CanvasSettingsResult(GridSpacing ?? 20,
             SelectedGridType));
     }
 

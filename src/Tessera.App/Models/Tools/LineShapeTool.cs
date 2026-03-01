@@ -6,26 +6,26 @@ public class LineShapeTool : ICanvasTool
 {
     private readonly ICanvasContext _canvasContext;
     private readonly LineShapeToolSettings _settings;
-    
+
     private LineShape? _line;
-    
+
     public LineShapeTool(ICanvasContext canvasContext, LineShapeToolSettings settings)
     {
         _canvasContext = canvasContext;
         _settings = settings;
     }
-    
+
     public void OnPointerPressed(Point screenPoint)
     {
         var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
-        
+
         _line = new LineShape
         {
             StartPoint = new Point(currentPoint.X, currentPoint.Y),
             EndPoint = new Point(currentPoint.X, currentPoint.Y),
             StrokeThickness = _settings.Size.Thickness,
             StrokeColor = _settings.Color,
-            Opacity =  _settings.Opacity,
+            Opacity = _settings.Opacity,
             StrokeDashArray = _settings.StrokeType.DashArray
         };
 
@@ -35,9 +35,9 @@ public class LineShapeTool : ICanvasTool
     public void OnPointerMoved(Point p)
     {
         if (_line == null) return;
-        
+
         var currentPoint = _canvasContext.Transform.ToWorld(p);
-        
+
         _line.EndPoint = new Point(currentPoint.X, currentPoint.Y);
     }
 

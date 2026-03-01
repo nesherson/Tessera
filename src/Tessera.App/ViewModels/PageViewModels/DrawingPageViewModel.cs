@@ -18,36 +18,36 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private const double ZoomFactor = 1.1;
     private const double MinScale = 0.1;
     private const double MaxScale = 8.0;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private double _viewportWidth;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private double _viewportHeight;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private ObservableCollection<ShapeBase> _shapes = [];
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private ToolItem _selectedToolItem;
-    
+
     [ObservableProperty]
     private RectangleShape _eraserRect;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private double _gridSpacing = 15;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private GridType _gridType = GridType.Dots;
-    
+
     [ObservableProperty]
     private Cursor _currentCursor = Cursor.Default;
-    
+
     [ObservableProperty]
     private bool _isToolSettingsOpen;
-    
+
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
-    
+
     public DrawingPageViewModel()
     {
         var pointShapeSettings = new PointShapeToolSettings();
@@ -55,7 +55,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         var shapeSettings = new ShapeToolSettings();
         var polylineShapeSettings = new PolylineShapeToolSettings();
         var textShapeSettings = new TextShapeToolSettings();
-        
+
         PageName = ApplicationPageNames.Drawing;
         Tools =
         [
@@ -108,33 +108,33 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
             },
         ];
         Transform = new CanvasTransform();
-        
+
         ResetToolSelection();
     }
-    
+
     public CanvasTransform Transform { get; }
     public ObservableCollection<ToolItem> Tools { get; }
-    
+
     public void OnPointerPressed(Point screenPoint)
     {
         CurrentTool.OnPointerPressed(screenPoint);
     }
-    
+
     public void OnPointerMoved(Point screenPoint)
     {
         CurrentTool.OnPointerMoved(screenPoint);
     }
-    
+
     public void OnPointerReleased(Point screenPoint)
     {
         CurrentTool.OnPointerReleased(screenPoint);
     }
-    
+
     public void OnPointerWheelChanged(Point screenPoint, double delta)
     {
         Zoom(screenPoint, delta);
     }
-    
+
     public void ResetToolSelection() => SelectedToolItem = Tools[0];
 
     private void Zoom(Point screenPoint, double delta)
@@ -144,10 +144,10 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
         if (newScale is < MinScale or > MaxScale)
             return;
-        
+
         Transform.ZoomAt(screenPoint, factor);
     }
-    
+
     private Point GetViewportCenter() => new(ViewportWidth / 2, ViewportHeight / 2);
 
     [RelayCommand]
@@ -172,7 +172,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     [RelayCommand]
     private void ZoomIn() => Zoom(GetViewportCenter(), 1);
-    
+
     [RelayCommand]
     private void ZoomOut() => Zoom(GetViewportCenter(), 0);
 

@@ -12,7 +12,7 @@ public class GeometryHelpers
         if (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
             ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0)))
             return true;
-        
+
         // Collinear cases — point lies on the segment
         if (d1 == 0 && OnSegment(c, d, a)) return true;
         if (d2 == 0 && OnSegment(c, d, b)) return true;
@@ -21,15 +21,15 @@ public class GeometryHelpers
 
         return false;
     }
-    
+
     // Cross product of vectors (b-a) and (c-a)
     // Positive = c is left of AB, Negative = right, Zero = collinear
     private static double Cross(Point a, Point b, Point c)
     {
         return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
     }
-    
-    
+
+
     // Is point p on segment (a, b), assuming they're collinear?
     private static bool OnSegment(Point a, Point b, Point p)
     {

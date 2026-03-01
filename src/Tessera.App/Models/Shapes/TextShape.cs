@@ -6,16 +6,16 @@ public partial class TextShape : ShapeBase
 {
     [ObservableProperty]
     private string _text = "";
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private double _fontSize;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private bool _isEditing;
-    
+
     [ObservableProperty]
     private FontFamily _fontFamily = new("Sans Serif Collection");
-    
+
     public override bool Intersects(Rect rect)
     {
         var formattedText = new FormattedText(
@@ -25,7 +25,7 @@ public partial class TextShape : ShapeBase
             new Typeface(FontFamily),
             FontSize,
             null);
-        
+
         return rect.Intersects(new Rect(X, Y, formattedText.Width, formattedText.Height));
     }
 }

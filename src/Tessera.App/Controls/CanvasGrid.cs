@@ -9,7 +9,7 @@ public class CanvasGrid : Control
 
     public static readonly StyledProperty<GridType> GridTypeProperty =
         AvaloniaProperty.Register<CanvasGrid, GridType>(nameof(GridType));
-    
+
     public static readonly StyledProperty<Matrix> MatrixProperty =
         AvaloniaProperty.Register<CanvasGrid, Matrix>(nameof(Matrix));
 
@@ -34,7 +34,7 @@ public class CanvasGrid : Control
         get => GetValue(GridSpacingProperty);
         set => SetValue(GridSpacingProperty, value);
     }
-    
+
     public Matrix Matrix
     {
         get => GetValue(MatrixProperty);
@@ -70,7 +70,7 @@ public class CanvasGrid : Control
                 throw new ArgumentOutOfRangeException();
         }
     }
-    
+
     private void DrawLineGrid(DrawingContext ctx, double startX, double startY, double endX, double endY)
     {
         for (var x = startX; x < endX; x += GridSpacing)

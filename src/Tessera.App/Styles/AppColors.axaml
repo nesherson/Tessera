@@ -13,16 +13,16 @@
     <Color x:Key="Color.Red">#E84444</Color>
     <Color x:Key="Color.Salmon">#E87A6E</Color>
 
-    <SolidColorBrush x:Key="Brush.Black"       Color="{StaticResource Color.Black}" />
-    <SolidColorBrush x:Key="Brush.Silver"      Color="{StaticResource Color.Silver}" />
+    <SolidColorBrush x:Key="Brush.Black" Color="{StaticResource Color.Black}" />
+    <SolidColorBrush x:Key="Brush.Silver" Color="{StaticResource Color.Silver}" />
     <SolidColorBrush x:Key="Brush.LightPurple" Color="{StaticResource Color.LightPurple}" />
-    <SolidColorBrush x:Key="Brush.Purple"      Color="{StaticResource Color.Purple}" />
+    <SolidColorBrush x:Key="Brush.Purple" Color="{StaticResource Color.Purple}" />
     <SolidColorBrush x:Key="Brush.IndigoBlue" Color="{StaticResource Color.IndigoBlue}" />
-    <SolidColorBrush x:Key="Brush.SkyBlue"    Color="{StaticResource Color.SkyBlue}" />
-    <SolidColorBrush x:Key="Brush.Orange"     Color="{StaticResource Color.Orange}" />
-    <SolidColorBrush x:Key="Brush.Rust"       Color="{StaticResource Color.Rust}" />
-    <SolidColorBrush x:Key="Brush.Green"      Color="{StaticResource Color.Green}" />
-    <SolidColorBrush x:Key="Brush.Emerald"    Color="{StaticResource Color.Emerald}" />
-    <SolidColorBrush x:Key="Brush.Red"        Color="{StaticResource Color.Red}" />
-    <SolidColorBrush x:Key="Brush.Salmon"     Color="{StaticResource Color.Salmon}" />
+    <SolidColorBrush x:Key="Brush.SkyBlue" Color="{StaticResource Color.SkyBlue}" />
+    <SolidColorBrush x:Key="Brush.Orange" Color="{StaticResource Color.Orange}" />
+    <SolidColorBrush x:Key="Brush.Rust" Color="{StaticResource Color.Rust}" />
+    <SolidColorBrush x:Key="Brush.Green" Color="{StaticResource Color.Green}" />
+    <SolidColorBrush x:Key="Brush.Emerald" Color="{StaticResource Color.Emerald}" />
+    <SolidColorBrush x:Key="Brush.Red" Color="{StaticResource Color.Red}" />
+    <SolidColorBrush x:Key="Brush.Salmon" Color="{StaticResource Color.Salmon}" />
 </ResourceDictionary>

@@ -5,35 +5,35 @@ namespace Tessera.App.Models;
 
 public abstract partial class ShapeBase : ObservableObject
 {
-    [ObservableProperty] 
+    [ObservableProperty]
     private double _x;
-    
+
     [ObservableProperty]
     private double _y;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private double _width;
-    
+
     [ObservableProperty]
     private double _height;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private double _strokeThickness;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private IBrush _color = Brushes.Black;
-    
-    [ObservableProperty] 
+
+    [ObservableProperty]
     private IBrush _strokeColor = Brushes.Black;
-    
+
     [ObservableProperty]
     private bool _isVisible = true;
-    
+
     [ObservableProperty]
     private double _opacity;
-    
+
     [ObservableProperty]
     private AvaloniaList<double> _strokeDashArray;
-    
+
     public abstract bool Intersects(Rect rect);
 }

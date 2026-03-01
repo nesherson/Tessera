@@ -18,7 +18,7 @@ public partial class ToolSettingsBase : ObservableObject
         new() { Name = "L", Description = "Large", Thickness = 12 },
         new() { Name = "XL", Description = "Extra large", Thickness = 18 }
     ];
-    
+
     [ObservableProperty]
     private List<StrokeType> _availableStrokeTypes =
     [
@@ -47,13 +47,13 @@ public partial class ToolSettingsBase : ObservableObject
 
     [ObservableProperty]
     private StrokeType _strokeType;
-    
+
     [ObservableProperty]
     private IBrush _color;
 
     [ObservableProperty]
     private ShapeSize _size;
-    
+
     [ObservableProperty]
     private double _opacity;
 

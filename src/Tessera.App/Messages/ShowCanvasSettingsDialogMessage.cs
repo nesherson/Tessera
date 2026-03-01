@@ -11,7 +11,7 @@ public class ShowCanvasSettingsDialogMessage
         GridSpacing = gridSpacing;
         GridType = gridType;
     }
-    
+
     public TaskCompletionSource<CanvasSettingsResult?> Tcs { get; } = new();
     public double GridSpacing { get; }
     public GridType GridType { get; }

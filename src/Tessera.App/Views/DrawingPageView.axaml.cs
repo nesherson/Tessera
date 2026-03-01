@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
@@ -21,9 +20,9 @@ public partial class DrawingPageView : UserControl
     protected override void OnSizeChanged(SizeChangedEventArgs e)
     {
         base.OnSizeChanged(e);
-        
+
         if (ViewModel == null) return;
-        
+
         ViewModel.ViewportWidth = CanvasContainer.Bounds.Width;
         ViewModel.ViewportHeight = CanvasContainer.Bounds.Height;
     }
@@ -31,47 +30,47 @@ public partial class DrawingPageView : UserControl
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (e.Properties.IsMiddleButtonPressed) return;
-        
+
         var pointer = e.GetPosition(CanvasContainer);
-        
+
         if (ViewModel?.IsToolSettingsOpen == true)
         {
             ViewModel.IsToolSettingsOpen = false;
         }
-        
+
         ViewModel?.OnPointerPressed(pointer);
     }
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
         if (e.Properties.IsMiddleButtonPressed) return;
-        
+
         var currentPoint = e.GetPosition(CanvasContainer);
-        
+
         ViewModel?.OnPointerMoved(currentPoint);
     }
 
     private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (e.Properties.IsMiddleButtonPressed) return;
-        
+
         var currentPoint = e.GetPosition(CanvasContainer);
-        
+
         ViewModel?.OnPointerReleased(currentPoint);
     }
-    
+
     private void OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
     {
         var currentPoint = e.GetPosition(CanvasContainer);
-        var delta =  e.Delta.Y;
-        
+        var delta = e.Delta.Y;
+
         ViewModel?.OnPointerWheelChanged(currentPoint, delta);
     }
 
     private void OnTextBoxLoaded(object? sender, RoutedEventArgs e)
     {
         if (sender is not TextBox tb) return;
-        
+
         tb.Focus();
         tb.SelectAll();
     }
@@ -79,7 +78,7 @@ public partial class DrawingPageView : UserControl
     private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
     {
         if (sender is not TextBox { DataContext: TextShape shape }) return;
-        
+
         if (string.IsNullOrWhiteSpace(shape.Text))
         {
             ViewModel?.Shapes.Remove(shape);
@@ -90,7 +89,7 @@ public partial class DrawingPageView : UserControl
 
     private void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
     {
-        if (sender is not TextBox { DataContext: TextShape shape }) 
+        if (sender is not TextBox { DataContext: TextShape shape })
             return;
 
         switch (e.Key)
@@ -100,7 +99,7 @@ public partial class DrawingPageView : UserControl
                 e.Handled = true;
                 break;
             case Key.Escape:
-                ViewModel?.Shapes.Remove(shape); 
+                ViewModel?.Shapes.Remove(shape);
                 e.Handled = true;
                 break;
         }
@@ -108,12 +107,12 @@ public partial class DrawingPageView : UserControl
 
     private void OnToolListBoxTapped(object? sender, TappedEventArgs e)
     {
-        if (sender is not ListBox || DataContext is not DrawingPageViewModel vm) 
+        if (sender is not ListBox || DataContext is not DrawingPageViewModel vm)
             return;
-        
+
         var clickedItem = (e.Source as Visual)?.FindAncestorOfType<ListBoxItem>();
-        
-        if (clickedItem?.DataContext is not ToolItem tappedTool) 
+
+        if (clickedItem?.DataContext is not ToolItem tappedTool)
             return;
 
         if (_previouslySelectedToolItem == tappedTool)

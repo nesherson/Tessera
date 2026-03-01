@@ -38,7 +38,8 @@ public class ShapeTool : ICanvasTool
             case "Semi":
                 _previewShape.StrokeColor = _settings.Color;
 
-                if (_settings.Color is SolidColorBrush scb) _previewShape.Color = new SolidColorBrush(scb.Color, AppConstants.SemiFillOpacity);
+                if (_settings.Color is SolidColorBrush scb)
+                    _previewShape.Color = new SolidColorBrush(scb.Color, AppConstants.SemiFillOpacity);
 
                 break;
             case "Solid":

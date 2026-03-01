@@ -19,22 +19,22 @@
             <Border Padding="20">
                 <StackPanel Spacing="20">
                     <StackPanel Orientation="Horizontal">
-                        <Svg Path="{Binding IconPath}" Width="24" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <Svg Path="{Binding IconPath}" Width="24" Margin="0,0,5,0" VerticalAlignment="Center" />
                         <TextBlock TextWrapping="Wrap" Text="{Binding Message}" VerticalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
                         <Button
-                            Content="{Binding CancelText}" 
+                            Content="{Binding CancelText}"
                             Command="{Binding CancelCommand}"
                             Classes="danger outline"
                             MinWidth="70"
-                            HorizontalContentAlignment="Center"/>
+                            HorizontalContentAlignment="Center" />
                         <Button
-                            Content="{Binding ConfirmText}" 
+                            Content="{Binding ConfirmText}"
                             Command="{Binding ConfirmCommand}"
                             Classes="accent"
                             MinWidth="70"
-                            HorizontalContentAlignment="Center"/>
+                            HorizontalContentAlignment="Center" />
                     </StackPanel>
                 </StackPanel>
             </Border>

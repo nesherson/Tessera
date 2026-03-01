@@ -6,10 +6,10 @@ namespace Tessera.App.Models;
 
 public partial class LineShape : ShapeBase
 {
-    [ObservableProperty] 
+    [ObservableProperty]
     private Point _startPoint;
 
-    [ObservableProperty] 
+    [ObservableProperty]
     private Point _endPoint;
 
     [ObservableProperty]

@@ -7,7 +7,7 @@ public class PolylineShapeTool : ICanvasTool
 {
     private readonly ICanvasContext _canvasContext;
     private readonly PolylineShapeToolSettings _settings;
-    
+
     private PolylineShape? _line;
 
     public PolylineShapeTool(ICanvasContext canvasContext, PolylineShapeToolSettings settings)
@@ -15,11 +15,11 @@ public class PolylineShapeTool : ICanvasTool
         _canvasContext = canvasContext;
         _settings = settings;
     }
-    
+
     public void OnPointerPressed(Point p)
     {
         var currentPoint = _canvasContext.Transform.ToWorld(p);
-        
+
         _line = new PolylineShape
         {
             StrokeThickness = _settings.Size.Thickness,

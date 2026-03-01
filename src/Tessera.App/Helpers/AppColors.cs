@@ -10,13 +10,13 @@ public static class AppColors
     public static Color LightPurple => GetColor("Color.LightPurple");
     public static Color Purple => GetColor("Color.Purple");
     public static Color IndigoBlue => GetColor("Color.IndigoBlue");
-    public static Color SkyBlue    => GetColor("Color.SkyBlue");
-    public static Color Orange     => GetColor("Color.Orange");
-    public static Color Rust       => GetColor("Color.Rust");
-    public static Color Green      => GetColor("Color.Green");
-    public static Color Emerald    => GetColor("Color.Emerald");
-    public static Color Red        => GetColor("Color.Red");
-    public static Color Salmon     => GetColor("Color.Salmon");
+    public static Color SkyBlue => GetColor("Color.SkyBlue");
+    public static Color Orange => GetColor("Color.Orange");
+    public static Color Rust => GetColor("Color.Rust");
+    public static Color Green => GetColor("Color.Green");
+    public static Color Emerald => GetColor("Color.Emerald");
+    public static Color Red => GetColor("Color.Red");
+    public static Color Salmon => GetColor("Color.Salmon");
 
     // Brushes
     public static IBrush BlackBrush => GetBrush("Brush.Black");
@@ -24,19 +24,19 @@ public static class AppColors
     public static IBrush LightPurpleBrush => GetBrush("Brush.LightPurple");
     public static IBrush PurpleBrush => GetBrush("Brush.Purple");
     public static IBrush IndigoBlueBrush => GetBrush("Brush.IndigoBlue");
-    public static IBrush SkyBlueBrush    => GetBrush("Brush.SkyBlue");
-    public static IBrush OrangeBrush     => GetBrush("Brush.Orange");
-    public static IBrush RustBrush       => GetBrush("Brush.Rust");
-    public static IBrush GreenBrush      => GetBrush("Brush.Green");
-    public static IBrush EmeraldBrush    => GetBrush("Brush.Emerald");
-    public static IBrush RedBrush        => GetBrush("Brush.Red");
-    public static IBrush SalmonBrush     => GetBrush("Brush.Salmon");
+    public static IBrush SkyBlueBrush => GetBrush("Brush.SkyBlue");
+    public static IBrush OrangeBrush => GetBrush("Brush.Orange");
+    public static IBrush RustBrush => GetBrush("Brush.Rust");
+    public static IBrush GreenBrush => GetBrush("Brush.Green");
+    public static IBrush EmeraldBrush => GetBrush("Brush.Emerald");
+    public static IBrush RedBrush => GetBrush("Brush.Red");
+    public static IBrush SalmonBrush => GetBrush("Brush.Salmon");
 
     public static IReadOnlyList<IBrush> DefaultPalette { get; } =
     [
         BlackBrush, SilverBrush, LightPurpleBrush, PurpleBrush,
         IndigoBlueBrush, SkyBlueBrush, OrangeBrush, RustBrush,
-        GreenBrush,      EmeraldBrush, RedBrush,    SalmonBrush,
+        GreenBrush, EmeraldBrush, RedBrush, SalmonBrush,
     ];
 
     private static Color GetColor(string key) =>

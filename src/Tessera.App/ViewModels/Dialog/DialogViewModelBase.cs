@@ -6,9 +6,10 @@ public partial class DialogViewModelBase : ViewModelBase
 {
     [ObservableProperty]
     private bool _isOpen;
+
     [ObservableProperty]
     private double _dialogWidth = double.NaN;
-    
+
     public void Show()
     {
         IsOpen = true;

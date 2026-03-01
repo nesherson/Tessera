@@ -6,7 +6,7 @@ public class IconButton : Button
 {
     public static readonly StyledProperty<string> IconPathProperty = AvaloniaProperty.Register<IconButton, string>(
         nameof(IconPath));
-    
+
     public static readonly StyledProperty<IBrush> IconColorProperty = AvaloniaProperty.Register<IconButton, IBrush>(
         nameof(IconColor), SolidColorBrush.Parse("#384247"));
 
@@ -18,13 +18,13 @@ public class IconButton : Button
         get => GetValue(IconPathProperty);
         set => SetValue(IconPathProperty, value);
     }
-    
+
     public IBrush IconColor
     {
         get => GetValue(IconColorProperty);
         set => SetValue(IconColorProperty, value);
     }
-    
+
     public bool IsTextVisible
     {
         get => GetValue(IsTextVisibleProperty);
@@ -39,6 +39,5 @@ public class IconButton : Button
     protected override void OnPointerExited(PointerEventArgs e)
     {
         Cursor = new Cursor(StandardCursorType.Arrow);
-
     }
 }

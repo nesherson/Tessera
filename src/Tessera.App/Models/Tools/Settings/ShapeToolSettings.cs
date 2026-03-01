@@ -10,13 +10,13 @@ public partial class ShapeToolSettings : ToolSettingsBase
 {
     [ObservableProperty]
     private ShapeType _shapeType;
-    
+
     [ObservableProperty]
     private FillType _fillType;
-    
+
     [ObservableProperty]
-    private IBrush _strokeColor =  Brushes.Black;
-    
+    private IBrush _strokeColor = Brushes.Black;
+
     [ObservableProperty]
     private List<ShapeType> _availableShapeTypes =
     [
