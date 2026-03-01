@@ -15,15 +15,15 @@
     </Design.DataContext>
     <UserControl.Styles>
         <Style Selector="Border.Tool">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#E5E7EB"/>
-            <Setter Property="CornerRadius" Value="6"/>
-            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Padding" Value="3" />
         </Style>
         <Style Selector="Border.Tool:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="#F3F4F6"/>
-            <Setter Property="BorderBrush" Value="#D1D5DB"/>
+            <Setter Property="Background" Value="#F3F4F6" />
+            <Setter Property="BorderBrush" Value="#D1D5DB" />
         </Style>
         <Style Selector="Button.FunctionBtn">
             <Setter Property="Background" Value="White" />
@@ -34,10 +34,10 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
         <Style Selector="Button:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>
+            <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}" />
         </Style>
         <Style Selector="Button:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"/>
+            <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}" />
         </Style>
         <Style Selector="Border.ToolbarBorder">
             <Setter Property="Background" Value="White" />
@@ -47,22 +47,22 @@
             <Setter Property="BoxShadow" Value="0 1 3 0 #10000000" />
         </Style>
         <Style Selector="TextBox.TbTransparent:pointerover /template/ Border#PART_BorderElement">
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent" />
         </Style>
         <Style Selector="TextBox.TbTransparent:focus /template/ Border#PART_BorderElement">
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent" />
         </Style>
         <Style Selector="ListBox.ToolbarListBox">
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="ItemsPanel">
                 <ItemsPanelTemplate>
-                    <StackPanel 
+                    <StackPanel
                         Orientation="Vertical" />
                 </ItemsPanelTemplate>
             </Setter>
             <Setter Property="ItemTemplate">
                 <DataTemplate DataType="{x:Type m:ToolItem}">
-                    <Border 
+                    <Border
                         ToolTip.Tip="{Binding Name}">
                         <Svg Path="{Binding IconPath}" Width="20" />
                     </Border>
@@ -70,21 +70,21 @@
             </Setter>
         </Style>
         <Style Selector="ListBox.ToolbarListBox ListBoxItem">
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Padding" Value="0,5" />
             <Setter Property="BorderThickness" Value="0,0,0,1" />
             <Setter Property="BorderBrush" Value="#E5E7EB" />
             <Setter Property="Background" Value="White" />
             <Style Selector="^:selected /template/ ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
+                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}" />
             </Style>
             <Style Selector="^:pointerover /template/ ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}"/>	
+                <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}" />
             </Style>
         </Style>
     </UserControl.Styles>
-    <Grid 
-        Background="#f9f9f9" 
+    <Grid
+        Background="#f9f9f9"
         ColumnDefinitions="*,Auto"
         RowDefinitions="*,Auto">
         <Grid
@@ -106,7 +106,7 @@
                                IsVisible="{Binding EraserRect.IsVisible}"
                                Stroke="{Binding EraserRect.StrokeColor}"
                                StrokeThickness="{Binding EraserRect.StrokeThickness}"
-                               Fill="{Binding EraserRect.Color}"/>
+                               Fill="{Binding EraserRect.Color}" />
                     <Canvas.RenderTransform>
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
@@ -121,13 +121,13 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </c:CanvasGrid.RenderTransform>
                 </c:CanvasGrid>
-                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False"  Padding="0" 
-                              Margin="0" 
-                              BorderThickness="0" >
+                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" Padding="0"
+                              Margin="0"
+                              BorderThickness="0">
                     <ItemsControl.Styles>
                         <Style Selector="ContentPresenter" x:DataType="m:ShapeBase">
-                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                            <Setter Property="Canvas.Left" Value="{Binding X}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
                         </Style>
                     </ItemsControl.Styles>
                     <ItemsControl.ItemsPanel>
@@ -155,8 +155,8 @@
                                     StartPoint="{Binding StartPoint}"
                                     EndPoint="{Binding EndPoint}"
                                     Stroke="{Binding StrokeColor}"
-                                    StrokeThickness="{Binding StrokeThickness}" 
-                                    StrokeDashArray="{Binding StrokeDashArray}" 
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}"
                                     Opacity="{Binding Opacity}" />
                             </DataTemplate>
                             <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
@@ -165,7 +165,7 @@
                                     Stroke="{Binding StrokeColor}"
                                     StrokeThickness="{Binding StrokeThickness}"
                                     StrokeDashArray="{Binding StrokeDashArray}"
-                                    Opacity="{Binding Opacity}"/>
+                                    Opacity="{Binding Opacity}" />
                             </DataTemplate>
                             <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
                                 <Rectangle
@@ -173,8 +173,8 @@
                                     Height="{Binding Height}"
                                     Stroke="{Binding StrokeColor}"
                                     Fill="{Binding Color}"
-                                    StrokeThickness="{Binding StrokeThickness}" 
-                                    StrokeDashArray="{Binding StrokeDashArray}" 
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}"
                                     Opacity="{Binding Opacity}" />
                             </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
@@ -184,7 +184,7 @@
                                                Foreground="{Binding Color}"
                                                IsVisible="{Binding !IsEditing}"
                                                FontFamily="{Binding FontFamily}" />
-                                    <TextBox 
+                                    <TextBox
                                         Classes="TbTransparent"
                                         Text="{Binding Text, Mode=TwoWay}"
                                         FontSize="{Binding FontSize}"
@@ -198,7 +198,7 @@
                                         Padding="1"
                                         Loaded="OnTextBoxLoaded"
                                         LostFocus="OnTextBoxLostFocus"
-                                        KeyDown="OnTextBoxKeyDown"/>
+                                        KeyDown="OnTextBoxKeyDown" />
                                 </Panel>
                             </DataTemplate>
                         </dt:ShapeTemplateSelector>
@@ -206,7 +206,7 @@
                 </ItemsControl>
             </Panel>
         </Grid>
-        <StackPanel 
+        <StackPanel
             Grid.Column="1"
             Grid.Row="0"
             Grid.RowSpan="2"
@@ -214,23 +214,23 @@
             VerticalAlignment="Center"
             Spacing="10"
             Orientation="Horizontal">
-            <c:CanvasToolSettings 
+            <c:CanvasToolSettings
                 ToolSettings="{Binding SelectedToolItem.ToolSettings}"
                 VerticalAlignment="Top">
                 <c:CanvasToolSettings.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
-                        <Binding 
-                            Path="SelectedToolItem.ToolSettings" 
+                        <Binding
+                            Path="SelectedToolItem.ToolSettings"
                             Converter="{x:Static ObjectConverters.IsNotNull}" />
-                        <Binding Path="IsToolSettingsOpen"/>
+                        <Binding Path="IsToolSettingsOpen" />
                     </MultiBinding>
                 </c:CanvasToolSettings.IsVisible>
             </c:CanvasToolSettings>
             <StackPanel Spacing="10">
                 <Border Classes="ToolbarBorder" Width="36">
-                    <ListBox 
+                    <ListBox
                         Classes="ToolbarListBox"
-                        ItemsSource="{Binding Tools}" 
+                        ItemsSource="{Binding Tools}"
                         SelectedItem="{Binding SelectedToolItem}"
                         Tapped="OnToolListBoxTapped">
                     </ListBox>
@@ -241,12 +241,12 @@
                                 ToolTip.Tip="Clear All"
                                 Classes="FunctionBtn"
                                 BorderThickness="0,0,0,1">
-                            <Svg Path="{x:Static helpers:Icons.Broom}" Width="20"/>
+                            <Svg Path="{x:Static helpers:Icons.Broom}" Width="20" />
                         </Button>
                         <Button Command="{Binding OpenOptionsCommand}"
                                 ToolTip.Tip="Open options"
                                 Classes="FunctionBtn">
-                            <Svg Path="{x:Static helpers:Icons.Gear}" Width="20"/>
+                            <Svg Path="{x:Static helpers:Icons.Gear}" Width="20" />
                         </Button>
                     </StackPanel>
                 </Border>
@@ -262,9 +262,8 @@
                     Margin="3"
                     CornerRadius="5"
                     Background="Transparent"
-                    Command="{Binding ZoomInCommand}"
-                >
-                    <Svg Path="{x:Static helpers:Icons.Plus}" Width="16"/>
+                    Command="{Binding ZoomInCommand}">
+                    <Svg Path="{x:Static helpers:Icons.Plus}" Width="16" />
                 </Button>
                 <Button
                     ToolTip.Tip="Zoom out"
@@ -272,22 +271,22 @@
                     Margin="3"
                     Background="Transparent"
                     Command="{Binding ZoomOutCommand}">
-                    <Svg Path="{x:Static helpers:Icons.Minus}" Width="16"/>
+                    <Svg Path="{x:Static helpers:Icons.Minus}" Width="16" />
                 </Button>
-                <Border 
-                    BorderBrush="#E5E7EB" 
-                    BorderThickness="1,0,0,0" 
-                    VerticalAlignment="Center" 
+                <Border
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1,0,0,0"
+                    VerticalAlignment="Center"
                     Padding="0, 12"
-                    Margin="3"/>
+                    Margin="3" />
                 <Button
                     Padding="5"
                     Margin="3"
                     Background="Transparent"
                     Command="{Binding ResetZoomCommand}">
-                    <TextBlock 
+                    <TextBlock
                         Text="{Binding Transform.Matrix.M22, StringFormat={}{0:P0}}"
-                        FontSize="14"/>
+                        FontSize="14" />
                 </Button>
             </StackPanel>
         </Border>

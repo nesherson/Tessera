@@ -12,7 +12,7 @@
         Title="{Binding Title}"
         Width="1200"
         Height="720"
-        Icon="/Assets/app-icon.png">        
+        Icon="/Assets/app-icon.png">
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
@@ -28,19 +28,19 @@
                 <Border Padding="0 10 0 0"
                         BorderBrush="{DynamicResource SplitViewBorderBrush}"
                         BorderThickness="0,0,1,0">
-                   <Grid RowDefinitions="*,Auto">
-                        <StackPanel Spacing="5"> 
+                    <Grid RowDefinitions="*,Auto">
+                        <StackPanel Spacing="5">
                             <Button Command="{Binding ToggleSideMenuCommand}"
                                     Background="Transparent"
                                     IsVisible="{Binding !IsPaneOpen}"
                                     Classes="LogoWrapper">
-                                <Svg Path="{x:Static helpers:Icons.LogoSmall}" Width="40"/>
+                                <Svg Path="{x:Static helpers:Icons.LogoSmall}" Width="40" />
                             </Button>
                             <Button Background="Transparent"
                                     IsVisible="{Binding IsPaneOpen}"
                                     Command="{Binding ToggleSideMenuCommand}"
                                     Classes="LogoWrapper">
-                                <Svg Path="{x:Static helpers:Icons.LogoLarge}" Width="110"/>
+                                <Svg Path="{x:Static helpers:Icons.LogoLarge}" Width="110" />
                             </Button>
                             <Border Padding="5,0">
                                 <StackPanel>
@@ -67,16 +67,16 @@
                                 IsTextVisible="{Binding IsPaneOpen}"
                                 IconPath="{x:Static helpers:Icons.Exit}" />
                         </Border>
-                   </Grid>
-                </Border>  
+                    </Grid>
+                </Border>
             </SplitView.Pane>
             <ContentControl
                 Content="{Binding CurrentPage}" />
         </SplitView>
         <Grid Name="DialogOverlay"
-              Grid.Column="0" 
-              Grid.ColumnSpan="2" 
-              IsVisible="{Binding #DialogOverlay.Opacity}" 
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              IsVisible="{Binding #DialogOverlay.Opacity}"
               Opacity="{Binding Dialog.IsOpen, FallbackValue=0}">
             <Grid.Styles>
                 <Style Selector="Grid">
@@ -89,10 +89,10 @@
             </Grid.Styles>
             <Border Background="Black" Opacity="0.5">
             </Border>
-            <ContentControl 
+            <ContentControl
                 Content="{Binding Dialog}"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"/>
+                VerticalAlignment="Center" />
         </Grid>
     </Grid>
 </Window>
