@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.3.11" />
+        <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.4.1" />
         <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.3.11" />
         <PackageReference Include="Avalonia.Desktop" Version="11.3.11" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.11" />
@@ -20,8 +21,10 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
         <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.9.2" />
+        <PackageReference Include="Xaml.Behaviors" Version="11.3.9.5" />
     </ItemGroup>
 
     <ItemGroup>
@@ -76,6 +79,8 @@
       <AvaloniaResource Include="Assets\Icons\square-duotone.svg" />
       <None Remove="Assets\Icons\info.svg" />
       <AvaloniaResource Include="Assets\Icons\info.svg" />
+      <None Remove="Assets\Icons\code.svg" />
+      <AvaloniaResource Include="Assets\Icons\code.svg" />
     </ItemGroup>
 
     <ItemGroup>

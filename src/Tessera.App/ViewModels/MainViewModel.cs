@@ -14,6 +14,7 @@ public partial class MainViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DrawingPageIsActive))]
+    [NotifyPropertyChangedFor(nameof(ScriptingPageIsActive))]
     private PageViewModel _currentPage;
     
     [ObservableProperty]
@@ -79,6 +80,7 @@ public partial class MainViewModel : ViewModelBase
 
     public string Title { get; set; } 
     public bool DrawingPageIsActive => CurrentPage.PageName == ApplicationPageNames.Drawing;
+    public bool ScriptingPageIsActive => CurrentPage.PageName == ApplicationPageNames.Scripting;
     
     [RelayCommand]
     private void GoToPage(ApplicationPageNames applicationPage)

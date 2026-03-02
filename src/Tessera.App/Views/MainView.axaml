@@ -34,21 +34,13 @@
                                     Background="Transparent"
                                     IsVisible="{Binding !IsPaneOpen}"
                                     Classes="LogoWrapper">
-                                <!-- <Image -->
-                                <!--     Source="{SvgImage /Assets/Logo/logo-small.svg}" -->
-                                <!--     Width="40"/> -->
                                 <Svg Path="{x:Static helpers:Icons.LogoSmall}" Width="40"/>
-                                
                             </Button>
                             <Button Background="Transparent"
                                     IsVisible="{Binding IsPaneOpen}"
                                     Command="{Binding ToggleSideMenuCommand}"
                                     Classes="LogoWrapper">
-                                <!-- <Image -->
-                                <!--     Source="{SvgImage /Assets/Logo/logo-large.svg}" -->
-                                <!--     Width="110"/> -->
                                 <Svg Path="{x:Static helpers:Icons.LogoLarge}" Width="110"/>
-                                
                             </Button>
                             <Border Padding="5,0">
                                 <StackPanel>
@@ -61,6 +53,15 @@
                                         Content="Drawing"
                                         IsTextVisible="{Binding IsPaneOpen}"
                                         IconPath="{x:Static helpers:Icons.PencilSimple}" />
+                                    <c:IconButton
+                                        Classes="NavBtn"
+                                        Classes.active="{Binding ScriptingPageIsActive}"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding GoToPageCommand}"
+                                        CommandParameter="{x:Static data:ApplicationPageNames.Scripting}"
+                                        Content="Scripting"
+                                        IsTextVisible="{Binding IsPaneOpen}"
+                                        IconPath="{x:Static helpers:Icons.Code}" />
                                 </StackPanel>
                             </Border>
                         </StackPanel>

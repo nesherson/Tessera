@@ -22,6 +22,7 @@ public static class Icons
     public const string Minus = "/Assets/Icons/minus.svg";
     public const string Broom = "/Assets/Icons/broom.svg";
     public const string Gear = "/Assets/Icons/gear.svg";
+    public const string Code = "/Assets/Icons/code.svg";
     public const string LogoSmall = "/Assets/Logo/logo-small.svg";
     public const string LogoLarge = "/Assets/Logo/logo-large.svg";
 }

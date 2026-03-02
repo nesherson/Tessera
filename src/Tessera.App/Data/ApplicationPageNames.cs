@@ -4,5 +4,6 @@ public enum ApplicationPageNames
 {
     Unknown,
     Dummy,
-    Drawing
+    Drawing,
+    Scripting
 }

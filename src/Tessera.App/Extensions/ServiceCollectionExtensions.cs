@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
             sp => pageName => pageName switch
             {
                 ApplicationPageNames.Drawing => sp.GetRequiredService<DrawingPageViewModel>(),
+                ApplicationPageNames.Scripting => sp.GetRequiredService<ScriptingPageViewModel>(),
                 _ => sp.GetRequiredService<DrawingPageViewModel>()
             });
     }
@@ -23,5 +24,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<MainViewModel>();
         services.AddTransient<DrawingPageViewModel>();
+        services.AddTransient<ScriptingPageViewModel>();
     }
 }
