@@ -35,5 +35,10 @@ public abstract partial class ShapeBase : ObservableObject
     [ObservableProperty]
     private AvaloniaList<double> _strokeDashArray;
 
+    [ObservableProperty]
+    private bool _isSelected;
+
     public abstract bool Intersects(Rect rect);
+    public abstract bool HitTest(Point worldPoint, double tolerance);
+    public abstract void Move(Vector delta);
 }
