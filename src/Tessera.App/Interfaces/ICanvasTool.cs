@@ -2,7 +2,7 @@ namespace Tessera.App.Interfaces;
 
 public interface ICanvasTool
 {
-    void OnPointerPressed(Point p);
-    void OnPointerMoved(Point p);
-    void OnPointerReleased(Point p);
+    void OnPointerPressed(Point screenPoint);
+    void OnPointerMoved(Point screenPoint);
+    void OnPointerReleased(Point screenPoint);
 }

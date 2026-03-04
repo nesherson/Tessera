@@ -9,5 +9,6 @@ public interface ICanvasContext
     ObservableCollection<ShapeBase> Shapes { get; }
     Cursor CurrentCursor { get; set; }
     RectangleShape EraserRect { get; set; }
+    RectangleShape MarqueeRect { get; set; }
     CanvasTransform Transform { get; }
 }

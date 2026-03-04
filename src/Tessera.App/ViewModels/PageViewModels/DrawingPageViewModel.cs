@@ -33,6 +33,9 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     [ObservableProperty]
     private RectangleShape _eraserRect;
+    
+    [ObservableProperty]
+    private RectangleShape _marqueeRect;
 
     [ObservableProperty]
     private double _gridSpacing = 15;
@@ -59,6 +62,12 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         PageName = ApplicationPageNames.Drawing;
         Tools =
         [
+            new ToolItem
+            {
+                Name = "Select",
+                IconPath = Icons.Cursor,
+                Tool = new SelectionTool(this),
+            },
             new ToolItem
             {
                 Name = "Pan",
@@ -135,7 +144,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         Zoom(screenPoint, delta);
     }
 
-    public void ResetToolSelection() => SelectedToolItem = Tools[0];
+    private void ResetToolSelection() => SelectedToolItem = Tools[1];
 
     private void Zoom(Point screenPoint, double delta)
     {

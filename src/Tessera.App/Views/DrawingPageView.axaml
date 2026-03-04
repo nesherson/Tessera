@@ -107,6 +107,14 @@
                                Stroke="{Binding EraserRect.StrokeColor}"
                                StrokeThickness="{Binding EraserRect.StrokeThickness}"
                                Fill="{Binding EraserRect.Color}" />
+                    <Rectangle Canvas.Left="{Binding MarqueeRect.X}"
+                               Canvas.Top="{Binding MarqueeRect.Y}"
+                               Width="{Binding MarqueeRect.Width}"
+                               Height="{Binding MarqueeRect.Height}"
+                               IsVisible="{Binding MarqueeRect.IsVisible}"
+                               Stroke="{Binding MarqueeRect.StrokeColor}"
+                               StrokeThickness="{Binding MarqueeRect.StrokeThickness}"
+                               Fill="{Binding MarqueeRect.Color}" />
                     <Canvas.RenderTransform>
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
@@ -168,14 +176,21 @@
                                     Opacity="{Binding Opacity}" />
                             </DataTemplate>
                             <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
-                                <Rectangle
-                                    Width="{Binding Width}"
-                                    Height="{Binding Height}"
-                                    Stroke="{Binding StrokeColor}"
-                                    Fill="{Binding Color}"
-                                    StrokeThickness="{Binding StrokeThickness}"
-                                    StrokeDashArray="{Binding StrokeDashArray}"
-                                    Opacity="{Binding Opacity}" />
+                                <Panel>
+                                    <Rectangle
+                                        Width="{Binding Width}"
+                                        Height="{Binding Height}"
+                                        Stroke="{Binding StrokeColor}"
+                                        Fill="{Binding Color}"
+                                        StrokeThickness="{Binding StrokeThickness}"
+                                        StrokeDashArray="{Binding StrokeDashArray}"
+                                        Opacity="{Binding Opacity}" />
+                                    <Rectangle
+                                        Width="{Binding TestWidth}" Height="{Binding TestHeight}"
+                                        Stroke="DodgerBlue" StrokeThickness="2"
+                                        StrokeDashArray="4,2"
+                                        IsVisible="{Binding IsSelected}"/>
+                                </Panel>
                             </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                 <Panel>
