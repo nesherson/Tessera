@@ -29,4 +29,15 @@ public partial class LineShape : ShapeBase
                GeometryHelpers.SegmentsIntersect(StartPoint, EndPoint, topLeft, bottomLeft) ||
                GeometryHelpers.SegmentsIntersect(StartPoint, EndPoint, topRight, bottomRight);
     }
+
+    public override bool HitTest(Point worldPoint, double tolerance)
+    {
+        return GeometryHelpers.OnSegment(StartPoint, EndPoint, worldPoint);
+    }
+
+    public override void Move(Vector delta)
+    {
+        StartPoint = new Point(StartPoint.X + delta.X, StartPoint.Y + delta.Y);
+        EndPoint = new Point(EndPoint.X + delta.X, EndPoint.Y + delta.Y);
+    }
 }
