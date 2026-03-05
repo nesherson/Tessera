@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace Tessera.App.Models;
+﻿namespace Tessera.App.Models;
 
 public class RectangleShape : ShapeBase
 {

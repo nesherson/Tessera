@@ -32,7 +32,7 @@ public partial class LineShape : ShapeBase
 
     public override bool HitTest(Point worldPoint, double tolerance)
     {
-        return GeometryHelpers.OnSegment(StartPoint, EndPoint, worldPoint);
+        return GeometryHelpers.DistanceToSegment(StartPoint, EndPoint, worldPoint) <= tolerance;
     }
 
     public override void Move(Vector delta)

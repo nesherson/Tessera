@@ -21,6 +21,25 @@ public class GeometryHelpers
 
         return false;
     }
+    
+    public static double DistanceToSegment(Point a, Point b, Point p)
+    {
+        var ab = b - a;
+        var ap = p - a;
+
+        var lengthSq = ab.X * ab.X + ab.Y * ab.Y;
+
+        if (lengthSq == 0)
+            return Math.Sqrt(ap.X * ap.X + ap.Y * ap.Y);
+
+        var t = Math.Clamp((ap.X * ab.X + ap.Y * ab.Y) / lengthSq, 0, 1);
+        var closest = new Point(a.X + t * ab.X, a.Y + t * ab.Y);
+
+        var dx = p.X - closest.X;
+        var dy = p.Y - closest.Y;
+        
+        return Math.Sqrt(dx * dx + dy * dy);
+    }
 
     // Cross product of vectors (b-a) and (c-a)
     // Positive = c is left of AB, Negative = right, Zero = collinear
@@ -30,7 +49,7 @@ public class GeometryHelpers
     }
 
 
-    // Is point p on segment (a, b), assuming they're collinear?
+    // Is point p on segment (a, b)
     private static bool OnSegment(Point a, Point b, Point p)
     {
         return Math.Min(a.X, b.X) <= p.X && p.X <= Math.Max(a.X, b.X)
