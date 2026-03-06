@@ -12,6 +12,9 @@ public partial class TextShape : ShapeBase
 
     [ObservableProperty]
     private bool _isEditing;
+    
+    [ObservableProperty]
+    private bool _isInitializing;
 
     [ObservableProperty]
     private FontFamily _fontFamily = new("Sans Serif Collection");

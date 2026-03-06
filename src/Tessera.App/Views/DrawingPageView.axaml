@@ -150,38 +150,38 @@
                     <ItemsControl.ItemTemplate>
                         <dt:ShapeTemplateSelector>
                             <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
-                              <Panel>
-                                  <Ellipse
-                                      Width="{Binding Width}"
-                                      Height="{Binding Height}"
-                                      Stroke="{Binding StrokeColor}"
-                                      Fill="{Binding Color}"
-                                      StrokeThickness="{Binding StrokeThickness}"
-                                      Opacity="{Binding Opacity}" />
-                                  <Ellipse
-                                      Width="{Binding Width}" Height="{Binding Height}"
-                                      Stroke="DodgerBlue" StrokeThickness="2"
-                                      StrokeDashArray="4,2"
-                                      IsVisible="{Binding IsSelected}" />
-                              </Panel>
+                                <Panel>
+                                    <Ellipse
+                                        Width="{Binding Width}"
+                                        Height="{Binding Height}"
+                                        Stroke="{Binding StrokeColor}"
+                                        Fill="{Binding Color}"
+                                        StrokeThickness="{Binding StrokeThickness}"
+                                        Opacity="{Binding Opacity}" />
+                                    <Ellipse
+                                        Width="{Binding Width}" Height="{Binding Height}"
+                                        Stroke="DodgerBlue" StrokeThickness="2"
+                                        StrokeDashArray="4,2"
+                                        IsVisible="{Binding IsSelected}" />
+                                </Panel>
                             </DataTemplate>
                             <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
-                               <Panel>
-                                   <Line
-                                       StartPoint="{Binding StartPoint}"
-                                       EndPoint="{Binding EndPoint}"
-                                       Stroke="{Binding StrokeColor}"
-                                       StrokeThickness="{Binding StrokeThickness}"
-                                       StrokeDashArray="{Binding StrokeDashArray}"
-                                       Opacity="{Binding Opacity}" />
-                                   <Line
-                                       StartPoint="{Binding StartPoint}"
-                                       EndPoint="{Binding EndPoint}"
-                                       Stroke="DodgerBlue"
-                                       StrokeThickness="1"
-                                       StrokeDashArray="4,2"
-                                       IsVisible="{Binding IsSelected}" />
-                               </Panel>
+                                <Panel>
+                                    <Line
+                                        StartPoint="{Binding StartPoint}"
+                                        EndPoint="{Binding EndPoint}"
+                                        Stroke="{Binding StrokeColor}"
+                                        StrokeThickness="{Binding StrokeThickness}"
+                                        StrokeDashArray="{Binding StrokeDashArray}"
+                                        Opacity="{Binding Opacity}" />
+                                    <Line
+                                        StartPoint="{Binding StartPoint}"
+                                        EndPoint="{Binding EndPoint}"
+                                        Stroke="DodgerBlue"
+                                        StrokeThickness="1"
+                                        StrokeDashArray="4,2"
+                                        IsVisible="{Binding IsSelected}" />
+                                </Panel>
                             </DataTemplate>
                             <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
                                 <Panel>
@@ -222,16 +222,24 @@
                                     <TextBlock
                                         Name="TextShapeTextBlock"
                                         Text="{Binding Text}"
-                                               FontSize="{Binding FontSize}"
-                                               Foreground="{Binding Color}"
-                                               IsVisible="{Binding !IsEditing}"
-                                               FontFamily="{Binding FontFamily}" />
+                                        FontSize="{Binding FontSize}"
+                                        Foreground="{Binding Color}"
+                                        FontFamily="{Binding FontFamily}"
+                                        Width="{Binding Width}"
+                                        Height="{Binding Height}" >
+                                        <TextBlock.IsVisible>
+                                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                <Binding Path="IsEditing" Converter="{x:Static BoolConverters.Not}"/>
+                                                <Binding Path="IsInitializing" Converter="{x:Static BoolConverters.Not}"/>
+                                            </MultiBinding>
+                                        </TextBlock.IsVisible>
+                                    </TextBlock>
                                     <Rectangle
-                                        Width="{Binding Width, ElementName=TextShapeTextBlock}" 
-                                        Height="{Binding Height, ElementName=TextShapeTextBlock}"
-                                        Stroke="DodgerBlue" StrokeThickness="2"
-                                        StrokeDashArray="4,2"
-                                        IsVisible="{Binding IsSelected}" />
+                                        Width="{Binding Width}"
+                                        Height="{Binding Height}"
+                                        Stroke="DeepSkyBlue"
+                                        StrokeThickness="1"
+                                        IsVisible="{Binding IsInitializing}"/>
                                     <TextBox
                                         Classes="TbTransparent"
                                         Text="{Binding Text, Mode=TwoWay}"
@@ -242,11 +250,18 @@
                                         Background="Transparent"
                                         BorderBrush="DeepSkyBlue"
                                         BorderThickness="1"
-                                        MinWidth="50"
                                         Padding="1"
+                                        Width="{Binding Width}"
+                                        Height="{Binding Height}"
                                         Loaded="OnTextBoxLoaded"
                                         LostFocus="OnTextBoxLostFocus"
                                         KeyDown="OnTextBoxKeyDown" />
+                                    <Rectangle
+                                        Width="{Binding Width, ElementName=TextShapeTextBlock}" 
+                                        Height="{Binding Height, ElementName=TextShapeTextBlock}"
+                                        Stroke="DodgerBlue" StrokeThickness="2"
+                                        StrokeDashArray="4,2"
+                                        IsVisible="{Binding IsSelected}" />
                                 </Panel>
                             </DataTemplate>
                         </dt:ShapeTemplateSelector>

@@ -1,5 +1,6 @@
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Tessera.App.ViewModels;
 using Tessera.App.Models;
@@ -70,38 +71,38 @@ public partial class DrawingPageView : UserControl
     private void OnTextBoxLoaded(object? sender, RoutedEventArgs e)
     {
         if (sender is not TextBox tb) return;
-
-        tb.Focus();
-        tb.SelectAll();
+        
+        if (tb.DataContext is TextShape { IsEditing: true })
+        {
+            tb.Focus();
+            return;
+        }
+        
+        if (tb.DataContext is TextShape shape)
+        {
+            shape.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(TextShape.IsEditing) && shape.IsEditing)
+                {
+                    Dispatcher.UIThread.Post(() => tb.Focus());
+                }
+            };
+        }
     }
 
     private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
     {
         if (sender is not TextBox { DataContext: TextShape shape }) return;
-
-        if (string.IsNullOrWhiteSpace(shape.Text))
-        {
-            ViewModel?.Shapes.Remove(shape);
-        }
-
-        shape.IsEditing = false;
+        
+        FinalizeTextShape(shape);
     }
 
     private void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
     {
-        if (sender is not TextBox { DataContext: TextShape shape })
-            return;
-
-        switch (e.Key)
+        if (e.Key == Key.Escape && sender is TextBox { DataContext: TextShape shape })
         {
-            case Key.Enter:
-                shape.IsEditing = false;
-                e.Handled = true;
-                break;
-            case Key.Escape:
-                ViewModel?.Shapes.Remove(shape);
-                e.Handled = true;
-                break;
+            FinalizeTextShape(shape);
+            e.Handled = true;
         }
     }
 
@@ -124,6 +125,16 @@ public partial class DrawingPageView : UserControl
         {
             _previouslySelectedToolItem = tappedTool;
             vm.IsToolSettingsOpen = false;
+        }
+    }
+    
+    private void FinalizeTextShape(TextShape shape)
+    {
+        shape.IsEditing = false;
+
+        if (string.IsNullOrWhiteSpace(shape.Text))
+        {
+            ViewModel?.Shapes.Remove(shape);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Tessera.App.Interfaces;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Tessera.App.Interfaces;
+using Tessera.App.Messages;
 
 namespace Tessera.App.Models;
 
@@ -6,6 +8,9 @@ public class TextShapeTool : ICanvasTool
 {
     private readonly ICanvasContext _canvasContext;
     private readonly TextShapeToolSettings _settings;
+    
+    private Point _startPoint;
+    private TextShape? _previewShape;
 
     public TextShapeTool(ICanvasContext canvasContext, TextShapeToolSettings settings)
     {
@@ -13,29 +18,48 @@ public class TextShapeTool : ICanvasTool
         _settings = settings;
     }
 
-    public void OnPointerPressed(Point p)
+    public void OnPointerPressed(Point screenPoint)
     {
-        var currentPoint = _canvasContext.Transform.ToWorld(p);
-        var newText = new TextShape
+        _startPoint = _canvasContext.Transform.ToWorld(screenPoint);
+        
+        _previewShape = new TextShape
         {
-            X = currentPoint.X,
-            Y = currentPoint.Y,
-            IsEditing = true,
+            X = _startPoint.X,
+            Y = _startPoint.Y,
+            IsInitializing = true,
             FontSize = _settings.Size.Thickness * 2,
             Color = _settings.Color,
+            Width = 1,
+            Height = 1,
             FontFamily = new FontFamily(_settings.FontFamily.Name)
         };
-
-        _canvasContext.Shapes.Add(newText);
+        
+        _canvasContext.Shapes.Add(_previewShape);
     }
 
-    public void OnPointerMoved(Point p)
+    public void OnPointerMoved(Point screenPoint)
     {
-        // Not used
+        if (_previewShape == null) return;
+        
+        var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
+        var x = Math.Min(currentPoint.X, _startPoint.X);
+        var y = Math.Min(currentPoint.Y, _startPoint.Y);
+        var w = Math.Abs(currentPoint.X - _startPoint.X);
+        var h = Math.Clamp(Math.Abs(currentPoint.Y - _startPoint.Y), 16, 16);
+
+        _previewShape.X = x;
+        _previewShape.Y = y;
+        _previewShape.Width = w;
+        _previewShape.Height = h;
     }
 
-    public void OnPointerReleased(Point p)
+    public void OnPointerReleased(Point screenPoint)
     {
-        // Not used
+        if (_previewShape == null) return;
+        
+        _previewShape.IsInitializing = false;
+        _previewShape.IsEditing = true;
+        
+        _previewShape = null;
     }
 }
