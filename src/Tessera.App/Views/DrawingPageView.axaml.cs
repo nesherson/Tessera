@@ -128,6 +128,18 @@ public partial class DrawingPageView : UserControl
         }
     }
     
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        switch (e.Key)
+        {
+            case Key.Delete:
+                ViewModel?.RemoveSelectedShapesCommand.Execute(null);
+                break;
+        }
+    }
+    
     private void FinalizeTextShape(TextShape shape)
     {
         shape.IsEditing = false;

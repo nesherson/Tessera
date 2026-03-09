@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -189,5 +190,14 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private void ResetZoom()
     {
         Transform.ResetZoom(GetViewportCenter());
+    }
+
+    [RelayCommand]
+    private void RemoveSelectedShapes()
+    {
+        Shapes
+            .Where(x => x.IsSelected)
+            .ToList()
+            .ForEach(x => Shapes.Remove(x));
     }
 }
