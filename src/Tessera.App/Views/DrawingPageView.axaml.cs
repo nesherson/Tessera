@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
@@ -104,6 +105,24 @@ public partial class DrawingPageView : UserControl
             FinalizeTextShape(shape);
             e.Handled = true;
         }
+    }
+    
+    private void TextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (sender is not TextBox tb) 
+            return;
+        
+        if (tb.DataContext is not TextShape shape)
+            return;
+        
+        Dispatcher.UIThread.Post(() =>
+        {
+            var lineCount = tb.Text?.Split('\n').Length ?? 1;
+            var lineHeight = shape.FontSize * 1.4;
+            var requiredHeight = lineCount * lineHeight;
+
+            shape.Height = Math.Max(requiredHeight, 16);
+        });
     }
 
     private void OnToolListBoxTapped(object? sender, TappedEventArgs e)

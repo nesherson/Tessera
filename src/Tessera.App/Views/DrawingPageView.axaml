@@ -258,9 +258,11 @@
                                         Height="{Binding Height}"
                                         MinHeight="16"
                                         AcceptsReturn="True"
+                                        TextWrapping="Wrap"
                                         Loaded="OnTextBoxLoaded"
                                         LostFocus="OnTextBoxLostFocus"
-                                        KeyDown="OnTextBoxKeyDown" />
+                                        KeyDown="OnTextBoxKeyDown"
+                                        TextChanged="TextBox_OnTextChanged"/>
                                     <Rectangle
                                         Width="{Binding Width}" 
                                         Height="{Binding Height}"
