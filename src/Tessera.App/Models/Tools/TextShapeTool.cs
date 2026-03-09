@@ -9,6 +9,8 @@ public class TextShapeTool : ICanvasTool
     private readonly ICanvasContext _canvasContext;
     private readonly TextShapeToolSettings _settings;
     
+    private const double Tolerance = 1;
+    
     private Point _startPoint;
     private TextShape? _previewShape;
 
@@ -27,7 +29,7 @@ public class TextShapeTool : ICanvasTool
             X = _startPoint.X,
             Y = _startPoint.Y,
             IsInitializing = true,
-            FontSize = _settings.Size.Thickness * 2,
+            FontSize = _settings.Size.Thickness * 3,
             Color = _settings.Color,
             Width = 1,
             Height = 1,
@@ -56,6 +58,12 @@ public class TextShapeTool : ICanvasTool
     public void OnPointerReleased(Point screenPoint)
     {
         if (_previewShape == null) return;
+
+        if (Math.Abs(_previewShape.Width - 1) < Tolerance)
+        {
+            _previewShape.Width = 52;
+            _previewShape.Height = 16;
+        }
         
         _previewShape.IsInitializing = false;
         _previewShape.IsEditing = true;
