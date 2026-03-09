@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Tessera.App.Constants;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
@@ -18,8 +19,8 @@ public class EraserTool : ICanvasTool
         {
             StrokeColor = Brushes.Red,
             StrokeThickness = 1,
-            Color = new SolidColorBrush(0x33FF0000),
-            IsVisible = false
+            Color = new SolidColorBrush(Brushes.Red.Color, AppConstants.EraserFillOpacity),
+            IsVisible = false,
         };
         _canvasContext.EraserRect = _eraserRect;
     }
