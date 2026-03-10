@@ -189,7 +189,23 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     [RelayCommand]
     private void ResetZoom()
     {
-        Transform.ResetZoom(GetViewportCenter());
+        // Transform.ResetZoom(GetViewportCenter());
+        var line = Shapes.First(x => x is LineShape);
+        var rect = line.GetBounds();
+        
+        var rectanglShape = new RectangleShape
+        {
+            X = rect.X,
+            Y = rect.Y,
+            Width = rect.Width,
+            Height = rect.Height,
+            Color = new SolidColorBrush(Brushes.Green.Color, 0.25),
+            StrokeColor =  Brushes.Green,
+            StrokeThickness = 2,
+            Opacity = 1
+        };
+        
+        Shapes.Add(rectanglShape);
     }
 
     [RelayCommand]

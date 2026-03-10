@@ -41,4 +41,10 @@ public abstract partial class ShapeBase : ObservableObject
     public abstract bool Intersects(Rect rect);
     public abstract bool HitTest(Point worldPoint, double tolerance);
     public abstract void Move(Vector delta);
+    public abstract Rect GetBounds();
+    
+    protected Rect InflateForStroke(Rect bounds)
+    {
+        return bounds.Inflate(StrokeThickness / 2);
+    }
 }

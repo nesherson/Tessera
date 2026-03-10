@@ -34,4 +34,17 @@ public partial class PolylineShape : ShapeBase
         Points = new ObservableCollection<Point>(Points
             .Select(point => new Point(point.X + delta.X, point.Y + delta.Y)));
     }
+
+    public override Rect GetBounds()
+    {
+        if (Points.Count == 0)
+            return default;
+
+        var minX = Points.Min(p => p.X);
+        var minY = Points.Min(p => p.Y);
+        var maxX = Points.Max(p => p.X);
+        var maxY = Points.Max(p => p.Y);
+
+        return InflateForStroke(new Rect(minX, minY, maxX - minX, maxY - minY));
+    }
 }

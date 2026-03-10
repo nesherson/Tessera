@@ -42,4 +42,9 @@ public partial class TextShape : ShapeBase
         X += delta.X;
         Y += delta.Y;
     }
+
+    public override Rect GetBounds()
+    {
+        return InflateForStroke(new Rect(X, Y, Width, Height));
+    }
 }
