@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using Avalonia.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Tessera.App.Interfaces;
 using Tessera.App.Messages;
 
@@ -20,7 +21,7 @@ public class TextShapeTool : ICanvasTool
         _settings = settings;
     }
 
-    public void OnPointerPressed(Point screenPoint)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
         _startPoint = _canvasContext.Transform.ToWorld(screenPoint);
         

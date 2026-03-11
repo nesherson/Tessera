@@ -9,6 +9,7 @@ using Tessera.App.Data;
 using Tessera.App.Enumerations;
 using Tessera.App.Helpers;
 using Tessera.App.Interfaces;
+using Tessera.App.Managers;
 using Tessera.App.Messages;
 using Tessera.App.Models;
 
@@ -59,15 +60,18 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         var shapeSettings = new ShapeToolSettings();
         var polylineShapeSettings = new PolylineShapeToolSettings();
         var textShapeSettings = new TextShapeToolSettings();
-
+        
         PageName = ApplicationPageNames.Drawing;
+        Transform = new CanvasTransform();
+        SelectionManager = new SelectionManager();
+        
         Tools =
         [
             new ToolItem
             {
                 Name = "Select",
                 IconPath = Icons.Cursor,
-                Tool = new SelectionTool(this),
+                Tool = new SelectionTool(this, SelectionManager),
             },
             new ToolItem
             {
@@ -117,17 +121,17 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Tool = new EraserTool(this),
             },
         ];
-        Transform = new CanvasTransform();
 
         ResetToolSelection();
     }
 
     public CanvasTransform Transform { get; }
+    public SelectionManager SelectionManager { get; }
     public ObservableCollection<ToolItem> Tools { get; }
 
-    public void OnPointerPressed(Point screenPoint)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
-        CurrentTool.OnPointerPressed(screenPoint);
+        CurrentTool.OnPointerPressed(screenPoint, keyModifiers);
     }
 
     public void OnPointerMoved(Point screenPoint)
@@ -193,7 +197,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         var line = Shapes.First(x => x is LineShape);
         var rect = line.GetBounds();
         
-        var rectanglShape = new RectangleShape
+        var rectangleShape = new RectangleShape
         {
             X = rect.X,
             Y = rect.Y,
@@ -205,15 +209,16 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
             Opacity = 1
         };
         
-        Shapes.Add(rectanglShape);
+        Shapes.Add(rectangleShape);
     }
 
     [RelayCommand]
     private void RemoveSelectedShapes()
     {
         Shapes
-            .Where(x => x.IsSelected)
+            .Where(x => SelectionManager.IsSelected(x))
             .ToList()
             .ForEach(x => Shapes.Remove(x));
+        SelectionManager.Clear();
     }
 }

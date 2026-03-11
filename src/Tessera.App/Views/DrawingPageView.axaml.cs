@@ -34,13 +34,14 @@ public partial class DrawingPageView : UserControl
         if (e.Properties.IsMiddleButtonPressed) return;
 
         var pointer = e.GetPosition(CanvasContainer);
+        var modifiers = e.KeyModifiers;
 
         if (ViewModel?.IsToolSettingsOpen == true)
         {
             ViewModel.IsToolSettingsOpen = false;
         }
 
-        ViewModel?.OnPointerPressed(pointer);
+        ViewModel?.OnPointerPressed(pointer, modifiers);
     }
 
     private void OnPointerMoved(object? sender, PointerEventArgs e)
@@ -107,7 +108,7 @@ public partial class DrawingPageView : UserControl
         }
     }
     
-    private void TextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void OnTextBoxTextChanged(object? sender, TextChangedEventArgs e)
     {
         if (sender is not TextBox tb) 
             return;

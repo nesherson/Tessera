@@ -14,7 +14,7 @@ public class PanTool : ICanvasTool
         _canvasContext = canvasContext;
     }
 
-    public void OnPointerPressed(Point screenPoint)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
         _startPoint = screenPoint;
         _canvasContext.CurrentCursor = new Cursor(StandardCursorType.SizeAll);

@@ -98,27 +98,33 @@
                    PointerReleased="OnPointerReleased"
                    PointerWheelChanged="OnPointerWheelChanged"
                    Cursor="{Binding CurrentCursor}">
+                
+                <!-- Eraser and marquee layer -->
                 <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
-                    <Rectangle Canvas.Left="{Binding EraserRect.X}"
-                               Canvas.Top="{Binding EraserRect.Y}"
-                               Width="{Binding EraserRect.Width}"
-                               Height="{Binding EraserRect.Height}"
-                               IsVisible="{Binding EraserRect.IsVisible}"
-                               Stroke="{Binding EraserRect.StrokeColor}"
-                               StrokeThickness="{Binding EraserRect.StrokeThickness}"
-                               Fill="{Binding EraserRect.Color}" />
-                    <Rectangle Canvas.Left="{Binding MarqueeRect.X}"
-                               Canvas.Top="{Binding MarqueeRect.Y}"
-                               Width="{Binding MarqueeRect.Width}"
-                               Height="{Binding MarqueeRect.Height}"
-                               IsVisible="{Binding MarqueeRect.IsVisible}"
-                               Stroke="{Binding MarqueeRect.StrokeColor}"
-                               StrokeThickness="{Binding MarqueeRect.StrokeThickness}"
-                               Fill="{Binding MarqueeRect.Color}" />
+                    <Rectangle 
+                        Canvas.Left="{Binding EraserRect.X}"
+                        Canvas.Top="{Binding EraserRect.Y}"
+                        Width="{Binding EraserRect.Width}"
+                        Height="{Binding EraserRect.Height}"
+                        IsVisible="{Binding EraserRect.IsVisible}"
+                        Stroke="{Binding EraserRect.StrokeColor}"
+                        StrokeThickness="{Binding EraserRect.StrokeThickness}"
+                        Fill="{Binding EraserRect.Color}" />
+                    <Rectangle 
+                        Canvas.Left="{Binding MarqueeRect.X}"
+                        Canvas.Top="{Binding MarqueeRect.Y}"
+                        Width="{Binding MarqueeRect.Width}"
+                        Height="{Binding MarqueeRect.Height}"
+                        IsVisible="{Binding MarqueeRect.IsVisible}"
+                        Stroke="{Binding MarqueeRect.StrokeColor}"
+                        StrokeThickness="{Binding MarqueeRect.StrokeThickness}"
+                        Fill="{Binding MarqueeRect.Color}" />
                     <Canvas.RenderTransform>
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
                 </Canvas>
+                
+                <!-- Grid layer -->
                 <c:CanvasGrid
                     RenderTransformOrigin="0,0"
                     IsHitTestVisible="False"
@@ -129,6 +135,24 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </c:CanvasGrid.RenderTransform>
                 </c:CanvasGrid>
+                
+                <!-- Selection overlay layer -->
+                <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
+                    <Rectangle
+                        Canvas.Left="{Binding SelectionManager.SelectionBounds.X}"
+                        Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}"
+                        Width="{Binding SelectionManager.SelectionBounds.Width}"
+                        Height="{Binding SelectionManager.SelectionBounds.Height}"
+                        Stroke="DodgerBlue"
+                        StrokeThickness="1"
+                        StrokeDashArray="4,2"
+                        IsVisible="{Binding SelectionManager.HasSelection}"/>
+                    <Canvas.RenderTransform>
+                        <MatrixTransform Matrix="{Binding Transform.Matrix}" />
+                    </Canvas.RenderTransform>
+                </Canvas>
+                
+                <!-- Shape layer -->
                 <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" Padding="0"
                               Margin="0"
                               BorderThickness="0">
@@ -158,12 +182,6 @@
                                         Fill="{Binding Color}"
                                         StrokeThickness="{Binding StrokeThickness}"
                                         Opacity="{Binding Opacity}" />
-                                    <Ellipse
-                                        Width="{Binding Width}" Height="{Binding Height}"
-                                        Stroke="DodgerBlue" 
-                                        StrokeThickness="2"
-                                        StrokeDashArray="4,2"
-                                        IsVisible="{Binding IsSelected}" />
                                 </Panel>
                             </DataTemplate>
                             <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
@@ -175,13 +193,6 @@
                                         StrokeThickness="{Binding StrokeThickness}"
                                         StrokeDashArray="{Binding StrokeDashArray}"
                                         Opacity="{Binding Opacity}" />
-                                    <Line
-                                        StartPoint="{Binding StartPoint}"
-                                        EndPoint="{Binding EndPoint}"
-                                        Stroke="DodgerBlue"
-                                        StrokeThickness="2"
-                                        StrokeDashArray="4,2"
-                                        IsVisible="{Binding IsSelected}" />
                                 </Panel>
                             </DataTemplate>
                             <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
@@ -192,12 +203,6 @@
                                         StrokeThickness="{Binding StrokeThickness}"
                                         StrokeDashArray="{Binding StrokeDashArray}"
                                         Opacity="{Binding Opacity}" />
-                                    <Polyline
-                                        Points="{Binding Points}"
-                                        Stroke="DodgerBlue"
-                                        StrokeThickness="2"
-                                        StrokeDashArray="4,2"
-                                        IsVisible="{Binding IsSelected}"/>
                                 </Panel>
                             </DataTemplate>
                             <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
@@ -211,12 +216,6 @@
                                         StrokeThickness="{Binding StrokeThickness}"
                                         StrokeDashArray="{Binding StrokeDashArray}"
                                         Opacity="{Binding Opacity}" />
-                                    <Rectangle
-                                        Width="{Binding Width}" Height="{Binding Height}"
-                                        Stroke="DodgerBlue" 
-                                        StrokeThickness="2"
-                                        StrokeDashArray="4,2"
-                                        IsVisible="{Binding IsSelected}" />
                                 </Panel>
                             </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
@@ -262,14 +261,7 @@
                                         Loaded="OnTextBoxLoaded"
                                         LostFocus="OnTextBoxLostFocus"
                                         KeyDown="OnTextBoxKeyDown"
-                                        TextChanged="TextBox_OnTextChanged"/>
-                                    <Rectangle
-                                        Width="{Binding Width}" 
-                                        Height="{Binding Height}"
-                                        Stroke="DodgerBlue" 
-                                        StrokeThickness="2"
-                                        StrokeDashArray="4,2"
-                                        IsVisible="{Binding IsSelected}" />
+                                        TextChanged="OnTextBoxTextChanged"/>
                                 </Panel>
                             </DataTemplate>
                         </dt:ShapeTemplateSelector>

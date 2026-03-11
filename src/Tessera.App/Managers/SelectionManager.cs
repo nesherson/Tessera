@@ -24,6 +24,14 @@ public partial class SelectionManager : ObservableObject
         _selectedShapes.Add(shape);
         UpdateBounds();
     }
+
+    public void SelectRange(IEnumerable<ShapeBase> shapes)
+    {
+        foreach (var shape in shapes)
+            _selectedShapes.Add(shape);
+        
+        UpdateBounds();
+    }
     
     public void Deselect(ShapeBase shape)
     {
@@ -44,12 +52,25 @@ public partial class SelectionManager : ObservableObject
         
         UpdateBounds();
     }
+    
+    public void MoveSelection(Vector delta)
+    {
+        SelectionBounds = new Rect(SelectionBounds.X + delta.X, 
+            SelectionBounds.Y + delta.Y,
+            SelectionBounds.Width,
+            SelectionBounds.Height);
+    }
 
     private void UpdateBounds()
     {
         HasSelection = _selectedShapes.Count > 0;
 
-        if (!HasSelection) return;
+        if (!HasSelection)
+        {
+            SelectionBounds = new Rect(0, 0, 0, 0);
+            
+            return;
+        }
         
         var rects = _selectedShapes.Select(s => s.GetBounds())
             .ToList();

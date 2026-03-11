@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Avalonia.Input;
 using Tessera.App.Constants;
 using Tessera.App.Interfaces;
 
@@ -25,9 +26,9 @@ public class EraserTool : ICanvasTool
         _canvasContext.EraserRect = _eraserRect;
     }
 
-    public void OnPointerPressed(Point p)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
-        _startPoint = _canvasContext.Transform.ToWorld(p);
+        _startPoint = _canvasContext.Transform.ToWorld(screenPoint);
         _eraserRect.X = _startPoint.X;
         _eraserRect.Y = _startPoint.Y;
         _eraserRect.Width = 0;

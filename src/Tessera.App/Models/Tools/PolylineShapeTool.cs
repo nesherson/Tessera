@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Avalonia.Input;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
@@ -16,9 +17,9 @@ public class PolylineShapeTool : ICanvasTool
         _settings = settings;
     }
 
-    public void OnPointerPressed(Point p)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
-        var currentPoint = _canvasContext.Transform.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
 
         _line = new PolylineShape
         {
