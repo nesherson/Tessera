@@ -65,7 +65,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         
         PageName = ApplicationPageNames.Drawing;
         Transform = new CanvasTransform();
-        SelectionManager = new SelectionManager();
+        SelectionManager = new SelectionManager(Shapes);
         
         Tools =
         [

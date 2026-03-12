@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Models;
@@ -7,7 +9,14 @@ namespace Tessera.App.Managers;
 
 public partial class SelectionManager : ObservableObject
 {
+    private readonly ObservableCollection<ShapeBase> _shapes;
     private readonly HashSet<ShapeBase> _selectedShapes = [];
+
+    public SelectionManager(ObservableCollection<ShapeBase> shapes)
+    {
+        _shapes = shapes;
+        _shapes.CollectionChanged += OnShapesCollectionChanged;
+    }
     
     public IReadOnlyCollection<ShapeBase> SelectedShapes => _selectedShapes;
 
@@ -80,5 +89,20 @@ public partial class SelectionManager : ObservableObject
             union = union.Union(r);
 
         SelectionBounds = union;
+    }
+    
+    private void OnShapesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e is { Action: NotifyCollectionChangedAction.Remove, OldItems: not null })
+        {
+            foreach (ShapeBase shape in e.OldItems)
+                _selectedShapes.Remove(shape);
+        }
+        else if (e.Action == NotifyCollectionChangedAction.Reset)
+        {
+            _selectedShapes.Clear();
+        }
+        
+        UpdateBounds();
     }
 }
