@@ -31,6 +31,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private ObservableCollection<ShapeBase> _shapes = [];
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsSelectionToolSelected))]
     private ToolItem _selectedToolItem;
 
     [ObservableProperty]
@@ -52,6 +53,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private bool _isToolSettingsOpen;
 
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
+    public bool IsSelectionToolSelected => SelectedToolItem.Tool is SelectionTool;
 
     public DrawingPageViewModel()
     {

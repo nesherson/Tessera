@@ -145,8 +145,14 @@
                         Height="{Binding SelectionManager.SelectionBounds.Height}"
                         Stroke="DodgerBlue"
                         StrokeThickness="1"
-                        StrokeDashArray="4,2"
-                        IsVisible="{Binding SelectionManager.HasSelection}"/>
+                        StrokeDashArray="4,2">
+                        <Rectangle.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Rectangle.IsVisible>
+                    </Rectangle>
                     <Canvas.RenderTransform>
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
