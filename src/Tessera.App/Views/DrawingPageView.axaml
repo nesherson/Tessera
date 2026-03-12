@@ -221,7 +221,6 @@
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                 <Panel>
                                     <TextBlock
-                                        Name="TextShapeTextBlock"
                                         Text="{Binding Text}"
                                         FontSize="{Binding FontSize}"
                                         Foreground="{Binding Color}"

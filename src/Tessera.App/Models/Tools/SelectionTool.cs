@@ -81,37 +81,6 @@ public class SelectionTool : ICanvasTool
         }
         
         _selectionManager.Clear();
-        
-        // if (_selectionManager.SelectionBounds.Contains(world))
-        // {
-        //     if (keyModifiers.HasFlag(KeyModifiers.Control))
-        //     {
-        //         _selectionManager.Clear();
-        //     }
-        //     else
-        //     {
-        //         _pressedOnSelected = true;
-        //     }
-        //
-        //     return;
-        // }
-        //
-        // if (hitShape == null)
-        // {
-        //     _selectionManager.Clear();
-        // }
-        // else
-        // {
-        //     if (keyModifiers.HasFlag(KeyModifiers.Control))
-        //     {
-        //         _selectionManager.Toggle(hitShape);
-        //     }
-        //     else
-        //     {
-        //         _selectionManager.Clear();
-        //         _selectionManager.Select(hitShape);
-        //     }
-        // }
     }
 
     public void OnPointerMoved(Point screenPoint)
