@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -8,6 +9,7 @@ using Tessera.App.Data;
 using Tessera.App.Enumerations;
 using Tessera.App.Helpers;
 using Tessera.App.Interfaces;
+using Tessera.App.Managers;
 using Tessera.App.Messages;
 using Tessera.App.Models;
 
@@ -29,10 +31,14 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private ObservableCollection<ShapeBase> _shapes = [];
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsSelectionToolSelected))]
     private ToolItem _selectedToolItem;
 
     [ObservableProperty]
     private RectangleShape _eraserRect;
+    
+    [ObservableProperty]
+    private RectangleShape _marqueeRect;
 
     [ObservableProperty]
     private double _gridSpacing = 15;
@@ -47,6 +53,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private bool _isToolSettingsOpen;
 
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
+    public bool IsSelectionToolSelected => SelectedToolItem.Tool is SelectionTool;
 
     public DrawingPageViewModel()
     {
@@ -55,10 +62,19 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         var shapeSettings = new ShapeToolSettings();
         var polylineShapeSettings = new PolylineShapeToolSettings();
         var textShapeSettings = new TextShapeToolSettings();
-
+        
         PageName = ApplicationPageNames.Drawing;
+        Transform = new CanvasTransform();
+        SelectionManager = new SelectionManager(Shapes);
+        
         Tools =
         [
+            new ToolItem
+            {
+                Name = "Select",
+                IconPath = Icons.Cursor,
+                Tool = new SelectionTool(this, SelectionManager),
+            },
             new ToolItem
             {
                 Name = "Pan",
@@ -107,17 +123,17 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Tool = new EraserTool(this),
             },
         ];
-        Transform = new CanvasTransform();
 
         ResetToolSelection();
     }
 
     public CanvasTransform Transform { get; }
+    public SelectionManager SelectionManager { get; }
     public ObservableCollection<ToolItem> Tools { get; }
 
-    public void OnPointerPressed(Point screenPoint)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
-        CurrentTool.OnPointerPressed(screenPoint);
+        CurrentTool.OnPointerPressed(screenPoint, keyModifiers);
     }
 
     public void OnPointerMoved(Point screenPoint)
@@ -135,7 +151,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         Zoom(screenPoint, delta);
     }
 
-    public void ResetToolSelection() => SelectedToolItem = Tools[0];
+    private void ResetToolSelection() => SelectedToolItem = Tools[1];
 
     private void Zoom(Point screenPoint, double delta)
     {
@@ -180,5 +196,15 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     private void ResetZoom()
     {
         Transform.ResetZoom(GetViewportCenter());
+    }
+
+    [RelayCommand]
+    private void RemoveSelectedShapes()
+    {
+        Shapes
+            .Where(x => SelectionManager.IsSelected(x))
+            .ToList()
+            .ForEach(x => Shapes.Remove(x));
+        SelectionManager.Clear();
     }
 }

@@ -10,6 +10,7 @@ public static class Icons
     public const string CircleDashed = "/Assets/Icons/circle-dashed.svg";
     public const string Line = "/Assets/Icons/line.svg";
     public const string Pen = "/Assets/Icons/pen.svg";
+    public const string Cursor = "/Assets/Icons/cursor.svg";
     public const string PencilSimple = "/Assets/Icons/pencil-simple.svg";
     public const string Eraser = "/Assets/Icons/eraser.svg";
     public const string Info = "/Assets/Icons/info.svg";

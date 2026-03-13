@@ -1,4 +1,5 @@
-﻿using Tessera.App.Interfaces;
+﻿using Avalonia.Input;
+using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
 
@@ -15,7 +16,7 @@ public class LineShapeTool : ICanvasTool
         _settings = settings;
     }
 
-    public void OnPointerPressed(Point screenPoint)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
         var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
 

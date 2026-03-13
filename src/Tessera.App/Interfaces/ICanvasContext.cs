@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Avalonia.Input;
+using Tessera.App.Managers;
 using Tessera.App.Models;
 
 namespace Tessera.App.Interfaces;
@@ -9,5 +10,7 @@ public interface ICanvasContext
     ObservableCollection<ShapeBase> Shapes { get; }
     Cursor CurrentCursor { get; set; }
     RectangleShape EraserRect { get; set; }
+    RectangleShape MarqueeRect { get; set; }
     CanvasTransform Transform { get; }
+    SelectionManager SelectionManager { get; }
 }

@@ -1,4 +1,5 @@
-﻿using Tessera.App.Constants;
+﻿using Avalonia.Input;
+using Tessera.App.Constants;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
@@ -16,9 +17,9 @@ public class ShapeTool : ICanvasTool
         _settings = settings;
     }
 
-    public void OnPointerPressed(Point p)
+    public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
-        _startPoint = _canvasContext.Transform.ToWorld(p);
+        _startPoint = _canvasContext.Transform.ToWorld(screenPoint);
         _previewShape = CreateShape(_settings.ShapeType);
         _previewShape.X = _startPoint.X;
         _previewShape.Y = _startPoint.Y;

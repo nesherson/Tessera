@@ -1,0 +1,108 @@
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Models;
+
+namespace Tessera.App.Managers;
+
+public partial class SelectionManager : ObservableObject
+{
+    private readonly ObservableCollection<ShapeBase> _shapes;
+    private readonly HashSet<ShapeBase> _selectedShapes = [];
+
+    public SelectionManager(ObservableCollection<ShapeBase> shapes)
+    {
+        _shapes = shapes;
+        _shapes.CollectionChanged += OnShapesCollectionChanged;
+    }
+    
+    public IReadOnlyCollection<ShapeBase> SelectedShapes => _selectedShapes;
+
+    [ObservableProperty]
+    private Rect _selectionBounds;
+    
+    [ObservableProperty]
+    private bool _hasSelection;
+
+    public bool IsSelected(ShapeBase shape) => _selectedShapes.Contains(shape);
+
+    public void Select(ShapeBase shape)
+    {
+        _selectedShapes.Add(shape);
+        UpdateBounds();
+    }
+
+    public void SelectRange(IEnumerable<ShapeBase> shapes)
+    {
+        foreach (var shape in shapes)
+            _selectedShapes.Add(shape);
+        
+        UpdateBounds();
+    }
+    
+    public void Deselect(ShapeBase shape)
+    {
+        _selectedShapes.Remove(shape);
+        UpdateBounds();
+    }
+    
+    public void Clear()
+    {
+        _selectedShapes.Clear();
+        UpdateBounds();
+    }
+    
+    public void Toggle(ShapeBase shape)
+    {
+        if (!_selectedShapes.Remove(shape))
+            _selectedShapes.Add(shape);
+        
+        UpdateBounds();
+    }
+    
+    public void MoveSelection(Vector delta)
+    {
+        SelectionBounds = new Rect(SelectionBounds.X + delta.X, 
+            SelectionBounds.Y + delta.Y,
+            SelectionBounds.Width,
+            SelectionBounds.Height);
+    }
+
+    private void UpdateBounds()
+    {
+        HasSelection = _selectedShapes.Count > 0;
+
+        if (!HasSelection)
+        {
+            SelectionBounds = new Rect(0, 0, 0, 0);
+            
+            return;
+        }
+        
+        var rects = _selectedShapes.Select(s => s.GetBounds())
+            .ToList();
+        var union = rects.First();
+        
+        foreach (var r in rects.Skip(1))
+            union = union.Union(r);
+
+        SelectionBounds = union;
+    }
+    
+    private void OnShapesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e is { Action: NotifyCollectionChangedAction.Remove, OldItems: not null })
+        {
+            foreach (ShapeBase shape in e.OldItems)
+                _selectedShapes.Remove(shape);
+        }
+        else if (e.Action == NotifyCollectionChangedAction.Reset)
+        {
+            _selectedShapes.Clear();
+        }
+        
+        UpdateBounds();
+    }
+}
