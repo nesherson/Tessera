@@ -71,4 +71,7 @@ public class TextShapeTool : ICanvasTool
         
         _previewShape = null;
     }
+    
+    public void OnActivated() { }
+    public void OnDeactivated() { }
 }

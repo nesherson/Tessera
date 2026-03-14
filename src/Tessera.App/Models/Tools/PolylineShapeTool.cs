@@ -47,4 +47,7 @@ public class PolylineShapeTool : ICanvasTool
     {
         _line = null;
     }
+    
+    public void OnActivated() { }
+    public void OnDeactivated() { }
 }

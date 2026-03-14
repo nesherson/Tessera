@@ -73,6 +73,9 @@ public class ShapeTool : ICanvasTool
     {
         _previewShape = null;
     }
+    
+    public void OnActivated() { }
+    public void OnDeactivated() { }
 
     private ShapeBase CreateShape(ShapeType type)
     {

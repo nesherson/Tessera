@@ -216,4 +216,14 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         SelectionManager.Clear();
         SelectionManager.SelectRange(Shapes);
     }
+
+    partial void OnSelectedToolItemChanging(ToolItem? oldValue, ToolItem newValue)
+    {
+        oldValue?.Tool.OnDeactivated();
+    }
+
+    partial void OnSelectedToolItemChanged(ToolItem value)
+    {
+        value.Tool.OnActivated();
+    }
 }

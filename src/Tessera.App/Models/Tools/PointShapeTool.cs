@@ -31,12 +31,11 @@ public class PointShapeTool : ICanvasTool
     }
 
     // Not used
-    public void OnPointerMoved(Point p)
-    {
-    }
+    public void OnPointerMoved(Point p) { }
 
     // Not used
-    public void OnPointerReleased(Point p)
-    {
-    }
+    public void OnPointerReleased(Point p) { }
+    
+    public void OnActivated() { }
+    public void OnDeactivated() { }
 }
