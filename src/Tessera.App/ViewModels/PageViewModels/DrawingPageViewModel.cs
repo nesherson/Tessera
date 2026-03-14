@@ -207,4 +207,13 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
             .ForEach(x => Shapes.Remove(x));
         SelectionManager.Clear();
     }
+
+    [RelayCommand]
+    private void SelectAllShapes()
+    {
+        SelectedToolItem = Tools.First(x => x.Tool is SelectionTool);
+        
+        SelectionManager.Clear();
+        SelectionManager.SelectRange(Shapes);
+    }
 }

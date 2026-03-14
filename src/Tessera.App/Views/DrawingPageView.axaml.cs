@@ -157,6 +157,9 @@ public partial class DrawingPageView : UserControl
             case Key.Delete:
                 ViewModel?.RemoveSelectedShapesCommand.Execute(null);
                 break;
+            case Key.A when e.KeyModifiers.HasFlag(KeyModifiers.Control):
+                ViewModel?.SelectAllShapesCommand.Execute(null);
+                break;
         }
     }
     
