@@ -107,6 +107,8 @@ public class SelectionTool : ICanvasTool
         {
             var moveDelta = world - _lastPoint;
             
+            _canvasContext.CurrentCursor = new Cursor(StandardCursorType.SizeAll);
+            
             foreach (var shape in _canvasContext.Shapes.Where(s => _selectionManager.IsSelected(s)))
             {
                 shape.Move(moveDelta);
@@ -139,8 +141,12 @@ public class SelectionTool : ICanvasTool
         _mode = Mode.Undecided;
         _pressedOnSelected = false;
         _pressPoint = null;
+        _canvasContext.CurrentCursor = Cursor.Default;
     }
-    
+
+    public void OnActivated() { }
+    public void OnDeactivated() { }
+
     private ShapeBase? HitTestTopmost(Point world)
     {
         for (var i = _canvasContext.Shapes.Count - 1; i >= 0; i--)

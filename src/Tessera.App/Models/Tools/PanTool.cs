@@ -1,4 +1,7 @@
 ﻿using Avalonia.Input;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
+using Tessera.App.Constants;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
@@ -13,11 +16,12 @@ public class PanTool : ICanvasTool
     {
         _canvasContext = canvasContext;
     }
-
+    
     public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
         _startPoint = screenPoint;
-        _canvasContext.CurrentCursor = new Cursor(StandardCursorType.SizeAll);
+        
+        _canvasContext.CurrentCursor = new Cursor(Cursors.DragCursorBitmap, new PixelPoint(0, 0));
     }
 
     public void OnPointerMoved(Point screenPoint)
@@ -33,6 +37,16 @@ public class PanTool : ICanvasTool
     public void OnPointerReleased(Point screenPoint)
     {
         _startPoint = null;
+        _canvasContext.CurrentCursor = new Cursor(Cursors.DragCursorBitmap, new PixelPoint(0, 0));
+    }
+    
+    public void OnActivated()
+    {
+        _canvasContext.CurrentCursor = new Cursor(Cursors.PalmCursorBitmap, new PixelPoint(0, 0));
+    }
+
+    public void OnDeactivated()
+    {
         _canvasContext.CurrentCursor = Cursor.Default;
     }
 }

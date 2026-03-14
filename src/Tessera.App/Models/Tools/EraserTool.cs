@@ -64,4 +64,7 @@ public class EraserTool : ICanvasTool
 
         _eraserRect.IsVisible = false;
     }
+    
+    public void OnActivated() { }
+    public void OnDeactivated() { }
 }
