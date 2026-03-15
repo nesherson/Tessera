@@ -37,7 +37,7 @@ public class PanTool : ICanvasTool
     public void OnPointerReleased(Point screenPoint)
     {
         _startPoint = null;
-        _canvasContext.CurrentCursor = new Cursor(Cursors.DragCursorBitmap, new PixelPoint(0, 0));
+        _canvasContext.CurrentCursor = new Cursor(Cursors.PalmCursorBitmap, new PixelPoint(0, 0));
     }
     
     public void OnActivated()
