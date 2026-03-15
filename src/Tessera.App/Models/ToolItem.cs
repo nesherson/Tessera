@@ -1,3 +1,4 @@
+using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Interfaces;
 
@@ -9,4 +10,6 @@ public class ToolItem
     public string? IconPath { get; set; }
     public required ICanvasTool Tool { get; set; }
     public ObservableObject? ToolSettings { get; set; }
+    public KeyGesture? Shortcut { get; set; }
+    public string ToolTipText => Shortcut is null ? Name : $"{Name} ({Shortcut})"; 
 }

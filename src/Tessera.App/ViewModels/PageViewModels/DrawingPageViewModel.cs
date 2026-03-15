@@ -74,53 +74,61 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Name = "Select",
                 IconPath = Icons.Cursor,
                 Tool = new SelectionTool(this, SelectionManager),
+                Shortcut = new KeyGesture(Key.V)
             },
             new ToolItem
             {
                 Name = "Pan",
                 IconPath = Icons.HandGrabbing,
                 Tool = new PanTool(this),
+                Shortcut = new KeyGesture(Key.H)
             },
             new ToolItem
             {
                 Name = "Point",
                 IconPath = Icons.Point,
                 Tool = new PointShapeTool(this, pointShapeSettings),
-                ToolSettings = pointShapeSettings
+                ToolSettings = pointShapeSettings,
+                Shortcut = new KeyGesture(Key.P)
             },
             new ToolItem
             {
                 Name = "Line",
                 IconPath = Icons.Line,
                 Tool = new LineShapeTool(this, lineShapeSettings),
-                ToolSettings = lineShapeSettings
+                ToolSettings = lineShapeSettings,
+                Shortcut = new KeyGesture(Key.L)
             },
             new ToolItem
             {
                 Name = "Free drawing",
                 IconPath = Icons.Pen,
                 Tool = new PolylineShapeTool(this, polylineShapeSettings),
-                ToolSettings = polylineShapeSettings
+                ToolSettings = polylineShapeSettings,
+                Shortcut = new KeyGesture(Key.D)
             },
             new ToolItem
             {
                 Name = "Shape",
                 IconPath = Icons.Shapes,
                 Tool = new ShapeTool(this, shapeSettings),
-                ToolSettings = shapeSettings
+                ToolSettings = shapeSettings,
+                Shortcut = new KeyGesture(Key.S)
             },
             new ToolItem
             {
                 Name = "Text",
                 IconPath = Icons.TextT,
                 Tool = new TextShapeTool(this, textShapeSettings),
-                ToolSettings = textShapeSettings
+                ToolSettings = textShapeSettings,
+                Shortcut = new KeyGesture(Key.T)
             },
             new ToolItem
             {
                 Name = "Eraser",
                 IconPath = Icons.Eraser,
                 Tool = new EraserTool(this),
+                Shortcut = new KeyGesture(Key.E)
             },
         ];
 

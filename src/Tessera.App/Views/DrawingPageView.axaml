@@ -9,7 +9,8 @@
              xmlns:m="clr-namespace:Tessera.App.Models"
              xmlns:helpers="clr-namespace:Tessera.App.Helpers"
              x:Class="Tessera.App.Views.DrawingPageView"
-             x:DataType="vm:DrawingPageViewModel">
+             x:DataType="vm:DrawingPageViewModel"
+             Focusable="True">
     <Design.DataContext>
         <vm:DrawingPageViewModel />
     </Design.DataContext>
@@ -63,7 +64,7 @@
             <Setter Property="ItemTemplate">
                 <DataTemplate DataType="{x:Type m:ToolItem}">
                     <Border
-                        ToolTip.Tip="{Binding Name}">
+                        ToolTip.Tip="{Binding ToolTipText}">
                         <Svg Path="{Binding IconPath}" Width="20" />
                     </Border>
                 </DataTemplate>
@@ -306,13 +307,13 @@
                 <Border Classes="ToolbarBorder">
                     <StackPanel Orientation="Vertical">
                         <Button Command="{Binding ClearAllCommand}"
-                                ToolTip.Tip="Clear All"
+                                ToolTip.Tip="Clear All(CTRL + R)"
                                 Classes="FunctionBtn"
                                 BorderThickness="0,0,0,1">
                             <Svg Path="{x:Static helpers:Icons.Broom}" Width="20" />
                         </Button>
                         <Button Command="{Binding OpenOptionsCommand}"
-                                ToolTip.Tip="Open options"
+                                ToolTip.Tip="Open options(O)"
                                 Classes="FunctionBtn">
                             <Svg Path="{x:Static helpers:Icons.Gear}" Width="20" />
                         </Button>
