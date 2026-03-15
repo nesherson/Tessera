@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
@@ -15,6 +16,8 @@ public partial class DrawingPageView : UserControl
     public DrawingPageView()
     {
         InitializeComponent();
+        
+        Loaded += (_, _) => Focus();
     }
 
     private ToolItem? _previouslySelectedToolItem;
@@ -151,11 +154,33 @@ public partial class DrawingPageView : UserControl
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);
+        
+        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox)
+            return;
+        
+        var matchingTool = ViewModel?.Tools.FirstOrDefault(t =>
+            t.Shortcut != null &&
+            t.Shortcut.Key == e.Key &&
+            t.Shortcut.KeyModifiers == e.KeyModifiers);
+
+        if (matchingTool != null)
+        {
+            ViewModel?.SelectedToolItem = matchingTool;
+            e.Handled = true;
+            
+            return;
+        }
 
         switch (e.Key)
         {
             case Key.Delete:
                 ViewModel?.RemoveSelectedShapesCommand.Execute(null);
+                break;
+            case Key.O:
+                ViewModel?.OpenOptionsCommand.Execute(null);
+                break;
+            case Key.R when e.KeyModifiers.HasFlag(KeyModifiers.Control):
+                ViewModel?.ClearAllCommand.Execute(null);
                 break;
             case Key.A when e.KeyModifiers.HasFlag(KeyModifiers.Control):
                 ViewModel?.SelectAllShapesCommand.Execute(null);
