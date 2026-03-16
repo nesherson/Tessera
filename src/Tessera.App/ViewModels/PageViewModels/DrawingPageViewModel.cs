@@ -17,10 +17,6 @@ namespace Tessera.App.ViewModels;
 
 public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 {
-    private const double ZoomFactor = 1.1;
-    private const double MinScale = 0.1;
-    private const double MaxScale = 8.0;
-
     [ObservableProperty]
     private double _viewportWidth;
 
@@ -163,13 +159,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     private void Zoom(Point screenPoint, double delta)
     {
-        var factor = delta > 0 ? ZoomFactor : 1.0 / ZoomFactor;
-        var newScale = Transform.Matrix.M22 * factor;
-
-        if (newScale is < MinScale or > MaxScale)
-            return;
-
-        Transform.ZoomAt(screenPoint, factor);
+        Transform.ZoomAt(screenPoint, delta);
     }
 
     private Point GetViewportCenter() => new(ViewportWidth / 2, ViewportHeight / 2);

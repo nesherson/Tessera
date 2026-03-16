@@ -68,9 +68,8 @@ public partial class DrawingPageView : UserControl
     private void OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
     {
         var currentPoint = e.GetPosition(CanvasContainer);
-        var delta = e.Delta.Y;
 
-        ViewModel?.OnPointerWheelChanged(currentPoint, delta);
+        ViewModel?.OnPointerWheelChanged(currentPoint, e.Delta.Y);
     }
 
     private void OnTextBoxLoaded(object? sender, RoutedEventArgs e)
