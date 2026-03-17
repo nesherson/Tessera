@@ -26,11 +26,17 @@ public partial class SelectionManager : ObservableObject
     [ObservableProperty]
     private bool _hasSelection;
 
-    public bool IsSelected(ShapeBase shape) => _selectedShapes.Contains(shape);
+    public bool IsSelected(ShapeBase shape) => SelectedShapes.Contains(shape);
 
+    public event EventHandler? SelectionChanged;
+    
     public void Select(ShapeBase shape)
     {
         _selectedShapes.Add(shape);
+        
+        HasSelection = _selectedShapes.Count > 0;
+        
+        OnSelectionChanged();
         UpdateBounds();
     }
 
@@ -39,18 +45,29 @@ public partial class SelectionManager : ObservableObject
         foreach (var shape in shapes)
             _selectedShapes.Add(shape);
         
+        HasSelection = _selectedShapes.Count > 0;
+        
+        OnSelectionChanged();
         UpdateBounds();
     }
     
     public void Deselect(ShapeBase shape)
     {
         _selectedShapes.Remove(shape);
+        
+        HasSelection = _selectedShapes.Count > 0;
+        
+        OnSelectionChanged();
         UpdateBounds();
     }
     
     public void Clear()
     {
         _selectedShapes.Clear();
+        
+        HasSelection = _selectedShapes.Count > 0;
+        
+        OnSelectionChanged();
         UpdateBounds();
     }
     
@@ -59,6 +76,9 @@ public partial class SelectionManager : ObservableObject
         if (!_selectedShapes.Remove(shape))
             _selectedShapes.Add(shape);
         
+        HasSelection = _selectedShapes.Count > 0;
+        
+        OnSelectionChanged();
         UpdateBounds();
     }
     
@@ -72,8 +92,6 @@ public partial class SelectionManager : ObservableObject
 
     private void UpdateBounds()
     {
-        HasSelection = _selectedShapes.Count > 0;
-
         if (!HasSelection)
         {
             SelectionBounds = new Rect(0, 0, 0, 0);
@@ -81,7 +99,7 @@ public partial class SelectionManager : ObservableObject
             return;
         }
         
-        var rects = _selectedShapes.Select(s => s.GetBounds())
+        var rects = SelectedShapes.Select(s => s.GetBounds())
             .ToList();
         var union = rects.First();
         
@@ -105,4 +123,6 @@ public partial class SelectionManager : ObservableObject
         
         UpdateBounds();
     }
+    
+    private void OnSelectionChanged() => SelectionChanged?.Invoke(this, EventArgs.Empty);
 }
