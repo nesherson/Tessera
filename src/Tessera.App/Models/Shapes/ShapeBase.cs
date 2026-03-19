@@ -34,9 +34,6 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
 
     [ObservableProperty]
     private double _opacity;
-
-    [ObservableProperty]
-    private bool _isSelected;
     
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(StrokeDashArray))]
