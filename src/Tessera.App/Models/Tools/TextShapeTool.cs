@@ -1,7 +1,7 @@
 ﻿using Avalonia.Input;
-using CommunityToolkit.Mvvm.Messaging;
+using ExCSS;
 using Tessera.App.Interfaces;
-using Tessera.App.Messages;
+using Point = Avalonia.Point;
 
 namespace Tessera.App.Models;
 
@@ -13,7 +13,7 @@ public class TextShapeTool : ICanvasTool
     private const double Tolerance = 1;
     
     private Point _startPoint;
-    private TextShape? _previewShape;
+    private TextShape? _shape;
 
     public TextShapeTool(ICanvasContext canvasContext, TextShapeToolSettings settings)
     {
@@ -25,51 +25,51 @@ public class TextShapeTool : ICanvasTool
     {
         _startPoint = _canvasContext.Transform.ToWorld(screenPoint);
         
-        _previewShape = new TextShape
+        _shape = new TextShape
         {
             X = _startPoint.X,
             Y = _startPoint.Y,
             IsInitializing = true,
-            FontSize = _settings.Size.Thickness * 3,
-            Color = _settings.Color,
+            FontSize = _settings.StrokeThickness * 2,
+            StrokeColor = _settings.StrokeColor,
             Width = 1,
             Height = 1,
-            FontFamily = new FontFamily(_settings.FontFamily.Name)
+            Opacity = 1
         };
         
-        _canvasContext.Shapes.Add(_previewShape);
+        _canvasContext.Shapes.Add(_shape);
     }
 
     public void OnPointerMoved(Point screenPoint)
     {
-        if (_previewShape == null) return;
+        if (_shape == null) return;
         
         var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
         var x = Math.Min(currentPoint.X, _startPoint.X);
         var y = Math.Min(currentPoint.Y, _startPoint.Y);
         var w = Math.Abs(currentPoint.X - _startPoint.X);
-        var h = Math.Clamp(Math.Abs(currentPoint.Y - _startPoint.Y), 16, 16);
+        var h = Math.Clamp(Math.Abs(currentPoint.Y - _startPoint.Y), _shape.MinHeight, _shape.MinHeight);
 
-        _previewShape.X = x;
-        _previewShape.Y = y;
-        _previewShape.Width = w;
-        _previewShape.Height = h;
+        _shape.X = x;
+        _shape.Y = y;
+        _shape.Width = w;
+        _shape.Height = h;
     }
 
     public void OnPointerReleased(Point screenPoint)
     {
-        if (_previewShape == null) return;
+        if (_shape == null) return;
 
-        if (Math.Abs(_previewShape.Width - 1) < Tolerance)
+        if (Math.Abs(_shape.Width - 1) < Tolerance)
         {
-            _previewShape.Width = 52;
-            _previewShape.Height = 16;
+            _shape.Width = 52;
+            _shape.Height = 16;
         }
         
-        _previewShape.IsInitializing = false;
-        _previewShape.IsEditing = true;
+        _shape.IsInitializing = false;
+        _shape.IsEditing = true;
         
-        _previewShape = null;
+        _shape = null;
     }
     
     public void OnActivated() { }

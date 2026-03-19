@@ -1,8 +1,0 @@
-﻿namespace Tessera.App.Models;
-
-public record struct ShapeType
-{
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string IconPath { get; set; }
-}

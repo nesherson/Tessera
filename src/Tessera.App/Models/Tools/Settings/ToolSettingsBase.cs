@@ -1,67 +1,36 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Enumerations;
 using Tessera.App.Helpers;
+using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
 
-public partial class ToolSettingsBase : ObservableObject
+public partial class ToolSettingsBase : ObservableObject, IShapeProperties
 {
     [ObservableProperty]
-    private List<IBrush> _availableColors = [..AppColors.DefaultPalette];
+    private IBrush _color = AppColors.BlackBrush;
 
     [ObservableProperty]
-    private List<ShapeSize> _availableSizes =
-    [
-        new() { Name = "S", Description = "Small", Thickness = 4 },
-        new() { Name = "M", Description = "Medium", Thickness = 8 },
-        new() { Name = "L", Description = "Large", Thickness = 12 },
-        new() { Name = "XL", Description = "Extra large", Thickness = 18 }
-    ];
+    private double _opacity = 1;
 
     [ObservableProperty]
-    private List<StrokeType> _availableStrokeTypes =
-    [
-        new()
-        {
-            Name = "Solid",
-            Description = "Solid stroke",
-            IconPath = Icons.Circle,
-            DashArray = []
-        },
-        new()
-        {
-            Name = "Dotted",
-            Description = "Dotted stroke",
-            IconPath = Icons.CircleDotted,
-            DashArray = [1, 2]
-        },
-        new()
-        {
-            Name = "Dashed",
-            Description = "Dashed stroke",
-            IconPath = Icons.CircleDashed,
-            DashArray = [4, 4]
-        }
-    ];
+    private IBrush _strokeColor = AppColors.BlackBrush;
 
     [ObservableProperty]
-    private StrokeType _strokeType;
+    private double _strokeThickness = 12;
 
     [ObservableProperty]
-    private IBrush _color;
+    private ShapeType _shapeType;
+    
+    public StrokeType StrokeType { get; set; }
+    public FillType FillType { get; set; }
 
-    [ObservableProperty]
-    private ShapeSize _size;
-
-    [ObservableProperty]
-    private double _opacity;
-
-    protected ToolSettingsBase()
+    public AvaloniaList<double> StrokeDashArray => StrokeType switch
     {
-        Color = AvailableColors.First();
-        StrokeType = AvailableStrokeTypes.First();
-        Size = AvailableSizes.First();
-        Opacity = 1;
-    }
+        StrokeType.Solid => [],
+        StrokeType.Dashed => [1,2],
+        StrokeType.Dotted => [4,4],
+        _ => []
+    };
 }

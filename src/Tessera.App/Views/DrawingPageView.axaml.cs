@@ -121,11 +121,7 @@ public partial class DrawingPageView : UserControl
         
         Dispatcher.UIThread.Post(() =>
         {
-            var lineCount = tb.Text?.Split('\n').Length ?? 1;
-            var lineHeight = shape.FontSize * 1.4;
-            var requiredHeight = lineCount * lineHeight;
-
-            shape.Height = Math.Max(requiredHeight, 16);
+            shape.UpdateBounds();
         });
     }
 

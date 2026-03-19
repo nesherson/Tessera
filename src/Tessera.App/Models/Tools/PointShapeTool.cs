@@ -19,12 +19,14 @@ public class PointShapeTool : ICanvasTool
         var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
         var newPoint = new EllipseShape
         {
-            X = currentPoint.X,
-            Y = currentPoint.Y,
-            Width = _settings.Size.Thickness,
-            Height = _settings.Size.Thickness,
-            Color = _settings.Color,
-            Opacity = _settings.Opacity
+            X = currentPoint.X - _settings.StrokeThickness / 2,
+            Y = currentPoint.Y - _settings.StrokeThickness / 2,
+            Width = _settings.StrokeThickness,
+            Height = _settings.StrokeThickness,
+            StrokeColor = _settings.StrokeColor,
+            Color = _settings.StrokeColor,
+            Opacity = _settings.Opacity,
+            StrokeThickness = _settings.StrokeThickness
         };
 
         _canvasContext.Shapes.Add(newPoint);

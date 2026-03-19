@@ -99,10 +99,10 @@
                    PointerReleased="OnPointerReleased"
                    PointerWheelChanged="OnPointerWheelChanged"
                    Cursor="{Binding CurrentCursor}">
-                
+
                 <!-- Eraser and marquee layer -->
                 <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
-                    <Rectangle 
+                    <Rectangle
                         Canvas.Left="{Binding EraserRect.X}"
                         Canvas.Top="{Binding EraserRect.Y}"
                         Width="{Binding EraserRect.Width}"
@@ -111,7 +111,7 @@
                         Stroke="{Binding EraserRect.StrokeColor}"
                         StrokeThickness="{Binding EraserRect.StrokeThickness}"
                         Fill="{Binding EraserRect.Color}" />
-                    <Rectangle 
+                    <Rectangle
                         Canvas.Left="{Binding MarqueeRect.X}"
                         Canvas.Top="{Binding MarqueeRect.Y}"
                         Width="{Binding MarqueeRect.Width}"
@@ -124,7 +124,7 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
                 </Canvas>
-                
+
                 <!-- Grid layer -->
                 <c:CanvasGrid
                     RenderTransformOrigin="0,0"
@@ -136,7 +136,7 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </c:CanvasGrid.RenderTransform>
                 </c:CanvasGrid>
-                
+
                 <!-- Selection overlay layer -->
                 <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
                     <Rectangle
@@ -158,15 +158,18 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
                 </Canvas>
-                
+
                 <!-- Shape layer -->
-                <ItemsControl ItemsSource="{Binding Shapes}" IsHitTestVisible="False" Padding="0"
+                <ItemsControl ItemsSource="{Binding Shapes}" 
+                              IsHitTestVisible="False" 
+                              Padding="0"
                               Margin="0"
                               BorderThickness="0">
                     <ItemsControl.Styles>
                         <Style Selector="ContentPresenter" x:DataType="m:ShapeBase">
                             <Setter Property="Canvas.Left" Value="{Binding X}" />
                             <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                            <Setter Property="Opacity" Value="{Binding Opacity}" />
                         </Style>
                     </ItemsControl.Styles>
                     <ItemsControl.ItemsPanel>
@@ -181,63 +184,52 @@
                     <ItemsControl.ItemTemplate>
                         <dt:ShapeTemplateSelector>
                             <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
-                                <Panel>
-                                    <Ellipse
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Stroke="{Binding StrokeColor}"
-                                        Fill="{Binding Color}"
-                                        StrokeThickness="{Binding StrokeThickness}"
-                                        Opacity="{Binding Opacity}" />
-                                </Panel>
+                                <Ellipse
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    Stroke="{Binding StrokeColor}"
+                                    Fill="{Binding Color}" 
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}"/>
                             </DataTemplate>
                             <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
-                                <Panel>
-                                    <Line
-                                        StartPoint="{Binding StartPoint}"
-                                        EndPoint="{Binding EndPoint}"
-                                        Stroke="{Binding StrokeColor}"
-                                        StrokeThickness="{Binding StrokeThickness}"
-                                        StrokeDashArray="{Binding StrokeDashArray}"
-                                        Opacity="{Binding Opacity}" />
-                                </Panel>
+                                <Line
+                                    StartPoint="{Binding StartPoint}"
+                                    EndPoint="{Binding EndPoint}"
+                                    Stroke="{Binding StrokeColor}"
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
                             <DataTemplate x:Key="PolylineShape" DataType="{x:Type m:PolylineShape}">
-                                <Panel>
-                                    <Polyline
-                                        Points="{Binding Points}"
-                                        Stroke="{Binding StrokeColor}"
-                                        StrokeThickness="{Binding StrokeThickness}"
-                                        StrokeDashArray="{Binding StrokeDashArray}"
-                                        Opacity="{Binding Opacity}" />
-                                </Panel>
+                                <Polyline
+                                    Points="{Binding Points}"
+                                    Stroke="{Binding StrokeColor}"
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
                             <DataTemplate x:Key="RectangleShape" DataType="{x:Type m:RectangleShape}">
-                                <Panel>
-                                    <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Stroke="{Binding StrokeColor}"
-                                        Fill="{Binding Color}"
-                                        Margin="2"
-                                        StrokeThickness="{Binding StrokeThickness}"
-                                        StrokeDashArray="{Binding StrokeDashArray}"
-                                        Opacity="{Binding Opacity}" />
-                                </Panel>
+                                <Rectangle
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    Stroke="{Binding StrokeColor}"
+                                    Fill="{Binding Color}"
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                 <Panel>
                                     <TextBlock
                                         Text="{Binding Text}"
                                         FontSize="{Binding FontSize}"
-                                        Foreground="{Binding Color}"
-                                        FontFamily="{Binding FontFamily}"
+                                        Foreground="{Binding StrokeColor}"
+                                        FontFamily="Cascadia Mono"
                                         Width="{Binding Width}"
                                         Height="{Binding Height}">
                                         <TextBlock.IsVisible>
                                             <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                <Binding Path="IsEditing" Converter="{x:Static BoolConverters.Not}"/>
-                                                <Binding Path="IsInitializing" Converter="{x:Static BoolConverters.Not}"/>
+                                                <Binding Path="IsEditing" Converter="{x:Static BoolConverters.Not}" />
+                                                <Binding Path="IsInitializing"
+                                                         Converter="{x:Static BoolConverters.Not}" />
                                             </MultiBinding>
                                         </TextBlock.IsVisible>
                                     </TextBlock>
@@ -246,13 +238,14 @@
                                         Height="{Binding Height}"
                                         Stroke="DeepSkyBlue"
                                         StrokeThickness="1"
-                                        IsVisible="{Binding IsInitializing}"/>
+                                        IsVisible="{Binding IsInitializing}"
+                                        Opacity="1"/>
                                     <TextBox
                                         Classes="TbTransparent"
                                         Text="{Binding Text, Mode=TwoWay}"
                                         FontSize="{Binding FontSize}"
-                                        FontFamily="{Binding FontFamily}"
-                                        Foreground="{Binding Color}"
+                                        FontFamily="Cascadia Mono"
+                                        Foreground="{Binding StrokeColor}"
                                         IsVisible="{Binding IsEditing}"
                                         Background="Transparent"
                                         BorderBrush="DeepSkyBlue"
@@ -267,7 +260,7 @@
                                         Loaded="OnTextBoxLoaded"
                                         LostFocus="OnTextBoxLostFocus"
                                         KeyDown="OnTextBoxKeyDown"
-                                        TextChanged="OnTextBoxTextChanged"/>
+                                        TextChanged="OnTextBoxTextChanged" />
                                 </Panel>
                             </DataTemplate>
                         </dt:ShapeTemplateSelector>
@@ -284,14 +277,15 @@
             Spacing="10"
             Orientation="Horizontal">
             <c:CanvasToolSettings
-                ToolSettings="{Binding SelectedToolItem.ToolSettings}"
+                Properties="{Binding ActiveProperties}"
                 VerticalAlignment="Top">
                 <c:CanvasToolSettings.IsVisible>
-                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                    <MultiBinding Converter="{x:Static BoolConverters.Or}">
                         <Binding
                             Path="SelectedToolItem.ToolSettings"
                             Converter="{x:Static ObjectConverters.IsNotNull}" />
                         <Binding Path="IsToolSettingsOpen" />
+                        <Binding Path="SelectionManager.HasSelection" />
                     </MultiBinding>
                 </c:CanvasToolSettings.IsVisible>
             </c:CanvasToolSettings>

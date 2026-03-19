@@ -1,9 +1,12 @@
 using Avalonia.Collections;
+using Avalonia.Controls.Shapes;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Enumerations;
+using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
 
-public abstract partial class ShapeBase : ObservableObject
+public abstract partial class ShapeBase : ObservableObject, IShapeProperties
 {
     [ObservableProperty]
     private double _x;
@@ -33,11 +36,26 @@ public abstract partial class ShapeBase : ObservableObject
     private double _opacity;
 
     [ObservableProperty]
-    private AvaloniaList<double> _strokeDashArray;
-
-    [ObservableProperty]
     private bool _isSelected;
-
+    
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(StrokeDashArray))]
+    private StrokeType _strokeType;
+    
+    [ObservableProperty]
+    private FillType _fillType;
+    
+    [ObservableProperty]
+    private ShapeType _shapeType;
+    
+    public AvaloniaList<double> StrokeDashArray => StrokeType switch
+    {
+        StrokeType.Solid => [],
+        StrokeType.Dashed => [1,2],
+        StrokeType.Dotted => [4,4],
+        _ => []
+    };
+    
     public abstract bool Intersects(Rect rect);
     public abstract bool HitTest(Point worldPoint, double tolerance);
     public abstract void Move(Vector delta);

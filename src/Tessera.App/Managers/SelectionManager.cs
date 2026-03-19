@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
+using Avalonia.Skia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Models;
 
@@ -17,7 +21,7 @@ public partial class SelectionManager : ObservableObject
         _shapes = shapes;
         _shapes.CollectionChanged += OnShapesCollectionChanged;
     }
-    
+
     public IReadOnlyCollection<ShapeBase> SelectedShapes => _selectedShapes;
 
     [ObservableProperty]
@@ -34,6 +38,7 @@ public partial class SelectionManager : ObservableObject
     {
         _selectedShapes.Add(shape);
         
+        shape.PropertyChanged += OnShapePropertyChanged;
         HasSelection = _selectedShapes.Count > 0;
         
         OnSelectionChanged();
@@ -43,16 +48,22 @@ public partial class SelectionManager : ObservableObject
     public void SelectRange(IEnumerable<ShapeBase> shapes)
     {
         foreach (var shape in shapes)
+        {
             _selectedShapes.Add(shape);
+            
+            shape.PropertyChanged += OnShapePropertyChanged;
+        }
         
         HasSelection = _selectedShapes.Count > 0;
         
-        OnSelectionChanged();
+        OnSelectionChanged();   
         UpdateBounds();
     }
     
     public void Deselect(ShapeBase shape)
     {
+        shape.PropertyChanged -= OnShapePropertyChanged;
+
         _selectedShapes.Remove(shape);
         
         HasSelection = _selectedShapes.Count > 0;
@@ -63,6 +74,9 @@ public partial class SelectionManager : ObservableObject
     
     public void Clear()
     {
+        foreach (var shape in _selectedShapes)
+            shape.PropertyChanged -= OnShapePropertyChanged;
+        
         _selectedShapes.Clear();
         
         HasSelection = _selectedShapes.Count > 0;
@@ -74,7 +88,15 @@ public partial class SelectionManager : ObservableObject
     public void Toggle(ShapeBase shape)
     {
         if (!_selectedShapes.Remove(shape))
+        {
             _selectedShapes.Add(shape);
+        
+            shape.PropertyChanged += OnShapePropertyChanged;
+        }
+        else
+        {
+            shape.PropertyChanged -= OnShapePropertyChanged;
+        }
         
         HasSelection = _selectedShapes.Count > 0;
         
@@ -114,14 +136,30 @@ public partial class SelectionManager : ObservableObject
         if (e is { Action: NotifyCollectionChangedAction.Remove, OldItems: not null })
         {
             foreach (ShapeBase shape in e.OldItems)
+            {
+                shape.PropertyChanged -= OnShapePropertyChanged;
                 _selectedShapes.Remove(shape);
+            }
         }
         else if (e.Action == NotifyCollectionChangedAction.Reset)
         {
+            foreach (var shape in _selectedShapes)
+                shape.PropertyChanged -= OnShapePropertyChanged;
+            
             _selectedShapes.Clear();
         }
         
+        HasSelection = _selectedShapes.Count > 0;
+        
         UpdateBounds();
+    }
+    
+    private void OnShapePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (sender is TextShape && e.PropertyName == nameof(TextShape.StrokeThickness))
+        {
+            UpdateBounds();
+        }
     }
     
     private void OnSelectionChanged() => SelectionChanged?.Invoke(this, EventArgs.Empty);
