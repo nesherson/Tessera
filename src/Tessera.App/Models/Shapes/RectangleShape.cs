@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls.Shapes;
 
-namespace Tessera.App.wModels;
+namespace Tessera.App.Models;
 
 public class RectangleShape : ShapeBase
 {
