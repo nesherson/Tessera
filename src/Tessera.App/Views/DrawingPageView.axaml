@@ -213,6 +213,15 @@
                                     StrokeThickness="{Binding StrokeThickness}"
                                     StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
+                            <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
+                                <Ellipse
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    Stroke="{Binding StrokeColor}"
+                                    Fill="{Binding Color}"
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    StrokeDashArray="{Binding StrokeDashArray}" />
+                            </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                 <Panel>
                                     <TextBlock
