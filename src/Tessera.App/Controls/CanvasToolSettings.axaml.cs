@@ -192,10 +192,12 @@ public partial class CanvasToolSettings : UserControl
         
         if (change.Property == PropertiesProperty)
         {
-            ShowStrokeTypeOptions = Properties is not PointShapeToolSettings;
+            ShowStrokeTypeOptions = Properties is not PointShapeToolSettings
+                && (Properties is MultiShapePropertyProxy proxy1
+                    && proxy1.Shapes.Any(s => s is RectangleShape or EllipseShape or PolylineShape or LineShape));
             ShowShapeOptions = Properties is ShapeToolSettings
-                || (Properties is MultiShapePropertyProxy proxy
-                    && proxy.Shapes.Any(s => s is RectangleShape or EllipseShape));
+                || (Properties is MultiShapePropertyProxy proxy2
+                    && proxy2.Shapes.Any(s => s is RectangleShape or EllipseShape));
         }
     }
 }
