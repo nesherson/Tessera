@@ -17,7 +17,7 @@ public class PointShapeTool : ICanvasTool
     public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
     {
         var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
-        var newPoint = new EllipseShape
+        var newPoint = new PointShape
         {
             X = currentPoint.X - _settings.StrokeThickness / 2,
             Y = currentPoint.Y - _settings.StrokeThickness / 2,
