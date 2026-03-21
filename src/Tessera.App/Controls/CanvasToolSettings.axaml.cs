@@ -13,47 +13,38 @@ public partial class CanvasToolSettings : UserControl
     public static readonly StyledProperty<IShapeProperties> PropertiesProperty =
         AvaloniaProperty.Register<CanvasToolSettings, IShapeProperties>(nameof(Properties));
 
-    private List<IBrush> _availableColors;
     public static readonly DirectProperty<CanvasToolSettings, List<IBrush>> AvailableColorsProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, List<IBrush>>(
             nameof(AvailableColors), o => o.AvailableColors, (o, v) => o.AvailableColors = v);
 
-    private List<ShapeSize> _availableSizes;
     public static readonly DirectProperty<CanvasToolSettings, List<ShapeSize>> AvailableSizesProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, List<ShapeSize>>(
             nameof(AvailableSizes), o => o.AvailableSizes, (o, v) => o.AvailableSizes = v);
 
-    private List<ToolListItem<StrokeType>> _availableStrokeTypes;
     public static readonly DirectProperty<CanvasToolSettings, List<ToolListItem<StrokeType>>> AvailableStrokeTypesProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, List<ToolListItem<StrokeType>>>(
             nameof(AvailableStrokeTypes), o => o.AvailableStrokeTypes, (o, v) => o.AvailableStrokeTypes = v);
 
-    private List<ToolListItem<FillType>> _availableFillTypes;
     public static readonly DirectProperty<CanvasToolSettings, List<ToolListItem<FillType>>> AvailableFillTypesProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, List<ToolListItem<FillType>>>(
             nameof(AvailableFillTypes), o => o.AvailableFillTypes, (o, v) => o.AvailableFillTypes = v);
 
-    private List<ToolListItem<ShapeType>> _availableShapeTypes;
     public static readonly DirectProperty<CanvasToolSettings, List<ToolListItem<ShapeType>>> AvailableShapeTypesProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, List<ToolListItem<ShapeType>>>(
             nameof(AvailableShapeTypes), o => o.AvailableShapeTypes, (o, v) => o.AvailableShapeTypes = v);
 
-    private bool _isShapePopupOpen;
     public static readonly DirectProperty<CanvasToolSettings, bool> IsShapePopupOpenProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, bool>(
             nameof(IsShapePopupOpen), o => o.IsShapePopupOpen, (o, v) => o.IsShapePopupOpen = v);
 
-    private ToolListItem<ShapeType> _selectedShapeType;
     public static readonly DirectProperty<CanvasToolSettings, ToolListItem<ShapeType>> SelectedShapeTypeProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, ToolListItem<ShapeType>>(
             nameof(SelectedShapeType), o => o.SelectedShapeType, (o, v) => o.SelectedShapeType = v);
 
-    private bool _showStrokeTypeOptions = true;
     public static readonly DirectProperty<CanvasToolSettings, bool> ShowStrokeTypeOptionsProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, bool>(
             nameof(ShowStrokeTypeOptions), o => o.ShowStrokeTypeOptions, (o, v) => o.ShowStrokeTypeOptions = v);
 
-    private bool _showShapeOptions;
     public static readonly DirectProperty<CanvasToolSettings, bool> ShowShapeOptionsProperty =
         AvaloniaProperty.RegisterDirect<CanvasToolSettings, bool>(
             nameof(ShowShapeOptions), o => o.ShowShapeOptions, (o, v) => o.ShowShapeOptions = v);
@@ -105,59 +96,59 @@ public partial class CanvasToolSettings : UserControl
         ];
         SelectedShapeType = AvailableShapeTypes[0];
     }
-    
+
     public List<IBrush> AvailableColors
     {
-        get => _availableColors;
-        set => SetAndRaise(AvailableColorsProperty, ref _availableColors, value);
+        get;
+        set => SetAndRaise(AvailableColorsProperty, ref field, value);
     }
 
     public List<ShapeSize> AvailableSizes
     {
-        get => _availableSizes;
-        set => SetAndRaise(AvailableSizesProperty, ref _availableSizes, value);
+        get;
+        set => SetAndRaise(AvailableSizesProperty, ref field, value);
     }
 
     public List<ToolListItem<StrokeType>> AvailableStrokeTypes
     {
-        get => _availableStrokeTypes;
-        set => SetAndRaise(AvailableStrokeTypesProperty, ref _availableStrokeTypes, value);
+        get;
+        set => SetAndRaise(AvailableStrokeTypesProperty, ref field, value);
     }
 
     public List<ToolListItem<FillType>> AvailableFillTypes
     {
-        get => _availableFillTypes;
-        set => SetAndRaise(AvailableFillTypesProperty, ref _availableFillTypes, value);
+        get;
+        set => SetAndRaise(AvailableFillTypesProperty, ref field, value);
     }
 
     public List<ToolListItem<ShapeType>> AvailableShapeTypes
     {
-        get => _availableShapeTypes;
-        set => SetAndRaise(AvailableShapeTypesProperty, ref _availableShapeTypes, value);
+        get;
+        set => SetAndRaise(AvailableShapeTypesProperty, ref field, value);
     }
 
     public ToolListItem<ShapeType> SelectedShapeType
     {
-        get => _selectedShapeType;
-        set => SetAndRaise(SelectedShapeTypeProperty, ref _selectedShapeType, value);
+        get;
+        set => SetAndRaise(SelectedShapeTypeProperty, ref field, value);
     }
 
     public bool ShowStrokeTypeOptions
     {
-        get => _showStrokeTypeOptions;
-        set => SetAndRaise(ShowStrokeTypeOptionsProperty, ref _showStrokeTypeOptions, value);
-    }
+        get;
+        set => SetAndRaise(ShowStrokeTypeOptionsProperty, ref field, value);
+    } = true;
 
     public bool ShowShapeOptions
     {
-        get => _showShapeOptions;
-        set => SetAndRaise(ShowShapeOptionsProperty, ref _showShapeOptions, value);
+        get;
+        set => SetAndRaise(ShowShapeOptionsProperty, ref field, value);
     }
 
     public bool IsShapePopupOpen
     {
-        get => _isShapePopupOpen;
-        set => SetAndRaise(IsShapePopupOpenProperty, ref _isShapePopupOpen, value);
+        get;
+        set => SetAndRaise(IsShapePopupOpenProperty, ref field, value);
     }
 
     public IShapeProperties Properties
