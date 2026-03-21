@@ -113,8 +113,6 @@ public class SelectionTool : ICanvasTool
             {
                 shape.Move(moveDelta);
             }
-
-            _selectionManager.MoveSelection(moveDelta);
         }
 
         _lastPoint = world;

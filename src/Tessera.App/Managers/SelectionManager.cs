@@ -103,14 +103,6 @@ public partial class SelectionManager : ObservableObject
         OnSelectionChanged();
         UpdateBounds();
     }
-    
-    public void MoveSelection(Vector delta)
-    {
-        SelectionBounds = new Rect(SelectionBounds.X + delta.X, 
-            SelectionBounds.Y + delta.Y,
-            SelectionBounds.Width,
-            SelectionBounds.Height);
-    }
 
     private void UpdateBounds()
     {
@@ -156,7 +148,11 @@ public partial class SelectionManager : ObservableObject
     
     private void OnShapePropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (sender is TextShape && e.PropertyName == nameof(TextShape.StrokeThickness))
+        if (e.PropertyName is nameof(LineShape.StartPoint) 
+            or nameof(LineShape.EndPoint) 
+            or nameof(PolylineShape.Points)
+            or nameof(ShapeBase.X)
+            or nameof(ShapeBase.Y))
         {
             UpdateBounds();
         }
