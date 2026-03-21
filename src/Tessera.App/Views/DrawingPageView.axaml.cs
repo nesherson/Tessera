@@ -99,6 +99,7 @@ public partial class DrawingPageView : UserControl
         if (sender is not TextBox { DataContext: TextShape shape }) return;
         
         FinalizeTextShape(shape);
+        Focus();
     }
 
     private void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
@@ -106,6 +107,7 @@ public partial class DrawingPageView : UserControl
         if (e.Key == Key.Escape && sender is TextBox { DataContext: TextShape shape })
         {
             FinalizeTextShape(shape);
+            Focus();
             e.Handled = true;
         }
     }
