@@ -19,18 +19,8 @@ public partial class TextShape : ShapeBase
     
     public double MinHeight => FontSize * 1.4;
     
-    public override bool Intersects(Rect rect)
-    {
-        var formattedText = new FormattedText(
-            Text,
-            System.Globalization.CultureInfo.CurrentCulture,
-            FlowDirection.LeftToRight,
-            new Typeface(new FontFamily("Cascadia Mono")),
-            FontSize,
-            null);
-
-        return rect.Intersects(new Rect(X, Y, formattedText.Width, formattedText.Height));
-    }
+    public override bool Intersects(Rect rect) => 
+        rect.Intersects(new Rect(X, Y, Width, Height));
 
     public override bool HitTest(Point worldPoint, double tolerance) => 
         GetBounds().Inflate(tolerance).Contains(worldPoint);
