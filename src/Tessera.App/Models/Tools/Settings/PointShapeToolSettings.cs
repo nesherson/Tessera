@@ -1,3 +1,10 @@
-﻿namespace Tessera.App.Models;
+﻿using Avalonia.Collections;
+using Tessera.App.Interfaces;
 
-public class PointShapeToolSettings : ToolSettingsBase;
+namespace Tessera.App.Models;
+
+public class PointShapeToolSettings : ToolSettingsBase, IShapeProperties
+{
+    
+    public AvaloniaList<double> StrokeDashArray { get; set; }
+}

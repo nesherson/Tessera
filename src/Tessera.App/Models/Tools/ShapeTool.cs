@@ -1,5 +1,6 @@
 ﻿using Avalonia.Input;
 using Tessera.App.Constants;
+using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
@@ -25,27 +26,28 @@ public class ShapeTool : ICanvasTool
         _previewShape.Y = _startPoint.Y;
         _previewShape.Width = 0;
         _previewShape.Height = 0;
-        _previewShape.StrokeDashArray = _settings.StrokeType.DashArray;
-        _previewShape.StrokeThickness = _settings.Size.Thickness;
+        _previewShape.StrokeType = _settings.StrokeType;
+        _previewShape.StrokeThickness = _settings.StrokeThickness;
         _previewShape.Opacity = _settings.Opacity;
+        _previewShape.FillType = _settings.FillType; 
 
-        switch (_settings.FillType.Name)
+        switch (_settings.FillType)
         {
-            case "None":
-                _previewShape.StrokeColor = _settings.Color;
+            case FillType.None:
+                _previewShape.StrokeColor = _settings.StrokeColor;
                 _previewShape.Color = Brushes.Transparent;
 
                 break;
-            case "Semi":
-                _previewShape.StrokeColor = _settings.Color;
+            case FillType.Semi:
+                _previewShape.StrokeColor = _settings.StrokeColor;
 
-                if (_settings.Color is SolidColorBrush scb)
+                if (_settings.StrokeColor is SolidColorBrush scb)
                     _previewShape.Color = new SolidColorBrush(scb.Color, AppConstants.SemiFillOpacity);
 
                 break;
-            case "Solid":
-                _previewShape.StrokeColor = _settings.Color;
-                _previewShape.Color = _settings.Color;
+            case FillType.Solid:
+                _previewShape.StrokeColor = _settings.StrokeColor;
+                _previewShape.Color = _settings.StrokeColor;
 
                 break;
         }
@@ -79,10 +81,10 @@ public class ShapeTool : ICanvasTool
 
     private ShapeBase CreateShape(ShapeType type)
     {
-        return type.Name switch
+        return type switch
         {
-            "Rectangle" => new RectangleShape(),
-            "Ellipse" => new EllipseShape(),
+            ShapeType.Rectangle => new RectangleShape(),
+            ShapeType.Ellipse => new EllipseShape(),
             _ => new RectangleShape()
         };
     }

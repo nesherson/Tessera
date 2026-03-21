@@ -1,6 +1,6 @@
 namespace Tessera.App.Models;
 
-public class EllipseShape : ShapeBase
+public class PointShape : ShapeBase
 {
     public override bool Intersects(Rect rect)
     {

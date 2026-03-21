@@ -99,6 +99,7 @@ public partial class DrawingPageView : UserControl
         if (sender is not TextBox { DataContext: TextShape shape }) return;
         
         FinalizeTextShape(shape);
+        Focus();
     }
 
     private void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
@@ -106,6 +107,7 @@ public partial class DrawingPageView : UserControl
         if (e.Key == Key.Escape && sender is TextBox { DataContext: TextShape shape })
         {
             FinalizeTextShape(shape);
+            Focus();
             e.Handled = true;
         }
     }
@@ -120,11 +122,7 @@ public partial class DrawingPageView : UserControl
         
         Dispatcher.UIThread.Post(() =>
         {
-            var lineCount = tb.Text?.Split('\n').Length ?? 1;
-            var lineHeight = shape.FontSize * 1.4;
-            var requiredHeight = lineCount * lineHeight;
-
-            shape.Height = Math.Max(requiredHeight, 16);
+            shape.UpdateBounds();
         });
     }
 

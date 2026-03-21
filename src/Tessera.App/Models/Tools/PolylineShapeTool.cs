@@ -23,9 +23,9 @@ public class PolylineShapeTool : ICanvasTool
 
         _line = new PolylineShape
         {
-            StrokeThickness = _settings.Size.Thickness,
-            StrokeColor = _settings.Color,
-            StrokeDashArray = _settings.StrokeType.DashArray,
+            StrokeThickness = _settings.StrokeThickness,
+            StrokeColor = _settings.StrokeColor,
+            StrokeType = _settings.StrokeType,
             Opacity = _settings.Opacity,
         };
 

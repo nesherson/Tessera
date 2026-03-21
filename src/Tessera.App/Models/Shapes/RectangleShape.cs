@@ -1,4 +1,6 @@
-﻿namespace Tessera.App.Models;
+﻿using Avalonia.Controls.Shapes;
+
+namespace Tessera.App.Models;
 
 public class RectangleShape : ShapeBase
 {
@@ -7,10 +9,8 @@ public class RectangleShape : ShapeBase
         return rect.Intersects(new Rect(X, Y, Width, Height));
     }
 
-    public override bool HitTest(Point worldPoint, double tolerance)
-    {
-        return new Rect(X, Y, Width, Height).Contains(worldPoint);
-    }
+    public override bool HitTest(Point worldPoint, double tolerance) =>
+        GetBounds().Inflate(tolerance).Contains(worldPoint);
 
     public override void Move(Vector delta)
     {
@@ -18,8 +18,6 @@ public class RectangleShape : ShapeBase
         Y += delta.Y;
     }
 
-    public override Rect GetBounds()
-    {
-        return InflateForStroke(new Rect(X, Y, Width, Height));
-    }
+    public override Rect GetBounds() => 
+        InflateForStroke(new Rect(X, Y, Width, Height));
 }

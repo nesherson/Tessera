@@ -49,42 +49,14 @@
             </DataTemplate>
         </Setter>
     </Style>
-
-    <Style Selector="ListBox.StrokeTypeListBox">
+    
+    <Style Selector="ListBox.TypeListBox">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="ItemTemplate">
-            <DataTemplate DataType="{x:Type m:StrokeType}">
+            <DataTemplate DataType="{x:Type m:ToolListItem}">
                 <Svg Path="{Binding IconPath}" Width="14" />
             </DataTemplate>
         </Setter>
     </Style>
-
-    <Style Selector="ListBox.ShapeTypeListBox">
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="ItemTemplate">
-            <DataTemplate DataType="{x:Type m:ShapeType}">
-                <Svg Path="{Binding IconPath}" Width="14" />
-            </DataTemplate>
-        </Setter>
-    </Style>
-
-    <Style Selector="ListBox.FillTypeListBox">
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="ItemTemplate">
-            <DataTemplate DataType="{x:Type m:FillType}">
-                <Svg Path="{Binding IconPath}" Width="14" />
-            </DataTemplate>
-        </Setter>
-    </Style>
-
-    <Style Selector="ListBox.FontTypeListBox">
-        <Setter Property="ItemTemplate">
-            <DataTemplate DataType="{x:Type m:FontType}">
-                <TextBlock Text="Aa" ToolTip.Tip="{Binding Description}"
-                           FontSize="12" Height="16" FontWeight="DemiBold"
-                           FontFamily="{Binding FontFamily}"
-                           HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </DataTemplate>
-        </Setter>
-    </Style>
+    
 </Styles>

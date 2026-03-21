@@ -18,7 +18,7 @@ public class SelectionTool : ICanvasTool
     private Point _lastPoint;
     private bool _pressedOnSelected;
 
-    private const double HitTolerance = 6.0;
+    private const double HitTolerance = 3.0;
     private const double DragThreshold = 4.0;
 
     public SelectionTool(ICanvasContext canvasContext, SelectionManager selectionManager)
@@ -113,8 +113,6 @@ public class SelectionTool : ICanvasTool
             {
                 shape.Move(moveDelta);
             }
-
-            _selectionManager.MoveSelection(moveDelta);
         }
 
         _lastPoint = world;

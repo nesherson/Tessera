@@ -24,25 +24,25 @@ public class LineShapeTool : ICanvasTool
         {
             StartPoint = new Point(currentPoint.X, currentPoint.Y),
             EndPoint = new Point(currentPoint.X, currentPoint.Y),
-            StrokeThickness = _settings.Size.Thickness,
-            StrokeColor = _settings.Color,
+            StrokeThickness = _settings.StrokeThickness,
+            StrokeColor = _settings.StrokeColor,
             Opacity = _settings.Opacity,
-            StrokeDashArray = _settings.StrokeType.DashArray
+            StrokeType = _settings.StrokeType
         };
 
         _canvasContext.Shapes.Add(_line);
     }
 
-    public void OnPointerMoved(Point p)
+    public void OnPointerMoved(Point screenPoint)
     {
         if (_line == null) return;
 
-        var currentPoint = _canvasContext.Transform.ToWorld(p);
+        var currentPoint = _canvasContext.Transform.ToWorld(screenPoint);
 
         _line.EndPoint = new Point(currentPoint.X, currentPoint.Y);
     }
 
-    public void OnPointerReleased(Point p)
+    public void OnPointerReleased(Point screenPoint)
     {
         _line = null;
     }

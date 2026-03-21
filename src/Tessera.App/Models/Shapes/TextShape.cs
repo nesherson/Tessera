@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using HarfBuzzSharp;
 
 namespace Tessera.App.Models;
 
@@ -15,27 +16,14 @@ public partial class TextShape : ShapeBase
     
     [ObservableProperty]
     private bool _isInitializing;
+    
+    public double MinHeight => FontSize * 1.4;
+    
+    public override bool Intersects(Rect rect) => 
+        rect.Intersects(new Rect(X, Y, Width, Height));
 
-    [ObservableProperty]
-    private FontFamily _fontFamily = new("Sans Serif Collection");
-
-    public override bool Intersects(Rect rect)
-    {
-        var formattedText = new FormattedText(
-            Text,
-            System.Globalization.CultureInfo.CurrentCulture,
-            FlowDirection.LeftToRight,
-            new Typeface(FontFamily),
-            FontSize,
-            null);
-
-        return rect.Intersects(new Rect(X, Y, formattedText.Width, formattedText.Height));
-    }
-
-    public override bool HitTest(Point worldPoint, double tolerance)
-    {
-        return new Rect(X, Y, Width, Height).Contains(worldPoint);
-    }
+    public override bool HitTest(Point worldPoint, double tolerance) => 
+        GetBounds().Inflate(tolerance).Contains(worldPoint);
 
     public override void Move(Vector delta)
     {
@@ -46,5 +34,14 @@ public partial class TextShape : ShapeBase
     public override Rect GetBounds()
     {
         return InflateForStroke(new Rect(X, Y, Width, Height));
+    }
+
+    public void UpdateBounds()
+    {
+        var lineCount = Text?.Split('\n').Length ?? 1;
+        var lineHeight = FontSize * 1.4;
+        var requiredHeight = lineCount * lineHeight;
+
+        Height = Math.Max(requiredHeight, 16);
     }
 }

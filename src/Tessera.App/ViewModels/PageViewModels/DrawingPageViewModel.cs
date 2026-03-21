@@ -47,6 +47,10 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     [ObservableProperty]
     private bool _isToolSettingsOpen;
+    
+    
+    [ObservableProperty]
+    private IShapeProperties? _activeProperties;
 
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     public bool IsSelectionToolSelected => SelectedToolItem.Tool is SelectionTool;
@@ -127,6 +131,8 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 Shortcut = new KeyGesture(Key.E)
             },
         ];
+        
+        SelectionManager.SelectionChanged += OnSelectionChanged;
 
         ResetToolSelection();
     }
@@ -153,6 +159,18 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     public void OnPointerWheelChanged(Point screenPoint, double delta)
     {
         Zoom(screenPoint, delta);
+    }
+    
+    private void OnSelectionChanged(object? sender, EventArgs e)
+    {
+        if (SelectionManager.HasSelection)
+        {
+            ActiveProperties = new MultiShapePropertyProxy(SelectionManager.SelectedShapes.ToList());
+        }
+        else
+        {
+            ActiveProperties = SelectedToolItem.ToolSettings as IShapeProperties;
+        }
     }
 
     private void ResetToolSelection() => SelectedToolItem = Tools[1];
@@ -223,5 +241,10 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     partial void OnSelectedToolItemChanged(ToolItem value)
     {
         value.Tool.OnActivated();
+        
+        if (SelectionManager.HasSelection)
+            return;
+
+        ActiveProperties = value.ToolSettings as IShapeProperties;
     }
 }
