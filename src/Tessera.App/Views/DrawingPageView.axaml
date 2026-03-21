@@ -290,7 +290,6 @@
                         <Binding
                             Path="SelectedToolItem.ToolSettings"
                             Converter="{x:Static ObjectConverters.IsNotNull}" />
-                        <Binding Path="IsToolSettingsOpen" />
                         <Binding Path="SelectionManager.HasSelection" />
                     </MultiBinding>
                 </c:CanvasToolSettings.IsVisible>
