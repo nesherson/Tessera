@@ -83,6 +83,8 @@
         <AvaloniaResource Include="Assets\Cursors\drag.png" />
         <None Remove="Assets\Cursors\palm.png" />
         <AvaloniaResource Include="Assets\Cursors\palm.png" />
+        <None Remove="Assets\Icons\triangle.svg" />
+        <AvaloniaResource Include="Assets\Icons\triangle.svg" />
     </ItemGroup>
 
     <ItemGroup>

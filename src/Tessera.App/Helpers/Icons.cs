@@ -3,6 +3,7 @@
 public static class Icons
 {
     public const string Square = "/Assets/Icons/square.svg";
+    public const string Triangle = "/Assets/Icons/triangle.svg";
     public const string SquareFill = "/Assets/Icons/square-fill.svg";
     public const string SquareDuotone = "/Assets/Icons/square-duotone.svg";
     public const string Circle = "/Assets/Icons/circle.svg";

@@ -92,7 +92,8 @@ public partial class CanvasToolSettings : UserControl
         AvailableShapeTypes =
         [
             new() { Name = "Rectangle", Description = "Rectangle", IconPath = Icons.Square, Type = ShapeType.Rectangle },
-            new() { Name = "Ellipse", Description = "Ellipse", IconPath = Icons.Circle, Type = ShapeType.Ellipse}
+            new() { Name = "Ellipse", Description = "Ellipse", IconPath = Icons.Circle, Type = ShapeType.Ellipse},
+            new() { Name = "Triangle", Description = "Triangle", IconPath = Icons.Triangle, Type = ShapeType.Triangle},
         ];
         SelectedShapeType = AvailableShapeTypes[0];
     }

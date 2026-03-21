@@ -222,6 +222,13 @@
                                     StrokeThickness="{Binding StrokeThickness}"
                                     StrokeDashArray="{Binding StrokeDashArray}" />
                             </DataTemplate>
+                            <DataTemplate x:Key="TriangleShape" DataType="{x:Type m:TriangleShape}">
+                                <Polygon
+                                    Points="{Binding Points}"
+                                    Fill="{Binding Color}"
+                                    Stroke="{Binding StrokeColor}"
+                                    StrokeThickness="2" />
+                            </DataTemplate>
                             <DataTemplate x:Key="TextShape" DataType="{x:Type m:TextShape}">
                                 <Panel>
                                     <TextBlock
