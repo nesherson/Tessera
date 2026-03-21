@@ -52,16 +52,19 @@
                     Classes="ToolListBox TypeListBox"
                     ItemsSource="{Binding AvailableStrokeTypes, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}"
                     SelectedValue="{Binding Properties.StrokeType, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}"
-                    SelectedValueBinding="{Binding TypeValue}" />
+                    SelectedValueBinding="{Binding TypeValue}"
+                    IsVisible="{Binding ShowStrokeTypeOptions, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}"/>
                 <ListBox
                     x:DataType="models:ToolListItem"
                     Classes="ToolListBox TypeListBox"
                     ItemsSource="{Binding AvailableFillTypes, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}"
                     SelectedValue="{Binding Properties.FillType, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}"
-                    SelectedValueBinding="{Binding TypeValue}" />
+                    SelectedValueBinding="{Binding TypeValue}"
+                    IsVisible="{Binding ShowShapeOptions, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}" />
                 <Button
                     Name="ShapeButton"
                     Classes="ShapeButton"
+                    IsVisible="{Binding ShowShapeOptions, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}"
                     Command="{Binding OpenShapePopupCommand, RelativeSource={RelativeSource AncestorType=controls:CanvasToolSettings}}">
                     <Grid ColumnDefinitions="*,Auto" HorizontalAlignment="Stretch">
                         <TextBlock Text="Shape"
