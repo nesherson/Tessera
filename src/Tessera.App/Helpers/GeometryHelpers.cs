@@ -43,11 +43,22 @@ public class GeometryHelpers
 
     // Cross product of vectors (b-a) and (c-a)
     // Positive = c is left of AB, Negative = right, Zero = collinear
-    private static double Cross(Point a, Point b, Point c)
+    public static double Cross(Point a, Point b, Point c)
     {
         return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
     }
+    
+    public static bool PointInTriangle(Point a, Point b, Point c, Point p)
+    {
+        var d1 = Cross(a, b, p);
+        var d2 = Cross(b, c, p);
+        var d3 = Cross(c, a, p);
 
+        var hasNeg = d1 < 0 || d2 < 0 || d3 < 0;
+        var hasPos = d1 > 0 || d2 > 0 || d3 > 0;
+
+        return !(hasNeg && hasPos);
+    }
 
     // Is point p on segment (a, b)
     private static bool OnSegment(Point a, Point b, Point p)

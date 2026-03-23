@@ -151,6 +151,7 @@ public partial class SelectionManager : ObservableObject
         if (e.PropertyName is nameof(LineShape.StartPoint) 
             or nameof(LineShape.EndPoint) 
             or nameof(PolylineShape.Points)
+            or nameof(TriangleShape.Points)
             or nameof(ShapeBase.X)
             or nameof(ShapeBase.Y))
         {
