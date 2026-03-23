@@ -72,13 +72,18 @@ public class ShapeTool : ICanvasTool
         if (_previewShape is TriangleShape triangleShape)
         {
             var currentPoint = _canvasContext.Transform.ToWorld(p);
-            var secondPoint = new Point(currentPoint.X, _startPoint.Y);
-            var thirdPoint = new Point((_startPoint.X + currentPoint.X) / 2, currentPoint.Y);
-
-            triangleShape.Points = new ObservableCollection<Point>([
-                triangleShape.Points.First(),
-                secondPoint,
-                thirdPoint]);
+            var minX = Math.Min(currentPoint.X, _startPoint.X);
+            var maxX = Math.Max(currentPoint.X, _startPoint.X);
+            var minY = Math.Min(currentPoint.Y, _startPoint.Y);
+            var maxY = Math.Max(currentPoint.Y, _startPoint.Y);
+            var midX = (minX + maxX) / 2;
+            
+            triangleShape.Points =
+            [
+                new Point(minX, maxY),      // bottom-left
+                new Point(maxX, maxY),      // bottom-right
+                new Point(midX, minY)       // top-center
+            ];
         }
         else
         {
