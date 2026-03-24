@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Input;
@@ -48,9 +49,11 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     [ObservableProperty]
     private bool _isToolSettingsOpen;
     
-    
     [ObservableProperty]
     private IShapeProperties? _activeProperties;
+    
+    [ObservableProperty]
+    private Vector _dragVector;
 
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     public bool IsSelectionToolSelected => SelectedToolItem.Tool is SelectionTool;
@@ -66,6 +69,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         PageName = ApplicationPageNames.Drawing;
         Transform = new CanvasTransform();
         SelectionManager = new SelectionManager(Shapes);
+        TransformManager = new TransformManager();
         
         Tools =
         [
@@ -139,6 +143,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     public CanvasTransform Transform { get; }
     public SelectionManager SelectionManager { get; }
+    public TransformManager TransformManager { get; }
     public ObservableCollection<ToolItem> Tools { get; }
 
     public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
@@ -159,6 +164,20 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     public void OnPointerWheelChanged(Point screenPoint, double delta)
     {
         Zoom(screenPoint, delta);
+    }
+    
+    public void OnDrag(Vector delta)
+    {
+        // Debug.WriteLine(delta.X);
+        var matrix = Transform.Matrix;
+        if (matrix.TryInvert(out var inverted))
+        {
+            var worldDelta = new Vector(
+                delta.X * inverted.M11 + delta.Y * inverted.M21,
+                delta.X * inverted.M12 + delta.Y * inverted.M22
+            );
+            TransformManager.Scale(SelectionManager.SelectedShapes.ToList(), worldDelta);
+        }
     }
     
     private void OnSelectionChanged(object? sender, EventArgs e)

@@ -194,4 +194,19 @@ public partial class DrawingPageView : UserControl
             ViewModel?.Shapes.Remove(shape);
         }
     }
+
+    private void OnResizeHandleDragStarted(object? sender, VectorEventArgs e)
+    {
+        // ViewModel?.OnDrag(e.Vector);
+    }
+
+    private void OnResizeHandleDragDelta(object? sender, VectorEventArgs e)
+    {
+        ViewModel?.OnDrag(e.Vector);
+    }
+
+    private void OnResizeHandleDragCompleted(object? sender, VectorEventArgs e)
+    {
+        // ViewModel?.OnDrag(e.Vector);
+    }
 }

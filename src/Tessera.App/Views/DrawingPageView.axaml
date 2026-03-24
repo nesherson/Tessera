@@ -14,6 +14,19 @@
     <Design.DataContext>
         <vm:DrawingPageViewModel />
     </Design.DataContext>
+    <UserControl.Resources>
+        <ControlTheme x:Key="ThumbTheme" TargetType="Thumb">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Background="White"
+                            BorderBrush="DodgerBlue"
+                            BorderThickness="2"
+                            Width="10"
+                            Height="10"/>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+    </UserControl.Resources>
     <UserControl.Styles>
         <Style Selector="Border.Tool">
             <Setter Property="Background" Value="Transparent" />
@@ -99,6 +112,8 @@
                    PointerReleased="OnPointerReleased"
                    PointerWheelChanged="OnPointerWheelChanged"
                    Cursor="{Binding CurrentCursor}">
+                <TextBlock Text="{Binding DragVector.X}" />
+                <TextBlock Margin="30, 0,0,0" Text="{Binding DragVector.Y}" />
 
                 <!-- Eraser and marquee layer -->
                 <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
@@ -138,22 +153,135 @@
                 </c:CanvasGrid>
 
                 <!-- Selection overlay layer -->
-                <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
-                    <Rectangle
-                        Canvas.Left="{Binding SelectionManager.SelectionBounds.X}"
-                        Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}"
-                        Width="{Binding SelectionManager.SelectionBounds.Width}"
-                        Height="{Binding SelectionManager.SelectionBounds.Height}"
-                        Stroke="DodgerBlue"
-                        StrokeThickness="1"
-                        StrokeDashArray="4,2">
-                        <Rectangle.IsVisible>
+                <Canvas RenderTransformOrigin="0,0">
+                    <Thumb 
+                        Theme="{StaticResource ThumbTheme}"
+                        Canvas.Left="{Binding SelectionManager.SelectionBounds.TopLeft.X}"
+                        Canvas.Top="{Binding SelectionManager.SelectionBounds.TopLeft.Y}"
+                        Margin="-4"
+                        Cursor="TopLeftCorner"
+                        IsHitTestVisible="True"
+                        DragStarted="OnResizeHandleDragStarted"
+                        DragDelta="OnResizeHandleDragDelta"
+                        DragCompleted="OnResizeHandleDragCompleted"
+                    >
+                        <Thumb.IsVisible>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
                                 <Binding Path="SelectionManager.HasSelection" />
                                 <Binding Path="IsSelectionToolSelected" />
                             </MultiBinding>
-                        </Rectangle.IsVisible>
-                    </Rectangle>
+                        </Thumb.IsVisible>
+                    </Thumb>
+                    <Thumb 
+                        Theme="{StaticResource ThumbTheme}"
+                        Canvas.Left="{Binding SelectionManager.SelectionBounds.TopRight.X}"
+                        Canvas.Top="{Binding SelectionManager.SelectionBounds.TopRight.Y}"
+                        Margin="-4"
+                        Cursor="TopRightCorner"
+                        IsHitTestVisible="True"
+                        DragStarted="OnResizeHandleDragStarted"
+                        DragDelta="OnResizeHandleDragDelta"
+                        DragCompleted="OnResizeHandleDragCompleted">
+                        <Thumb.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Thumb.IsVisible>
+                    </Thumb>
+                    <Thumb 
+                        Theme="{StaticResource ThumbTheme}"
+                        Canvas.Left="{Binding SelectionManager.SelectionBounds.BottomLeft.X}"
+                        Canvas.Top="{Binding SelectionManager.SelectionBounds.BottomLeft.Y}"
+                        Margin="-4"
+                        Cursor="BottomLeftCorner"
+                        IsHitTestVisible="True"
+                        DragStarted="OnResizeHandleDragStarted"
+                        DragDelta="OnResizeHandleDragDelta"
+                        DragCompleted="OnResizeHandleDragCompleted">
+                        <Thumb.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Thumb.IsVisible>
+                    </Thumb>
+                    <Thumb 
+                        Theme="{StaticResource ThumbTheme}"
+                        Canvas.Left="{Binding SelectionManager.SelectionBounds.BottomRight.X}"
+                        Canvas.Top="{Binding SelectionManager.SelectionBounds.BottomRight.Y}"
+                        Margin="-4"
+                        Cursor="BottomRightCorner"
+                        IsHitTestVisible="True"
+                        DragStarted="OnResizeHandleDragStarted"
+                        DragDelta="OnResizeHandleDragDelta"
+                        DragCompleted="OnResizeHandleDragCompleted">
+                        <Thumb.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Thumb.IsVisible>
+                    </Thumb>
+                    <!-- <Rectangle -->
+                    <!--     Canvas.Left="{Binding SelectionManager.SelectionBounds.X}" -->
+                    <!--     Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}" -->
+                    <!--     Width="{Binding SelectionManager.SelectionBounds.Width}" -->
+                    <!--     Height="{Binding SelectionManager.SelectionBounds.Height}" -->
+                    <!--     Stroke="DodgerBlue" -->
+                    <!--     StrokeThickness="1" -->
+                    <!--     IsHitTestVisible="False"> -->
+                    <!--     <Rectangle.IsVisible> -->
+                    <!--         <MultiBinding Converter="{x:Static BoolConverters.And}"> -->
+                    <!--             <Binding Path="SelectionManager.HasSelection" /> -->
+                    <!--             <Binding Path="IsSelectionToolSelected" /> -->
+                    <!--         </MultiBinding> -->
+                    <!--     </Rectangle.IsVisible> -->
+                    <!-- </Rectangle> -->
+                    <Line
+                        StartPoint="{Binding SelectionManager.SelectionBounds.TopLeft}" 
+                        EndPoint="{Binding SelectionManager.SelectionBounds.TopRight}" 
+                        Stroke="Red" StrokeThickness="2">
+                        <Line.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Line.IsVisible>
+                    </Line>
+                    <Line 
+                        StartPoint="{Binding SelectionManager.SelectionBounds.BottomLeft}" 
+                        EndPoint="{Binding SelectionManager.SelectionBounds.BottomRight}" 
+                        Stroke="Red" StrokeThickness="2">
+                        <Line.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Line.IsVisible>
+                    </Line>
+                    <Line 
+                        StartPoint="{Binding SelectionManager.SelectionBounds.TopLeft}" 
+                        EndPoint="{Binding SelectionManager.SelectionBounds.BottomLeft}" 
+                        Stroke="Red" StrokeThickness="2">
+                        <Line.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Line.IsVisible>
+                    </Line>
+                    <Line 
+                        StartPoint="{Binding SelectionManager.SelectionBounds.TopRight}" 
+                        EndPoint="{Binding SelectionManager.SelectionBounds.BottomRight}" 
+                        Stroke="Red" StrokeThickness="2">
+                        <Line.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="SelectionManager.HasSelection" />
+                                <Binding Path="IsSelectionToolSelected" />
+                            </MultiBinding>
+                        </Line.IsVisible>
+                    </Line>
                     <Canvas.RenderTransform>
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </Canvas.RenderTransform>
