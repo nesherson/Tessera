@@ -6,4 +6,8 @@ public enum ResizePoint
     TopRight,
     BottomLeft,
     BottomRight,
+    Bottom,
+    Left,
+    Right,
+    Top
 }
