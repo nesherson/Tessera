@@ -7,6 +7,7 @@
              xmlns:dt="clr-namespace:Tessera.App.DataTemplates"
              xmlns:c="clr-namespace:Tessera.App.Controls"
              xmlns:m="clr-namespace:Tessera.App.Models"
+             xmlns:enum="clr-namespace:Tessera.App.Enumerations"
              xmlns:helpers="clr-namespace:Tessera.App.Helpers"
              x:Class="Tessera.App.Views.DrawingPageView"
              x:DataType="vm:DrawingPageViewModel"
@@ -155,6 +156,7 @@
                 <!-- Selection overlay layer -->
                 <Canvas RenderTransformOrigin="0,0">
                     <Thumb 
+                        Tag="{x:Static enum:ResizePoint.TopLeft}"
                         Theme="{StaticResource ThumbTheme}"
                         Canvas.Left="{Binding SelectionManager.SelectionBounds.TopLeft.X}"
                         Canvas.Top="{Binding SelectionManager.SelectionBounds.TopLeft.Y}"
@@ -173,6 +175,7 @@
                         </Thumb.IsVisible>
                     </Thumb>
                     <Thumb 
+                        Tag="{x:Static enum:ResizePoint.TopRight}"
                         Theme="{StaticResource ThumbTheme}"
                         Canvas.Left="{Binding SelectionManager.SelectionBounds.TopRight.X}"
                         Canvas.Top="{Binding SelectionManager.SelectionBounds.TopRight.Y}"
@@ -190,6 +193,7 @@
                         </Thumb.IsVisible>
                     </Thumb>
                     <Thumb 
+                        Tag="{x:Static enum:ResizePoint.BottomLeft}"
                         Theme="{StaticResource ThumbTheme}"
                         Canvas.Left="{Binding SelectionManager.SelectionBounds.BottomLeft.X}"
                         Canvas.Top="{Binding SelectionManager.SelectionBounds.BottomLeft.Y}"
@@ -207,6 +211,7 @@
                         </Thumb.IsVisible>
                     </Thumb>
                     <Thumb 
+                        Tag="{x:Static enum:ResizePoint.BottomRight}"
                         Theme="{StaticResource ThumbTheme}"
                         Canvas.Left="{Binding SelectionManager.SelectionBounds.BottomRight.X}"
                         Canvas.Top="{Binding SelectionManager.SelectionBounds.BottomRight.Y}"

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Avalonia.Collections;
 using Avalonia.Controls.Shapes;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -57,6 +58,7 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
     public abstract bool HitTest(Point worldPoint, double tolerance);
     public abstract void Move(Vector delta);
     public abstract Rect GetBounds();
+    public virtual void Scale(ResizePoint resizePoint, Vector delta) { }
     
     protected Rect InflateForStroke(Rect bounds)
     {

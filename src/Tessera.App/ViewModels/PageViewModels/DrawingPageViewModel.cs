@@ -165,19 +165,39 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     {
         Zoom(screenPoint, delta);
     }
-    
-    public void OnDrag(Vector delta)
+
+    private enum DragMode
     {
-        // Debug.WriteLine(delta.X);
-        var matrix = Transform.Matrix;
-        if (matrix.TryInvert(out var inverted))
-        {
-            var worldDelta = new Vector(
-                delta.X * inverted.M11 + delta.Y * inverted.M21,
-                delta.X * inverted.M12 + delta.Y * inverted.M22
-            );
-            TransformManager.Scale(SelectionManager.SelectedShapes.ToList(), worldDelta);
-        }
+        None,
+        Start,
+        Dragging,
+        Completed
+    }
+
+    private DragMode _dragMode = DragMode.None;
+    private bool _isDragging;
+    
+    public void OnDragStart(ResizePoint resizePoint, Vector delta)
+    {
+        _dragMode = DragMode.Start;
+        _isDragging = true;
+    }
+    
+    public void OnDrag(ResizePoint resizePoint, Vector delta)
+    {
+        var selectedShapes = Shapes
+            .Where(x => SelectionManager.IsSelected(x))
+            .ToList();
+        
+        _dragMode = DragMode.Dragging;
+        
+        TransformManager.Scale(selectedShapes, resizePoint, delta);
+    }
+    
+    public void OnDragCompleted(ResizePoint resizePoint, Vector delta)
+    {
+        _dragMode = DragMode.Completed;
+        _isDragging = false;
     }
     
     private void OnSelectionChanged(object? sender, EventArgs e)
