@@ -1,4 +1,5 @@
-﻿using Avalonia.Collections;
+﻿using System.Diagnostics;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Enumerations;
 using Tessera.App.Helpers;
@@ -49,14 +50,124 @@ public partial class LineShape : ShapeBase
         {
             case ResizePoint.TopLeft:
             {
+                if (StartPoint.X < EndPoint.X)
+                {
+                    var newX = Math.Min(StartPoint.X + delta.X, EndPoint.X - MinWidth);
+
+                    StartPoint = new Point(newX, StartPoint.Y);
+                }
+                else
+                {
+                    var newX = Math.Min(EndPoint.X + delta.X, StartPoint.X - MinWidth);
+
+                    EndPoint = new Point(newX, EndPoint.Y);
+                }
+                
+                if (StartPoint.Y < EndPoint.Y)
+                {
+                    var newY = Math.Min(StartPoint.Y + delta.Y, EndPoint.Y - MinWidth);
+                    
+                    StartPoint = new Point(StartPoint.X, newY);
+                }
+                else
+                {
+                    var newY = Math.Min(EndPoint.Y + delta.Y, StartPoint.Y - MinWidth);
+                    
+                    EndPoint = new Point(EndPoint.X, newY);
+                }
+                
+                break;
+            }
+            case ResizePoint.BottomLeft:
+            {
+                if (StartPoint.X < EndPoint.X)
+                {
+                    var newX = Math.Min(StartPoint.X + delta.X, EndPoint.X - MinWidth);
+
+                    StartPoint = new Point(newX, StartPoint.Y);
+                }
+                else
+                {
+                    var newX = Math.Min(EndPoint.X + delta.X, StartPoint.X - MinWidth);
+
+                    EndPoint = new Point(newX, EndPoint.Y);
+                }
+                
+                if (StartPoint.Y > EndPoint.Y)
+                {
+                    var newY = Math.Max(StartPoint.Y + delta.Y, EndPoint.Y + MinWidth);
+                    
+                    StartPoint = new Point(StartPoint.X, newY);
+                }
+                else
+                {
+                    var newY = Math.Max(EndPoint.Y + delta.Y, StartPoint.Y + MinWidth);
+                    
+                    EndPoint = new Point(EndPoint.X, newY);
+                }
+                
                 break;
             }
             case ResizePoint.TopRight:
+            {
+                if (StartPoint.X > EndPoint.X)
+                {
+                    var newX = Math.Max(StartPoint.X + delta.X, EndPoint.X + MinWidth);
+
+                    StartPoint = new Point(newX, StartPoint.Y);
+                }
+                else
+                {
+                    var newX = Math.Max(EndPoint.X + delta.X, StartPoint.X + MinWidth);
+
+                    EndPoint = new Point(newX, EndPoint.Y);
+                }
+                
+                if (StartPoint.Y < EndPoint.Y)
+                {
+                    var newY = Math.Min(StartPoint.Y + delta.Y, EndPoint.Y - MinWidth);
+                    
+                    StartPoint = new Point(StartPoint.X, newY);
+                }
+                else
+                {
+                    var newY = Math.Min(EndPoint.Y + delta.Y, StartPoint.Y - MinWidth);
+                    
+                    EndPoint = new Point(EndPoint.X, newY);
+                }
+                
                 break;
-            case ResizePoint.BottomLeft:
-                break;
+            }
             case ResizePoint.BottomRight:
+            {
+                if (StartPoint.X > EndPoint.X)
+                {
+                    var newX = Math.Max(StartPoint.X + delta.X, EndPoint.X + MinWidth);
+
+                    StartPoint = new Point(newX, StartPoint.Y);
+                }
+                else
+                {
+                    var newX = Math.Max(EndPoint.X + delta.X, StartPoint.X + MinWidth);
+
+                    EndPoint = new Point(newX, EndPoint.Y);
+                }
+                
+                if (StartPoint.Y > EndPoint.Y)
+                {
+                    var newY = Math.Max(StartPoint.Y + delta.Y, EndPoint.Y + MinWidth);
+                    
+                    StartPoint = new Point(StartPoint.X, newY);
+                }
+                else
+                {
+                    var newY = Math.Max(EndPoint.Y + delta.Y, StartPoint.Y + MinWidth);
+                    
+                    EndPoint = new Point(EndPoint.X, newY);
+                }
+                
                 break;
+            }
             case ResizePoint.Bottom:
             {
                 if (StartPoint.Y > EndPoint.Y)
@@ -91,7 +202,22 @@ public partial class LineShape : ShapeBase
                 break;
             }
             case ResizePoint.Top:
+            {
+                if (StartPoint.Y < EndPoint.Y)
+                {
+                    var newY = Math.Min(StartPoint.Y + delta.Y, EndPoint.Y - MinWidth);
+
+                    StartPoint = new Point(StartPoint.X, newY);
+                }
+                else
+                {
+                    var newY = Math.Min(EndPoint.Y + delta.Y, StartPoint.Y - MinWidth);
+                    
+                    EndPoint = new Point(EndPoint.X, newY);
+                }
+                
                 break;
+            }
         }
     }
 
