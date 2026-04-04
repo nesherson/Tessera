@@ -120,8 +120,6 @@
                    PointerReleased="OnPointerReleased"
                    PointerWheelChanged="OnPointerWheelChanged"
                    Cursor="{Binding CurrentCursor}">
-                <TextBlock Text="{Binding DragVector.X}" />
-                <TextBlock Margin="30, 0,0,0" Text="{Binding DragVector.Y}" />
 
                 <!-- Eraser and marquee layer -->
                 <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
