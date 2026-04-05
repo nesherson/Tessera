@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tessera.App.Enumerations;
 using Tessera.App.Helpers;
 
 namespace Tessera.App.Models;
@@ -70,5 +71,26 @@ public partial class TriangleShape : ShapeBase
         var maxY = Points.Max(p => p.Y);
 
         return InflateForStroke(new Rect(minX, minY, maxX - minX, maxY - minY));
+    }
+
+    public override void Scale(ResizePoint resizePoint, Vector delta)
+    {
+        switch (resizePoint)
+        {
+            case ResizePoint.Right:
+            {
+                var mostRightPoint = Points.MaxBy(p => p.X);
+                var newRightPoint = new Point(mostRightPoint.X + delta.X, mostRightPoint.Y);
+
+                var newPoints = Points.Where(p => p != mostRightPoint).ToList();
+                
+                newPoints.Add(newRightPoint);
+                
+                Points = new ObservableCollection<Point>(newPoints);
+               
+                
+                break;
+            }
+        }
     }
 }
