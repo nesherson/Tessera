@@ -13,12 +13,29 @@
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
     </Application.Styles>
     <Application.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <MergeResourceInclude Source="/Controls/IconButton.axaml"></MergeResourceInclude>
                 <MergeResourceInclude Source="/Styles/AppColors.axaml"></MergeResourceInclude>
             </ResourceDictionary.MergedDictionaries>
+            <ControlTheme x:Key="ThumbTheme" TargetType="Thumb">
+                <Setter Property="Template">
+                    <ControlTemplate>
+                        <Border Background="White"
+                                BorderBrush="DodgerBlue"
+                                BorderThickness="2"
+                                Width="10"
+                                Height="10"/>
+                    </ControlTemplate>
+                </Setter>
+            </ControlTheme>
+            <ControlTheme x:Key="EdgeThumbTheme" TargetType="Thumb">
+                <Setter Property="Template">
+                    <ControlTemplate>
+                        <Border Background="Transparent"/>
+                    </ControlTemplate>
+                </Setter>
+            </ControlTheme>
         </ResourceDictionary>
 
         <!-- General Brushes -->
