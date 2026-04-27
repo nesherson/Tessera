@@ -35,6 +35,8 @@ public class SelectionOverlay : Canvas
 
     public SelectionOverlay()
     {
+        IsVisible = false;
+        
         _border = new Rectangle
         {
             Stroke = Brushes.DodgerBlue,
