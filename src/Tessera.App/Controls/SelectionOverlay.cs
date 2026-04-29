@@ -162,7 +162,6 @@ public class SelectionOverlay : Canvas
 
     private static void PositionEdge(Thumb thumb, double x, double y, double w, double h)
     {
-        Debug.WriteLine($"PositionEdge -> x: {x}, y: {y}, w: {w}, h: {h}");
         SetLeft(thumb, x);
         SetTop(thumb, y);
         thumb.Width = w;
