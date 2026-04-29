@@ -21,8 +21,8 @@ public class RectangleShape : ShapeBase
         Y += delta.Y;
     }
 
-    public override Rect GetBounds() => InflateForStroke(new Rect(X, Y, Width, Height));
-
+    public override Rect GetBounds() => new(X, Y, Width, Height);
+    
     public override void Scale(ResizePoint resizePoint, Vector delta)
     {
         switch (resizePoint)

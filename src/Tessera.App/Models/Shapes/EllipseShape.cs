@@ -102,8 +102,5 @@ public class EllipseShape : ShapeBase
         }
     }
 
-    public override Rect GetBounds()
-    {
-        return InflateForStroke(new Rect(X, Y, Width, Height));
-    }
+    public override Rect GetBounds() => new(X, Y, Width, Height);
 }

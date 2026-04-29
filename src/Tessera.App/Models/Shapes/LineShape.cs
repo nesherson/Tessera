@@ -227,7 +227,6 @@ public partial class LineShape : ShapeBase
         var y = Math.Min(StartPoint.Y, EndPoint.Y);
         var width = Math.Abs(StartPoint.X - EndPoint.X);
         var height = Math.Abs(StartPoint.Y - EndPoint.Y);
-        ;
 
         return InflateForStroke(new Rect(x, y, width, height));
     }

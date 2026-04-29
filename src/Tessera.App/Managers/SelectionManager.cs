@@ -113,7 +113,7 @@ public partial class SelectionManager : ObservableObject
             return;
         }
         
-        var rects = SelectedShapes.Select(s => s.GetBounds())
+        var rects = SelectedShapes.Select(s => s.GetBounds().Inflate(2))
             .ToList();
         var union = rects.First();
         
