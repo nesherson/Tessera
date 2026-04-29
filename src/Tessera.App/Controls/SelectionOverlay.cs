@@ -148,10 +148,10 @@ public class SelectionOverlay : Canvas
         PositionCorner(_cornerHandles[3], b.Right, b.Bottom);
 
         // Edges
-        PositionEdge(_edgeHandles[0], b.Left, b.Top, b.Width, 6);      // top
-        PositionEdge(_edgeHandles[1], b.Left, b.Bottom - 3, b.Width, 6); // bottom
-        PositionEdge(_edgeHandles[2], b.Left, b.Top, 6, b.Height);      // left
-        PositionEdge(_edgeHandles[3], b.Right - 3, b.Top, 6, b.Height); // right
+        PositionEdge(_edgeHandles[0], b.Left, b.Top, b.Width, 2);        // top
+        PositionEdge(_edgeHandles[1], b.Left, b.Bottom - 3, b.Width, 2); // bottom
+        PositionEdge(_edgeHandles[2], b.Left, b.Top, 2, b.Height);       // left
+        PositionEdge(_edgeHandles[3], b.Right - 3, b.Top, 2, b.Height);  // right
     }
 
     private static void PositionCorner(Thumb thumb, double x, double y)
@@ -162,7 +162,6 @@ public class SelectionOverlay : Canvas
 
     private static void PositionEdge(Thumb thumb, double x, double y, double w, double h)
     {
-        Debug.WriteLine($"PositionEdge -> x: {x}, y: {y}, w: {w}, h: {h}");
         SetLeft(thumb, x);
         SetTop(thumb, y);
         thumb.Width = w;
