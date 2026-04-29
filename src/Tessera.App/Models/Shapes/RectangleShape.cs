@@ -1,11 +1,12 @@
-﻿using System.Diagnostics;
-using Avalonia.Controls.Shapes;
-using Tessera.App.Enumerations;
+﻿using Tessera.App.Enumerations;
 
 namespace Tessera.App.Models;
 
 public class RectangleShape : ShapeBase
 {
+    private double MinWidth => StrokeThickness * 2.15; 
+    private double MinHeight => StrokeThickness * 2.15; 
+    
     public override bool Intersects(Rect rect)
     {
         return rect.Intersects(new Rect(X, Y, Width, Height));
@@ -28,8 +29,8 @@ public class RectangleShape : ShapeBase
         {
             case ResizePoint.TopLeft:
             {
-                var newHeight = Math.Max(10, Height - delta.Y);
-                var newWidth = Math.Max(10, Width - delta.X);
+                var newHeight = Math.Max(MinHeight, Height - delta.Y);
+                var newWidth = Math.Max(MinWidth, Width - delta.X);
                 var newX = X + (Width - newWidth);
                 var newY = Y + (Height - newHeight);
 
@@ -42,21 +43,21 @@ public class RectangleShape : ShapeBase
             }
             case ResizePoint.BottomLeft:
             {
-                var newWidth = Math.Max(10, Width - delta.X);
+                var newWidth = Math.Max(MinWidth, Width - delta.X);
                 var newX = X + (Width - newWidth);
 
                 Width = newWidth;
-                Height = Math.Max(10, Height + delta.Y);
+                Height = Math.Max(MinHeight, Height + delta.Y);
                 X = newX;
 
                 break;
             }
             case ResizePoint.TopRight:
             {
-                var newHeight = Math.Max(10, Height - delta.Y);
+                var newHeight = Math.Max(MinHeight, Height - delta.Y);
                 var newY = Y + (Height - newHeight);
 
-                Width = Math.Max(10, Width + delta.X);
+                Width = Math.Max(MinWidth, Width + delta.X);
                 Height = newHeight;
                 Y = newY;
 
@@ -64,20 +65,20 @@ public class RectangleShape : ShapeBase
             }
             case ResizePoint.BottomRight:
             {
-                Width = Math.Max(10, Width + delta.X);
-                Height = Math.Max(10, Height + delta.Y);
+                Width = Math.Max(MinWidth, Width + delta.X);
+                Height = Math.Max(MinHeight, Height + delta.Y);
 
                 break;
             }
             case ResizePoint.Bottom:
             {
-                Height = Math.Max(10, Height + delta.Y);
+                Height = Math.Max(MinHeight, Height + delta.Y);
                 
                 break;
             }
             case ResizePoint.Left:
             {
-                var newWidth = Math.Max(10, Width - delta.X);
+                var newWidth = Math.Max(MinHeight, Width - delta.X);
                 var newX = X + (Width - newWidth);
 
                 Width = newWidth;
@@ -87,13 +88,13 @@ public class RectangleShape : ShapeBase
             }
             case ResizePoint.Right:
             {
-                Width = Math.Max(10, Width + delta.X);
+                Width = Math.Max(MinWidth, Width + delta.X);
                 
                 break;
             }
             case ResizePoint.Top:
             {
-                var newHeight = Math.Max(10, Height - delta.Y);
+                var newHeight = Math.Max(MinHeight, Height - delta.Y);
                 var newY = Y + (Height - newHeight);
 
                 Height = newHeight;
