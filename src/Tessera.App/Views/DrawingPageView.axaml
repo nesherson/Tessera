@@ -183,12 +183,6 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <dt:ShapeTemplateSelector>
-                            <DataTemplate x:Key="PointShape" DataType="{x:Type m:PointShape}">
-                                <Ellipse
-                                    Width="{Binding Width}"
-                                    Height="{Binding Height}"
-                                    Fill="{Binding StrokeColor}" />
-                            </DataTemplate>
                             <DataTemplate x:Key="LineShape" DataType="{x:Type m:LineShape}">
                                 <Line
                                     StartPoint="{Binding StartPoint}"

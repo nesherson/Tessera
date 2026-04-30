@@ -76,11 +76,6 @@ public class MultiShapePropertyProxy : ObservableObject, IShapeProperties
                     textShape.FontSize = textShape.StrokeThickness * 2;
                     textShape.UpdateBounds();
                 }
-                else if (shape is PointShape pointShape)
-                {
-                    pointShape.Width = pointShape.StrokeThickness;
-                    pointShape.Height = pointShape.StrokeThickness;
-                }
             }
             OnPropertyChanged();
         }
