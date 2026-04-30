@@ -60,7 +60,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     public DrawingPageViewModel()
     {
-        var pointShapeSettings = new PointShapeToolSettings();
         var lineShapeSettings = new LineShapeToolSettings();
         var shapeSettings = new ShapeToolSettings();
         var polylineShapeSettings = new PolylineShapeToolSettings();
@@ -86,14 +85,6 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
                 IconPath = Icons.HandGrabbing,
                 Tool = new PanTool(this),
                 Shortcut = new KeyGesture(Key.H)
-            },
-            new ToolItem
-            {
-                Name = "Point",
-                IconPath = Icons.Point,
-                Tool = new PointShapeTool(this, pointShapeSettings),
-                ToolSettings = pointShapeSettings,
-                Shortcut = new KeyGesture(Key.P)
             },
             new ToolItem
             {
