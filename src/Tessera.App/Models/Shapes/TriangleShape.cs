@@ -68,7 +68,7 @@ public partial class TriangleShape : ShapeBase
         var maxX = Points.Max(p => p.X);
         var maxY = Points.Max(p => p.Y);
 
-        return InflateForStroke(new Rect(minX, minY, maxX - minX, maxY - minY));
+        return new Rect(minX, minY, maxX - minX, maxY - minY);
     }
 
     public override void Scale(ResizePoint resizePoint, Vector delta)

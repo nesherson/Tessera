@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Tessera.App.Controls;
 using Tessera.App.Enumerations;
 using Tessera.App.ViewModels;
 using Tessera.App.Models;
@@ -187,33 +188,12 @@ public partial class DrawingPageView : UserControl
         }
     }
 
-    private void OnResizeHandleDragStarted(object? sender, VectorEventArgs e)
-    {
-        if (sender is not Thumb thumb) return;
-        if (thumb.Tag is null) return;
+    private void OnResizeHandleDragStarted(object? sender, ResizeEventArgs e) =>
+        ViewModel?.OnDragStart(e.Handle, e.DragArgs.Vector);
 
-        var resizePoint = (ResizePoint)thumb.Tag;
+    private void OnResizeHandleDragDelta(object? sender, ResizeEventArgs e) =>
+        ViewModel?.OnDrag(e.Handle, e.DragArgs.Vector);
 
-        ViewModel?.OnDragStart(resizePoint, e.Vector);
-    }
-
-    private void OnResizeHandleDragDelta(object? sender, VectorEventArgs e)
-    {
-        if (sender is not Thumb thumb) return;
-        if (thumb.Tag is null) return;
-
-        var resizePoint = (ResizePoint)thumb.Tag;
-
-        ViewModel?.OnDrag(resizePoint, e.Vector);
-    }
-
-    private void OnResizeHandleDragCompleted(object? sender, VectorEventArgs e)
-    {
-        if (sender is not Thumb thumb) return;
-        if (thumb.Tag is null) return;
-
-        var resizePoint = (ResizePoint)thumb.Tag;
-
-        ViewModel?.OnDragCompleted(resizePoint, e.Vector);
-    }
+    private void OnResizeHandleDragCompleted(object? sender, ResizeEventArgs e) =>
+        ViewModel?.OnDragCompleted(e.Handle, e.DragArgs.Vector);
 }
