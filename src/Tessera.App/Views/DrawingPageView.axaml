@@ -157,125 +157,7 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </c:SelectionOverlay.RenderTransform>
                 </c:SelectionOverlay>
-                <!-- <Canvas RenderTransformOrigin="0,0"> -->
-                <!--     <Canvas.IsVisible> -->
-                <!--         <MultiBinding Converter="{x:Static BoolConverters.And}"> -->
-                <!--             <Binding Path="SelectionManager.HasSelection" /> -->
-                <!--             <Binding Path="IsSelectionToolSelected" /> -->
-                <!--         </MultiBinding> -->
-                <!--     </Canvas.IsVisible> -->
-                <!--     <Canvas.RenderTransform> -->
-                <!--         <MatrixTransform Matrix="{Binding Transform.Matrix}" /> -->
-                <!--     </Canvas.RenderTransform> -->
-                <!--      -->
-                <!--     <Rectangle -->
-                <!--         Canvas.Left="{Binding SelectionManager.SelectionBounds.X}" -->
-                <!--         Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}" -->
-                <!--         Width="{Binding SelectionManager.SelectionBounds.Width}" -->
-                <!--         Height="{Binding SelectionManager.SelectionBounds.Height}" -->
-                <!--         Stroke="DodgerBlue" StrokeThickness="2" -->
-                <!--         IsHitTestVisible="False"/> -->
-                <!-- -->
-                <!--     ~1~ Selection border @1@ -->
-                <!--     <Rectangle -->
-                <!--         Canvas.Left="{Binding SelectionManager.SelectionBounds.X}" -->
-                <!--         Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}" -->
-                <!--         Width="{Binding SelectionManager.SelectionBounds.Width}" -->
-                <!--         Height="{Binding SelectionManager.SelectionBounds.Height}" -->
-                <!--         Stroke="DodgerBlue" -->
-                <!--         StrokeThickness="2" -->
-                <!--         IsHitTestVisible="False"/> -->
-                <!-- -->
-                <!--     ~1~ Resize handles @1@ -->
-                <!--     <Thumb Tag="{x:Static enum:ResizePoint.TopLeft}" -->
-                <!--            Theme="{StaticResource ThumbTheme}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.TopLeft.X}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.TopLeft.Y}" -->
-                <!--            Margin="-4" Cursor="TopLeftCorner" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!-- -->
-                <!--     <Thumb Tag="{x:Static enum:ResizePoint.TopRight}" -->
-                <!--            Theme="{StaticResource ThumbTheme}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.TopRight.X}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.TopRight.Y}" -->
-                <!--            Margin="-4" Cursor="TopRightCorner" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!-- -->
-                <!--     <Thumb Tag="{x:Static enum:ResizePoint.BottomLeft}" -->
-                <!--            Theme="{StaticResource ThumbTheme}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.BottomLeft.X}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.BottomLeft.Y}" -->
-                <!--            Margin="-4" Cursor="BottomLeftCorner" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!-- -->
-                <!--     <Thumb Tag="{x:Static enum:ResizePoint.BottomRight}" -->
-                <!--            Theme="{StaticResource ThumbTheme}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.BottomRight.X}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.BottomRight.Y}" -->
-                <!--            Margin="-4" Cursor="BottomRightCorner" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!--      -->
-                <!--     ~1~ Top edge @1@ -->
-                <!--     <Thumb Classes="EdgeHandle" -->
-                <!--            Tag="{x:Static enum:ResizePoint.Top}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.X}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}" -->
-                <!--            Width="{Binding SelectionManager.SelectionBounds.Width}" -->
-                <!--            Height="6" -->
-                <!--            Margin="0,-3,0,0" -->
-                <!--            Cursor="TopSide" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!-- -->
-                <!--     ~1~ Bottom edge @1@ -->
-                <!--     <Thumb Classes="EdgeHandle" -->
-                <!--            Tag="{x:Static enum:ResizePoint.Bottom}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.X}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.Bottom}" -->
-                <!--            Width="{Binding SelectionManager.SelectionBounds.Width}" -->
-                <!--            Height="6" -->
-                <!--            Margin="0,-3,0,0" -->
-                <!--            Cursor="BottomSide" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!-- -->
-                <!--     ~1~ Left edge @1@ -->
-                <!--     <Thumb Classes="EdgeHandle" -->
-                <!--            Tag="{x:Static enum:ResizePoint.Left}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.X}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}" -->
-                <!--            Width="6" -->
-                <!--            Height="{Binding SelectionManager.SelectionBounds.Height}" -->
-                <!--            Margin="-3,0,0,0" -->
-                <!--            Cursor="LeftSide" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!-- -->
-                <!--     ~1~ Right edge @1@ -->
-                <!--     <Thumb Classes="EdgeHandle" -->
-                <!--            Tag="{x:Static enum:ResizePoint.Right}" -->
-                <!--            Canvas.Left="{Binding SelectionManager.SelectionBounds.Right}" -->
-                <!--            Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}" -->
-                <!--            Width="6" -->
-                <!--            Height="{Binding SelectionManager.SelectionBounds.Height}" -->
-                <!--            Margin="-3,0,0,0" -->
-                <!--            Cursor="RightSide" -->
-                <!--            DragStarted="OnResizeHandleDragStarted" -->
-                <!--            DragDelta="OnResizeHandleDragDelta" -->
-                <!--            DragCompleted="OnResizeHandleDragCompleted"/> -->
-                <!-- </Canvas> -->
-
+                
                 <!-- Shape layer -->
                 <ItemsControl ItemsSource="{Binding Shapes}" 
                               IsHitTestVisible="False" 
@@ -392,6 +274,8 @@
                 </ItemsControl>
             </Panel>
         </Grid>
+        
+        <!-- Tool panel -->
         <StackPanel
             Grid.Column="1"
             Grid.Row="0"
@@ -438,6 +322,8 @@
                 </Border>
             </StackPanel>
         </StackPanel>
+        
+        <!-- Zoom panel -->
         <Border Grid.Column="0"
                 Grid.Row="1" Classes="ToolbarBorder" Margin="15"
                 HorizontalAlignment="Left">
