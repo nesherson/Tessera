@@ -70,9 +70,10 @@ public partial class PolylineShape : ShapeBase
             }
             case ResizePoint.BottomLeft:
             {
-                var newWidth = Math.Max(MinWidth, Width - delta.X);
-                var newX = X + (Width - newWidth);
-                var newHeight = Math.Max(MinHeight, Height + delta.Y);
+                var bounds = GetBounds();
+                var newWidth = Math.Max(MinWidth, bounds.Width - delta.X);
+                var newX = bounds.X + (bounds.Width - newWidth);
+                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
 
                 newBoundingBox = new Rect(newX, _originalBoundingBox.Y, newWidth, newHeight);
 
@@ -91,8 +92,11 @@ public partial class PolylineShape : ShapeBase
             }
             case ResizePoint.BottomRight:
             {
-                Width = Math.Max(MinWidth, Width + delta.X);
-                Height = Math.Max(MinHeight, Height + delta.Y);
+                var bounds = GetBounds();
+                var newWidth = Math.Max(MinWidth, bounds.Width + delta.X);
+                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
+                
+                newBoundingBox = new Rect(bounds.X, bounds.Y, newWidth, newHeight);
 
                 break;
             }
