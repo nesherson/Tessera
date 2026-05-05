@@ -70,127 +70,31 @@ public partial class TriangleShape : ShapeBase
 
         return new Rect(minX, minY, maxX - minX, maxY - minY);
     }
-
-    public override void Scale(ResizePoint resizePoint, Vector delta)
+    
+    protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
     {
-        switch (resizePoint)
+        var originalPoints = Points.ToArray();
+        var normalizedPoints = new List<Point>();
+        var newPoints = new List<Point>();
+
+        foreach (var originalPoint in originalPoints)
         {
-            case ResizePoint.TopLeft:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-                
-                var newLeftPoint = new Point(
-                    Math.Min(leftPoint.X + delta.X, rightPoint.X - 20),
-                    leftPoint.Y);
-                var newMidPoint = new Point((newLeftPoint.X + rightPoint.X) / 2, Math.Min(midPoint.Y + delta.Y, leftPoint.Y - 20));
-                
-                Points = new ObservableCollection<Point>([newLeftPoint, newMidPoint, rightPoint]);
-                
-                break;
-            }
-            case ResizePoint.TopRight:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-                
-                var newRightPoint = new Point(
-                    Math.Max(rightPoint.X + delta.X, leftPoint.X + 20),
-                    rightPoint.Y);
-                var newMidPoint = new Point((leftPoint.X + newRightPoint.X) / 2, Math.Min(midPoint.Y + delta.Y, leftPoint.Y - 20));
-                
-                Points = new ObservableCollection<Point>([leftPoint, newMidPoint, newRightPoint]);
-                
-                break;
-            }
-            case ResizePoint.BottomLeft:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-                
-                var newLeftPoint = new Point(
-                    Math.Min(leftPoint.X + delta.X, rightPoint.X - 20),
-                    Math.Max(leftPoint.Y + delta.Y, midPoint.Y + 20));
-                var newRightPoint = new Point(
-                    rightPoint.X,
-                    Math.Max(rightPoint.Y + delta.Y, midPoint.Y + 20));
-                var newMidPoint = new Point((newLeftPoint.X + newRightPoint.X) / 2, midPoint.Y);
-                
-                Points = new ObservableCollection<Point>([newLeftPoint, newMidPoint, newRightPoint]);
-                break;
-            }
-            case ResizePoint.BottomRight:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-
-                var newRightPoint = new Point(
-                    Math.Max(rightPoint.X + delta.X, leftPoint.X + 20),
-                    Math.Max(rightPoint.Y + delta.Y, midPoint.Y + 20));
-                var newLeftPoint = new Point(
-                    leftPoint.X,
-                    Math.Max(rightPoint.Y + delta.Y, midPoint.Y + 20));
-                var newMidPoint = new Point((newLeftPoint.X + newRightPoint.X) / 2, midPoint.Y);
-                
-                Points = new ObservableCollection<Point>([newLeftPoint, newMidPoint, newRightPoint]);
-                
-                break;
-            }
-            case ResizePoint.Left:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-
-                var newLeftPoint = new Point(Math.Min(leftPoint.X + delta.X, rightPoint.X - 20), leftPoint.Y);
-                var newMidPoint = new Point((newLeftPoint.X + rightPoint.X) / 2, midPoint.Y);
-
-                Points = new ObservableCollection<Point>([newLeftPoint, newMidPoint, rightPoint]);
-
-                break;
-            }
-            case ResizePoint.Top:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-
-                var newMidPoint = new Point(midPoint.X, Math.Min(midPoint.Y + delta.Y, leftPoint.Y - 20));
-
-                Points = new ObservableCollection<Point>([leftPoint, newMidPoint, rightPoint]);
-
-                break;
-            }
-            case ResizePoint.Right:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-
-                var newRightPoint = new Point(Math.Max(rightPoint.X + delta.X, leftPoint.X + 20), rightPoint.Y);
-                var newMidPoint = new Point((leftPoint.X + newRightPoint.X) / 2, midPoint.Y);
-
-                Points = new ObservableCollection<Point>([leftPoint, newMidPoint, newRightPoint]);
-
-                break;
-            }
-            case ResizePoint.Bottom:
-            {
-                var rightPoint = Points.MaxBy(p => p.X);
-                var leftPoint = Points.MinBy(p => p.X);
-                var midPoint = Points.First(p => p.X > leftPoint.X && p.X < rightPoint.X);
-
-                var newLeftPoint = new Point(leftPoint.X, Math.Max(leftPoint.Y + delta.Y, midPoint.Y + 20));
-                var newRightPoint = new Point(rightPoint.X, Math.Max(rightPoint.Y + delta.Y, midPoint.Y + 20));
-
-                Points = new ObservableCollection<Point>([newLeftPoint, midPoint, newRightPoint]);
-
-                break;
-            }
+            var normalizedPoint = new Point(
+                (originalPoint.X - oldBounds.X) / oldBounds.Width * 100,
+                (originalPoint.Y - oldBounds.Y) / oldBounds.Height * 100);
+            
+            normalizedPoints.Add(normalizedPoint);
         }
+
+        foreach (var normalizedPoint in normalizedPoints)
+        {
+            var newPoint = new Point(
+                newBounds.X + (normalizedPoint.X / 100) * newBounds.Width,
+                newBounds.Y + (normalizedPoint.Y / 100) * newBounds.Height);
+            
+            newPoints.Add(newPoint);
+        }
+        
+        Points = new ObservableCollection<Point>(newPoints);
     }
 }

@@ -2,16 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Tessera.App.Enumerations;
 using Tessera.App.Helpers;
 
 namespace Tessera.App.Models;
 
 public partial class PolylineShape : ShapeBase
 {
-    private double MinWidth => StrokeThickness * 2.15;
-    private double MinHeight => StrokeThickness * 2.15;
-
     [ObservableProperty]
     private ObservableCollection<Point> _points = [];
 
@@ -36,146 +32,7 @@ public partial class PolylineShape : ShapeBase
         Points = new ObservableCollection<Point>(
             Points.Select(point => new Point(point.X + delta.X, point.Y + delta.Y)));
     }
-
-    private Rect _originalBoundingBox;
-    private Point[] _originalPoints;
-
-    public override void OnScaleStart(ResizePoint resizePoint, Vector delta)
-    {
-        // Keep the original bounding box and points
-        // _originalBoundingBox = GetBounds();
-        // _originalPoints = Points.ToArray();
-    }
-
-    public override void Scale(ResizePoint resizePoint, Vector delta)
-    {
-        _originalBoundingBox = GetBounds();
-        _originalPoints = Points.ToArray();
-        // Create new bounding box like in rectangle shape
-        var newBoundingBox = new Rect();
-
-        switch (resizePoint)
-        {
-            case ResizePoint.TopLeft:
-            {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height - delta.Y);
-                var newWidth = Math.Max(MinWidth, bounds.Width - delta.X);
-                var newX = bounds.X + (bounds.Width - newWidth);
-                var newY = bounds.Y + (bounds.Height - newHeight);
-
-                newBoundingBox = new Rect(newX, newY, newWidth, newHeight);
-
-                break;
-            }
-            case ResizePoint.BottomLeft:
-            {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width - delta.X);
-                var newX = bounds.X + (bounds.Width - newWidth);
-                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
-
-                newBoundingBox = new Rect(newX, _originalBoundingBox.Y, newWidth, newHeight);
-
-                break;
-            }
-            case ResizePoint.TopRight:
-            {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height - delta.Y);
-                var newY = bounds.Y + (bounds.Height - newHeight);
-                var newWidth = Math.Max(MinWidth, bounds.Width + delta.X);
-                
-                newBoundingBox = new Rect(bounds.X, newY, newWidth, newHeight);
-
-                break;
-            }
-            case ResizePoint.BottomRight:
-            {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width + delta.X);
-                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
-                
-                newBoundingBox = new Rect(bounds.X, bounds.Y, newWidth, newHeight);
-
-                break;
-            }
-            case ResizePoint.Bottom:
-            {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
-                
-                newBoundingBox = new Rect(bounds.X, bounds.Y, bounds.Width, newHeight);
-
-                break;
-            }
-            case ResizePoint.Left:
-            {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width - delta.X);
-                var newX = bounds.X + (bounds.Width - newWidth);
-                
-                newBoundingBox = new Rect(newX, bounds.Y, newWidth,
-                    bounds.Height);
-
-                break;
-            }
-            case ResizePoint.Right:
-            {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width + delta.X);
-
-                newBoundingBox = new Rect(bounds.X, bounds.Y, newWidth,
-                    bounds.Height);
-
-                break;
-            }
-            case ResizePoint.Top:
-            {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height - delta.Y);
-                var newY = bounds.Y + (bounds.Height - newHeight);
-                
-                newBoundingBox = new Rect(bounds.X, newY, bounds.Width,
-                    newHeight);
-
-                break;
-            }
-            default:
-                throw new ArgumentOutOfRangeException(nameof(resizePoint), resizePoint, null);
-        }
-        
-        // For each point, figure out where it sits proportionally within the original bounding box — e.g.,
-        // "this point is 30% from the left and 60% from the top"
-
-        var normalizedPoints = new List<Point>();
-
-        foreach (var originalPoint in _originalPoints)
-        {
-            var normalizedPoint = new Point(
-                (originalPoint.X - _originalBoundingBox.X) / _originalBoundingBox.Width * 100,
-                (originalPoint.Y - _originalBoundingBox.Y) / _originalBoundingBox.Height * 100);
-            
-            normalizedPoints.Add(normalizedPoint);
-            
-            // Debug.WriteLine($"Normalized x: {normalizedPoint.X}, y: {normalizedPoint.Y}");
-        }
-        
-        var newPoints = new List<Point>();
-        // Map that same proportion into the new bounding box
-        foreach (var normalizedPoint in normalizedPoints)
-        {
-            var newPoint = new Point(
-                newBoundingBox.X + (normalizedPoint.X / 100) * newBoundingBox.Width,
-                newBoundingBox.Y + (normalizedPoint.Y / 100) * newBoundingBox.Height);
-            
-            newPoints.Add(newPoint);
-        }
-        
-        Points = new ObservableCollection<Point>(newPoints);
-
-    }
-
+    
     public override Rect GetBounds()
     {
         if (Points.Count == 0)
@@ -186,6 +43,33 @@ public partial class PolylineShape : ShapeBase
         var maxX = Points.Max(p => p.X);
         var maxY = Points.Max(p => p.Y);
 
-        return InflateForStroke(new Rect(minX, minY, maxX - minX, maxY - minY));
+        return new Rect(minX, minY, maxX - minX, maxY - minY);
+    }
+
+    protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
+    {
+        var originalPoints = Points.ToArray();
+        var normalizedPoints = new List<Point>();
+        var newPoints = new List<Point>();
+
+        foreach (var originalPoint in originalPoints)
+        {
+            var normalizedPoint = new Point(
+                (originalPoint.X - oldBounds.X) / oldBounds.Width * 100,
+                (originalPoint.Y - oldBounds.Y) / oldBounds.Height * 100);
+            
+            normalizedPoints.Add(normalizedPoint);
+        }
+
+        foreach (var normalizedPoint in normalizedPoints)
+        {
+            var newPoint = new Point(
+                newBounds.X + (normalizedPoint.X / 100) * newBounds.Width,
+                newBounds.Y + (normalizedPoint.Y / 100) * newBounds.Height);
+            
+            newPoints.Add(newPoint);
+        }
+        
+        Points = new ObservableCollection<Point>(newPoints);
     }
 }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
+using Avalonia.Controls.Shapes;
 using Avalonia.Skia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Models;
@@ -113,7 +114,7 @@ public partial class SelectionManager : ObservableObject
             return;
         }
         
-        var rects = SelectedShapes.Select(s => s.GetBounds().Inflate(2))
+        var rects = SelectedShapes.Select(s => s.GetBounds().Inflate(s.StrokeThickness / 2))
             .ToList();
         var union = rects.First();
         

@@ -44,181 +44,23 @@ public partial class LineShape : ShapeBase
         EndPoint = new Point(EndPoint.X + delta.X, EndPoint.Y + delta.Y);
     }
 
-    public override void Scale(ResizePoint resizePoint, Vector delta)
+    protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
     {
-        switch (resizePoint)
-        {
-            case ResizePoint.TopLeft:
-            {
-                if (StartPoint.X < EndPoint.X)
-                {
-                    var newX = Math.Min(StartPoint.X + delta.X, EndPoint.X - MinWidth);
-
-                    StartPoint = new Point(newX, StartPoint.Y);
-                }
-                else
-                {
-                    var newX = Math.Min(EndPoint.X + delta.X, StartPoint.X - MinWidth);
-
-                    EndPoint = new Point(newX, EndPoint.Y);
-                }
-                
-                if (StartPoint.Y < EndPoint.Y)
-                {
-                    var newY = Math.Min(StartPoint.Y + delta.Y, EndPoint.Y - MinWidth);
-                    
-                    StartPoint = new Point(StartPoint.X, newY);
-                }
-                else
-                {
-                    var newY = Math.Min(EndPoint.Y + delta.Y, StartPoint.Y - MinWidth);
-                    
-                    EndPoint = new Point(EndPoint.X, newY);
-                }
-                
-                break;
-            }
-            case ResizePoint.BottomLeft:
-            {
-                if (StartPoint.X < EndPoint.X)
-                {
-                    var newX = Math.Min(StartPoint.X + delta.X, EndPoint.X - MinWidth);
-
-                    StartPoint = new Point(newX, StartPoint.Y);
-                }
-                else
-                {
-                    var newX = Math.Min(EndPoint.X + delta.X, StartPoint.X - MinWidth);
-
-                    EndPoint = new Point(newX, EndPoint.Y);
-                }
-                
-                if (StartPoint.Y > EndPoint.Y)
-                {
-                    var newY = Math.Max(StartPoint.Y + delta.Y, EndPoint.Y + MinWidth);
-                    
-                    StartPoint = new Point(StartPoint.X, newY);
-                }
-                else
-                {
-                    var newY = Math.Max(EndPoint.Y + delta.Y, StartPoint.Y + MinWidth);
-                    
-                    EndPoint = new Point(EndPoint.X, newY);
-                }
-                
-                break;
-            }
-            case ResizePoint.TopRight:
-            {
-                if (StartPoint.X > EndPoint.X)
-                {
-                    var newX = Math.Max(StartPoint.X + delta.X, EndPoint.X + MinWidth);
-
-                    StartPoint = new Point(newX, StartPoint.Y);
-                }
-                else
-                {
-                    var newX = Math.Max(EndPoint.X + delta.X, StartPoint.X + MinWidth);
-
-                    EndPoint = new Point(newX, EndPoint.Y);
-                }
-                
-                if (StartPoint.Y < EndPoint.Y)
-                {
-                    var newY = Math.Min(StartPoint.Y + delta.Y, EndPoint.Y - MinWidth);
-                    
-                    StartPoint = new Point(StartPoint.X, newY);
-                }
-                else
-                {
-                    var newY = Math.Min(EndPoint.Y + delta.Y, StartPoint.Y - MinWidth);
-                    
-                    EndPoint = new Point(EndPoint.X, newY);
-                }
-                
-                break;
-            }
-            case ResizePoint.BottomRight:
-            {
-                if (StartPoint.X > EndPoint.X)
-                {
-                    var newX = Math.Max(StartPoint.X + delta.X, EndPoint.X + MinWidth);
-
-                    StartPoint = new Point(newX, StartPoint.Y);
-                }
-                else
-                {
-                    var newX = Math.Max(EndPoint.X + delta.X, StartPoint.X + MinWidth);
-
-                    EndPoint = new Point(newX, EndPoint.Y);
-                }
-                
-                if (StartPoint.Y > EndPoint.Y)
-                {
-                    var newY = Math.Max(StartPoint.Y + delta.Y, EndPoint.Y + MinWidth);
-                    
-                    StartPoint = new Point(StartPoint.X, newY);
-                }
-                else
-                {
-                    var newY = Math.Max(EndPoint.Y + delta.Y, StartPoint.Y + MinWidth);
-                    
-                    EndPoint = new Point(EndPoint.X, newY);
-                }
-                
-                break;
-            }
-            case ResizePoint.Bottom:
-            {
-                if (StartPoint.Y > EndPoint.Y)
-                {
-                    var newY = Math.Max(StartPoint.Y + delta.Y, EndPoint.Y + MinWidth);
-                    
-                    StartPoint = new Point(StartPoint.X, newY);
-                }
-                else
-                {
-                    var newY = Math.Max(EndPoint.Y + delta.Y, StartPoint.Y + MinWidth);
-                    
-                    EndPoint = new Point(EndPoint.X, newY);
-                }
-                
-                break;
-            }
-            case ResizePoint.Left:
-            {
-                var newX = Math.Min(StartPoint.X + delta.X, EndPoint.X - MinWidth);
-
-                StartPoint = new Point(newX, StartPoint.Y);
-
-                break;
-            }
-            case ResizePoint.Right:
-            {
-                var newX = Math.Max(EndPoint.X + delta.X, StartPoint.X + MinWidth);
-
-                EndPoint = new Point(newX, EndPoint.Y);
-
-                break;
-            }
-            case ResizePoint.Top:
-            {
-                if (StartPoint.Y < EndPoint.Y)
-                {
-                    var newY = Math.Min(StartPoint.Y + delta.Y, EndPoint.Y - MinWidth);
-
-                    StartPoint = new Point(StartPoint.X, newY);
-                }
-                else
-                {
-                    var newY = Math.Min(EndPoint.Y + delta.Y, StartPoint.Y - MinWidth);
-                    
-                    EndPoint = new Point(EndPoint.X, newY);
-                }
-                
-                break;
-            }
-        }
+       var normalizedStartPoint = new Point(
+           (StartPoint.X - oldBounds.X) / oldBounds.Width * 100,
+           (StartPoint.Y - oldBounds.Y) / oldBounds.Height * 100);
+       var normalizedEndPoint = new Point(
+           (EndPoint.X - oldBounds.X) / oldBounds.Width * 100,
+           (EndPoint.Y - oldBounds.Y) / oldBounds.Height * 100);
+       var newStartPoint = new Point(
+           newBounds.X + normalizedStartPoint.X / 100 * newBounds.Width,
+           newBounds.Y + normalizedStartPoint.Y / 100 * newBounds.Height);
+       var newEndPoint = new Point(
+           newBounds.X + normalizedEndPoint.X / 100 * newBounds.Width,
+           newBounds.Y + normalizedEndPoint.Y / 100 * newBounds.Height);
+       
+       StartPoint = newStartPoint;
+       EndPoint = newEndPoint;
     }
 
     public override Rect GetBounds()
