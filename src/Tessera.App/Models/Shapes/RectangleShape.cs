@@ -1,12 +1,7 @@
-﻿using Tessera.App.Enumerations;
-
-namespace Tessera.App.Models;
+﻿namespace Tessera.App.Models;
 
 public class RectangleShape : ShapeBase
 {
-    private double MinWidth => StrokeThickness * 2.15; 
-    private double MinHeight => StrokeThickness * 2.15; 
-    
     public override bool Intersects(Rect rect)
     {
         return rect.Intersects(new Rect(X, Y, Width, Height));

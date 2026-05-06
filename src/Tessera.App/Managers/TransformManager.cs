@@ -6,11 +6,28 @@ namespace Tessera.App.Managers;
 
 public class TransformManager
 {
-    public void Scale(IList<ShapeBase> shapes, ResizePoint resizePoint, Vector delta)
+    private readonly HashSet<ShapeBase> _shapes = [];
+    private readonly Dictionary<ShapeBase, Rect> _shapeBounds = [];
+
+    public void ScaleStart(IList<ShapeBase> shapes)
     {
+        _shapes.Clear();
+        _shapeBounds.Clear();
+
         foreach (var shape in shapes)
         {
-            shape.Scale(resizePoint, delta);
+            _shapes.Add(shape);
+            _shapeBounds.Add(shape, shape.GetBounds());
+        }
+    }
+
+    public void Scale(ResizePoint resizePoint, Vector delta)
+    {
+        foreach (var shape in _shapes)
+        {
+            var shapeBounds = _shapeBounds[shape];
+
+            _shapeBounds[shape] = shape.Scale(shapeBounds, resizePoint, delta);
         }
     }
 }

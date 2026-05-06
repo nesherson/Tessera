@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using Avalonia.Collections;
-using Avalonia.Controls.Shapes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
@@ -61,107 +59,102 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
     public abstract bool HitTest(Point worldPoint, double tolerance);
     public abstract void Move(Vector delta);
     public abstract Rect GetBounds();
-    public void Scale(ResizePoint resizePoint, Vector delta)
+    
+    public Rect Scale(Rect currentBounds, ResizePoint resizePoint, Vector delta)
     {
-        var originalBoundingBox = GetBounds();
-        Rect newBoundingBox;
+        Rect newBounds;
 
         switch (resizePoint)
         {
             case ResizePoint.TopLeft:
             {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height - delta.Y);
-                var newWidth = Math.Max(MinWidth, bounds.Width - delta.X);
-                var newX = bounds.X + (bounds.Width - newWidth);
-                var newY = bounds.Y + (bounds.Height - newHeight);
-
-                newBoundingBox = new Rect(newX, newY, newWidth, newHeight);
-
+                var newHeight = Math.Max(MinHeight, currentBounds.Height - delta.Y);
+                var newWidth = Math.Max(MinWidth, currentBounds.Width - delta.X);
+                var newX = currentBounds.X + (currentBounds.Width - newWidth);
+                var newY = currentBounds.Y + (currentBounds.Height - newHeight);
+            
+                newBounds = new Rect(newX, newY, newWidth, newHeight);
+            
                 break;
             }
             case ResizePoint.BottomLeft:
             {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width - delta.X);
-                var newX = bounds.X + (bounds.Width - newWidth);
-                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
-
-                newBoundingBox = new Rect(newX, originalBoundingBox.Y, newWidth, newHeight);
-
+                var newWidth = Math.Max(MinWidth, currentBounds.Width - delta.X);
+                var newX = currentBounds.X + (currentBounds.Width - newWidth);
+                var newHeight = Math.Max(MinHeight, currentBounds.Height + delta.Y);
+            
+                newBounds = new Rect(newX, currentBounds.Y, newWidth, newHeight);
+            
                 break;
             }
             case ResizePoint.TopRight:
             {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height - delta.Y);
-                var newY = bounds.Y + (bounds.Height - newHeight);
-                var newWidth = Math.Max(MinWidth, bounds.Width + delta.X);
-
-                newBoundingBox = new Rect(bounds.X, newY, newWidth, newHeight);
-
+                var newHeight = Math.Max(MinHeight, currentBounds.Height - delta.Y);
+                var newY = currentBounds.Y + (currentBounds.Height - newHeight);
+                var newWidth = Math.Max(MinWidth, currentBounds.Width + delta.X);
+            
+                newBounds = new Rect(currentBounds.X, newY, newWidth, newHeight);
+            
                 break;
             }
             case ResizePoint.BottomRight:
             {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width + delta.X);
-                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
-
-                newBoundingBox = new Rect(bounds.X, bounds.Y, newWidth, newHeight);
-
+                var newWidth = Math.Max(MinWidth, currentBounds.Width + delta.X);
+                var newHeight = Math.Max(MinHeight, currentBounds.Height + delta.Y);
+            
+                newBounds = new Rect(currentBounds.X, currentBounds.Y, newWidth, newHeight);
+            
                 break;
             }
             case ResizePoint.Bottom:
             {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height + delta.Y);
-
-                newBoundingBox = new Rect(bounds.X, bounds.Y, bounds.Width, newHeight);
-
+                var newHeight = Math.Max(MinHeight, currentBounds.Height + delta.Y);
+            
+                newBounds = new Rect(currentBounds.X, currentBounds.Y, currentBounds.Width, newHeight);
+            
                 break;
             }
             case ResizePoint.Left:
             {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width - delta.X);
-                var newX = bounds.X + (bounds.Width - newWidth);
-
-                newBoundingBox = new Rect(newX, bounds.Y, newWidth, bounds.Height);
-
+                var newWidth = Math.Max(MinWidth, currentBounds.Width - delta.X);
+                var newX = currentBounds.X + (currentBounds.Width - newWidth);
+            
+                newBounds = new Rect(newX, currentBounds.Y, newWidth, currentBounds.Height);
+            
                 break;
             }
             case ResizePoint.Right:
             {
-                var bounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, bounds.Width + delta.X);
+                // var testBounds = GetBounds();
+                var newWidth = Math.Max(MinWidth, currentBounds.Width + delta.X);
 
-                newBoundingBox = new Rect(bounds.X, bounds.Y, newWidth, bounds.Height);
+                newBounds = new Rect(currentBounds.X, currentBounds.Y, newWidth, currentBounds.Height);
 
                 break;
             }
             case ResizePoint.Top:
             {
-                var bounds = GetBounds();
-                var newHeight = Math.Max(MinHeight, bounds.Height - delta.Y);
-                var newY = bounds.Y + (bounds.Height - newHeight);
-
-                newBoundingBox = new Rect(bounds.X, newY, bounds.Width, newHeight);
-
+                var newHeight = Math.Max(MinHeight, currentBounds.Height - delta.Y);
+                var newY = currentBounds.Y + (currentBounds.Height - newHeight);
+            
+                newBounds = new Rect(currentBounds.X, newY, currentBounds.Width, newHeight);
+            
                 break;
             }
             default:
-                newBoundingBox = GetBounds();
+                newBounds = currentBounds;
                 break;
         }
         
-        OnBoundsChanged(originalBoundingBox, newBoundingBox);
+        OnBoundsChanged(currentBounds, newBounds);
+
+        return newBounds;
     }
-    
-    protected virtual void OnBoundsChanged(Rect oldBounds, Rect newBounds) { }
     
     protected Rect InflateForStroke(Rect bounds)
     {
         return bounds.Inflate(StrokeThickness / 2);
     }
+    
+    protected virtual void OnBoundsChanged(Rect oldBounds, Rect newBounds) { }
 }

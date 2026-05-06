@@ -172,6 +172,12 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     {
         _dragMode = DragMode.Start;
         _isDragging = true;
+        
+        var selectedShapes = Shapes
+            .Where(x => SelectionManager.IsSelected(x))
+            .ToList();
+        
+        TransformManager.ScaleStart(selectedShapes);
     }
     
     public void OnDrag(ResizePoint resizePoint, Vector delta)
@@ -182,7 +188,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         
         _dragMode = DragMode.Dragging;
         
-        TransformManager.Scale(selectedShapes, resizePoint, delta);
+        TransformManager.Scale(resizePoint, delta);
     }
     
     public void OnDragCompleted(ResizePoint resizePoint, Vector delta)
