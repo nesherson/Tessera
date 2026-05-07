@@ -155,23 +155,9 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     {
         Zoom(screenPoint, delta);
     }
-
-    private enum DragMode
-    {
-        None,
-        Start,
-        Dragging,
-        Completed
-    }
-
-    private DragMode _dragMode = DragMode.None;
-    private bool _isDragging;
     
     public void OnDragStart(ResizePoint resizePoint, Vector delta)
     {
-        _dragMode = DragMode.Start;
-        _isDragging = true;
-        
         var selectedShapes = Shapes
             .Where(x => SelectionManager.IsSelected(x))
             .ToList();
@@ -181,19 +167,12 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     
     public void OnDrag(ResizePoint resizePoint, Vector delta)
     {
-        var selectedShapes = Shapes
-            .Where(x => SelectionManager.IsSelected(x))
-            .ToList();
-        
-        _dragMode = DragMode.Dragging;
-        
         TransformManager.Scale(resizePoint, delta);
     }
     
-    public void OnDragCompleted(ResizePoint resizePoint, Vector delta)
+    public void OnDragCompleted()
     {
-        _dragMode = DragMode.Completed;
-        _isDragging = false;
+        TransformManager.ScaleCompleted();
     }
     
     private void OnSelectionChanged(object? sender, EventArgs e)

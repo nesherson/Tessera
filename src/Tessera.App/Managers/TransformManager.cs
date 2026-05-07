@@ -11,9 +11,6 @@ public class TransformManager
 
     public void ScaleStart(IList<ShapeBase> shapes)
     {
-        _shapes.Clear();
-        _shapeBounds.Clear();
-
         foreach (var shape in shapes)
         {
             _shapes.Add(shape);
@@ -29,5 +26,11 @@ public class TransformManager
 
             _shapeBounds[shape] = shape.Scale(shapeBounds, resizePoint, delta);
         }
+    }
+
+    public void ScaleCompleted()
+    {
+        _shapes.Clear();
+        _shapeBounds.Clear();
     }
 }

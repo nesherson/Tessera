@@ -192,5 +192,5 @@ public partial class DrawingPageView : UserControl
         ViewModel?.OnDrag(e.Handle, e.DragArgs.Vector);
 
     private void OnResizeHandleDragCompleted(object? sender, ResizeEventArgs e) =>
-        ViewModel?.OnDragCompleted(e.Handle, e.DragArgs.Vector);
+        ViewModel?.OnDragCompleted();
 }
