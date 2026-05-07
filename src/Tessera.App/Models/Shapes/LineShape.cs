@@ -1,9 +1,5 @@
-﻿using System.Diagnostics;
-using Avalonia.Collections;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Tessera.App.Enumerations;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Helpers;
-using Tessera.App.Interfaces;
 
 namespace Tessera.App.Models;
 

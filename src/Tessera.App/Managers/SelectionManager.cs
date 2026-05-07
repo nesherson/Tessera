@@ -2,11 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Mime;
-using Avalonia.Controls.Shapes;
-using Avalonia.Skia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Models;
 

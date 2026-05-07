@@ -1,5 +1,3 @@
-using Tessera.App.Enumerations;
-
 namespace Tessera.App.Models;
 
 public class EllipseShape : ShapeBase

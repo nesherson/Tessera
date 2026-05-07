@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using Avalonia.Input;
+﻿using Avalonia.Input;
 using Tessera.App.Constants;
 using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;

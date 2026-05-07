@@ -1,12 +1,9 @@
-using System.Diagnostics;
 using System.Linq;
-using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Tessera.App.Controls;
-using Tessera.App.Enumerations;
 using Tessera.App.ViewModels;
 using Tessera.App.Models;
 

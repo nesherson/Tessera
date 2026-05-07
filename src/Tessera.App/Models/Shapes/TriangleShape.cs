@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Tessera.App.Enumerations;
 using Tessera.App.Helpers;
 
 namespace Tessera.App.Models;
