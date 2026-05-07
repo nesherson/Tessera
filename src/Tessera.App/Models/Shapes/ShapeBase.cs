@@ -60,18 +60,19 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
     public abstract void Move(Vector delta);
     public abstract Rect GetBounds();
     
-    public Rect Scale(Rect currentBounds, ResizePoint resizePoint, Vector delta)
+    public void Scale(ResizePoint resizePoint, Vector delta)
     {
+        var originalBounds = GetBounds();
         Rect newBounds;
 
         switch (resizePoint)
         {
             case ResizePoint.TopLeft:
             {
-                var newHeight = Math.Max(MinHeight, currentBounds.Height - delta.Y);
-                var newWidth = Math.Max(MinWidth, currentBounds.Width - delta.X);
-                var newX = currentBounds.X + (currentBounds.Width - newWidth);
-                var newY = currentBounds.Y + (currentBounds.Height - newHeight);
+                var newHeight = Math.Max(MinHeight, originalBounds.Height - delta.Y);
+                var newWidth = Math.Max(MinWidth, originalBounds.Width - delta.X);
+                var newX = originalBounds.X + (originalBounds.Width - newWidth);
+                var newY = originalBounds.Y + (originalBounds.Height - newHeight);
             
                 newBounds = new Rect(newX, newY, newWidth, newHeight);
             
@@ -79,76 +80,73 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.BottomLeft:
             {
-                var newWidth = Math.Max(MinWidth, currentBounds.Width - delta.X);
-                var newX = currentBounds.X + (currentBounds.Width - newWidth);
-                var newHeight = Math.Max(MinHeight, currentBounds.Height + delta.Y);
+                var newWidth = Math.Max(MinWidth, originalBounds.Width - delta.X);
+                var newX = originalBounds.X + (originalBounds.Width - newWidth);
+                var newHeight = Math.Max(MinHeight, originalBounds.Height + delta.Y);
             
-                newBounds = new Rect(newX, currentBounds.Y, newWidth, newHeight);
+                newBounds = new Rect(newX, originalBounds.Y, newWidth, newHeight);
             
                 break;
             }
             case ResizePoint.TopRight:
             {
-                var newHeight = Math.Max(MinHeight, currentBounds.Height - delta.Y);
-                var newY = currentBounds.Y + (currentBounds.Height - newHeight);
-                var newWidth = Math.Max(MinWidth, currentBounds.Width + delta.X);
+                var newHeight = Math.Max(MinHeight, originalBounds.Height - delta.Y);
+                var newY = originalBounds.Y + (originalBounds.Height - newHeight);
+                var newWidth = Math.Max(MinWidth, originalBounds.Width + delta.X);
             
-                newBounds = new Rect(currentBounds.X, newY, newWidth, newHeight);
+                newBounds = new Rect(originalBounds.X, newY, newWidth, newHeight);
             
                 break;
             }
             case ResizePoint.BottomRight:
             {
-                var newWidth = Math.Max(MinWidth, currentBounds.Width + delta.X);
-                var newHeight = Math.Max(MinHeight, currentBounds.Height + delta.Y);
+                var newWidth = Math.Max(MinWidth, originalBounds.Width + delta.X);
+                var newHeight = Math.Max(MinHeight, originalBounds.Height + delta.Y);
             
-                newBounds = new Rect(currentBounds.X, currentBounds.Y, newWidth, newHeight);
+                newBounds = new Rect(originalBounds.X, originalBounds.Y, newWidth, newHeight);
             
                 break;
             }
             case ResizePoint.Bottom:
             {
-                var newHeight = Math.Max(MinHeight, currentBounds.Height + delta.Y);
+                var newHeight = Math.Max(MinHeight, originalBounds.Height + delta.Y);
             
-                newBounds = new Rect(currentBounds.X, currentBounds.Y, currentBounds.Width, newHeight);
+                newBounds = new Rect(originalBounds.X, originalBounds.Y, originalBounds.Width, newHeight);
             
                 break;
             }
             case ResizePoint.Left:
             {
-                var newWidth = Math.Max(MinWidth, currentBounds.Width - delta.X);
-                var newX = currentBounds.X + (currentBounds.Width - newWidth);
+                var newWidth = Math.Max(MinWidth, originalBounds.Width - delta.X);
+                var newX = originalBounds.X + (originalBounds.Width - newWidth);
             
-                newBounds = new Rect(newX, currentBounds.Y, newWidth, currentBounds.Height);
+                newBounds = new Rect(newX, originalBounds.Y, newWidth, originalBounds.Height);
             
                 break;
             }
             case ResizePoint.Right:
             {
-                // var testBounds = GetBounds();
-                var newWidth = Math.Max(MinWidth, currentBounds.Width + delta.X);
+                var newWidth = Math.Max(MinWidth, originalBounds.Width + delta.X);
 
-                newBounds = new Rect(currentBounds.X, currentBounds.Y, newWidth, currentBounds.Height);
+                newBounds = new Rect(originalBounds.X, originalBounds.Y, newWidth, originalBounds.Height);
 
                 break;
             }
             case ResizePoint.Top:
             {
-                var newHeight = Math.Max(MinHeight, currentBounds.Height - delta.Y);
-                var newY = currentBounds.Y + (currentBounds.Height - newHeight);
+                var newHeight = Math.Max(MinHeight, originalBounds.Height - delta.Y);
+                var newY = originalBounds.Y + (originalBounds.Height - newHeight);
             
-                newBounds = new Rect(currentBounds.X, newY, currentBounds.Width, newHeight);
+                newBounds = new Rect(originalBounds.X, newY, originalBounds.Width, newHeight);
             
                 break;
             }
             default:
-                newBounds = currentBounds;
+                newBounds = originalBounds;
                 break;
         }
         
-        OnBoundsChanged(currentBounds, newBounds);
-
-        return newBounds;
+        OnBoundsChanged(originalBounds, newBounds);
     }
     
     protected Rect InflateForStroke(Rect bounds)
