@@ -148,14 +148,12 @@
                 <!-- Selection overlay layer -->
                 <c:SelectionOverlay 
                     RenderTransformOrigin="0,0"
+                    TransformMatrix="{Binding Transform.Matrix}"
                     SelectionBounds="{Binding SelectionManager.SelectionBounds}"
                     HasSelection="{Binding SelectionManager.HasSelection}"
                     ResizeStarted="OnResizeHandleDragStarted"
                     ResizeDelta="OnResizeHandleDragDelta"
                     ResizeCompleted="OnResizeHandleDragCompleted">
-                    <c:SelectionOverlay.RenderTransform>
-                        <MatrixTransform Matrix="{Binding Transform.Matrix}" />
-                    </c:SelectionOverlay.RenderTransform>
                 </c:SelectionOverlay>
                 
                 <!-- Shape layer -->

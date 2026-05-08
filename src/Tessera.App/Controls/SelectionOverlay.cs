@@ -31,6 +31,9 @@ public class SelectionOverlay : Canvas
     private static readonly StandardCursorType[] EdgeCursors =
     [StandardCursorType.TopSide, StandardCursorType.BottomSide,
         StandardCursorType.LeftSide, StandardCursorType.RightSide];
+    
+    public static readonly StyledProperty<Matrix> TransformMatrixProperty =
+        AvaloniaProperty.Register<SelectionOverlay, Matrix>(nameof(TransformMatrix));
 
     public SelectionOverlay()
     {
@@ -70,6 +73,12 @@ public class SelectionOverlay : Canvas
     {
         get => GetValue(HasSelectionProperty);
         set => SetValue(HasSelectionProperty, value);
+    }
+    
+    public Matrix TransformMatrix
+    {
+        get => GetValue(TransformMatrixProperty);
+        set => SetValue(TransformMatrixProperty, value);
     }
     
     // Events for resize operations
@@ -116,7 +125,9 @@ public class SelectionOverlay : Canvas
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == SelectionBoundsProperty || change.Property == HasSelectionProperty)
+        if (change.Property == SelectionBoundsProperty 
+            || change.Property == HasSelectionProperty 
+            || change.Property == TransformMatrixProperty)
             UpdateLayout();
     }
     
@@ -131,26 +142,31 @@ public class SelectionOverlay : Canvas
         
         IsVisible = true;
 
-        var b = SelectionBounds;
+        var worldBounds = SelectionBounds;
+        
+        var topLeft = worldBounds.TopLeft.Transform(TransformMatrix);
+        var bottomRight = worldBounds.BottomRight.Transform(TransformMatrix);
+        
+        var screenBounds = new Rect(topLeft, bottomRight);
         
         // Border
-        SetLeft(_border, b.X);
-        SetTop(_border, b.Y);
+        SetLeft(_border, screenBounds.X);
+        SetTop(_border, screenBounds.Y);
         
-        _border.Width = b.Width;
-        _border.Height = b.Height;
+        _border.Width = screenBounds.Width;
+        _border.Height = screenBounds.Height;
 
         // Corners
-        PositionCorner(_cornerHandles[0], b.Left, b.Top);
-        PositionCorner(_cornerHandles[1], b.Right, b.Top);
-        PositionCorner(_cornerHandles[2], b.Left, b.Bottom);
-        PositionCorner(_cornerHandles[3], b.Right, b.Bottom);
+        PositionCorner(_cornerHandles[0], screenBounds.Left, screenBounds.Top);
+        PositionCorner(_cornerHandles[1], screenBounds.Right, screenBounds.Top);
+        PositionCorner(_cornerHandles[2], screenBounds.Left, screenBounds.Bottom);
+        PositionCorner(_cornerHandles[3], screenBounds.Right, screenBounds.Bottom);
 
         // Edges
-        PositionEdge(_edgeHandles[0], b.Left, b.Top, b.Width, 6);      // top
-        PositionEdge(_edgeHandles[1], b.Left, b.Bottom - 3, b.Width, 6); // bottom
-        PositionEdge(_edgeHandles[2], b.Left, b.Top, 6, b.Height);      // left
-        PositionEdge(_edgeHandles[3], b.Right - 3, b.Top, 6, b.Height); // right
+        PositionEdge(_edgeHandles[0], screenBounds.Left, screenBounds.Top, screenBounds.Width, 6);      // top
+        PositionEdge(_edgeHandles[1], screenBounds.Left, screenBounds.Bottom - 3, screenBounds.Width, 6); // bottom
+        PositionEdge(_edgeHandles[2], screenBounds.Left, screenBounds.Top, 6, screenBounds.Height);      // left
+        PositionEdge(_edgeHandles[3], screenBounds.Right - 3, screenBounds.Top, 6, screenBounds.Height); // right
     }
 
     private static void PositionCorner(Thumb thumb, double x, double y)
