@@ -43,4 +43,12 @@ public partial class TextShape : ShapeBase
 
         Height = Math.Max(requiredHeight, 16);
     }
+
+    protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
+    {
+        X = newBounds.X;
+        Y = newBounds.Y;
+        Width = newBounds.Width;
+        Height = newBounds.Height;
+    }
 }
