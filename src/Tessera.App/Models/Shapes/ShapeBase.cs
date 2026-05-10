@@ -52,8 +52,8 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
         _ => []
     };
     
-    private double MinWidth => StrokeThickness * 2.15;
-    private double MinHeight => StrokeThickness * 2.15;
+    public virtual double MinWidth => StrokeThickness * 2.15;
+    public virtual double MinHeight => StrokeThickness * 2.15;
     
     public abstract bool Intersects(Rect rect);
     public abstract bool HitTest(Point worldPoint, double tolerance);
