@@ -15,9 +15,10 @@ public partial class TextShape : ShapeBase
     
     [ObservableProperty]
     private bool _isInitializing;
-    
-    public double MinHeight => FontSize * 1.4;
-    
+
+    public override double MinHeight => 16;
+    public override double MinWidth => 32;
+
     public override bool Intersects(Rect rect) => 
         rect.Intersects(new Rect(X, Y, Width, Height));
 
@@ -32,7 +33,7 @@ public partial class TextShape : ShapeBase
 
     public override Rect GetBounds()
     {
-        return InflateForStroke(new Rect(X, Y, Width, Height));
+        return new Rect(X, Y, Width, Height);
     }
 
     public void UpdateBounds()
@@ -50,5 +51,6 @@ public partial class TextShape : ShapeBase
         Y = newBounds.Y;
         Width = newBounds.Width;
         Height = newBounds.Height;
+        FontSize = newBounds.Height * 0.9;
     }
 }
