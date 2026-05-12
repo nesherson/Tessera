@@ -43,7 +43,7 @@ public class SelectionOverlay : Canvas
         {
             Stroke = Brushes.DodgerBlue,
             StrokeThickness = 2,
-            IsHitTestVisible = false
+            IsHitTestVisible = false,
         };
         
         Children.Add(_border);
@@ -91,10 +91,10 @@ public class SelectionOverlay : Canvas
         var thumb = new Thumb
         {
             Tag = point,
-            Width = 8,
-            Height = 8,
+            Width = 10,
+            Height = 10,
             Cursor = new Cursor(cursor),
-            Theme = Application.Current?.FindResource("ThumbTheme") as ControlTheme
+            Theme = Application.Current?.FindResource("ThumbTheme") as ControlTheme,
         };
 
         thumb.DragStarted += OnThumbDragStarted;
@@ -146,7 +146,6 @@ public class SelectionOverlay : Canvas
         
         var topLeft = worldBounds.TopLeft.Transform(TransformMatrix);
         var bottomRight = worldBounds.BottomRight.Transform(TransformMatrix);
-        
         var screenBounds = new Rect(topLeft, bottomRight);
         
         // Border
@@ -171,8 +170,8 @@ public class SelectionOverlay : Canvas
 
     private static void PositionCorner(Thumb thumb, double x, double y)
     {
-        SetLeft(thumb, x - 4);
-        SetTop(thumb, y - 4);
+        SetLeft(thumb, x - thumb.Width / 2);
+        SetTop(thumb, y - thumb.Height / 2);
     }
 
     private static void PositionEdge(Thumb thumb, double x, double y, double w, double h)
