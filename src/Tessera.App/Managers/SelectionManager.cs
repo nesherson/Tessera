@@ -110,7 +110,7 @@ public partial class SelectionManager : ObservableObject
             return;
         }
         
-        var rects = SelectedShapes.Select(s => s.GetBounds().Inflate(s.StrokeThickness / 2))
+        var rects = SelectedShapes.Select(s => s.GetBounds().Inflate(2))
             .ToList();
         var union = rects.First();
         
