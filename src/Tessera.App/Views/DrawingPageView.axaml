@@ -144,17 +144,6 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </c:CanvasGrid.RenderTransform>
                 </c:CanvasGrid>
-
-                <!-- Selection overlay layer -->
-                <c:SelectionOverlay 
-                    RenderTransformOrigin="0,0"
-                    TransformMatrix="{Binding Transform.Matrix}"
-                    SelectionBounds="{Binding SelectionManager.SelectionBounds}"
-                    HasSelection="{Binding SelectionManager.HasSelection}"
-                    ResizeStarted="OnResizeHandleDragStarted"
-                    ResizeDelta="OnResizeHandleDragDelta"
-                    ResizeCompleted="OnResizeHandleDragCompleted">
-                </c:SelectionOverlay>
                 
                 <!-- Shape layer -->
                 <ItemsControl ItemsSource="{Binding Shapes}" 
@@ -202,7 +191,7 @@
                                     Stroke="{Binding StrokeColor}"
                                     Fill="{Binding Color}"
                                     StrokeThickness="{Binding StrokeThickness}"
-                                    StrokeDashArray="{Binding StrokeDashArray}" />
+                                    StrokeDashArray="{Binding StrokeDashArray}"/>
                             </DataTemplate>
                             <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
                                 <Ellipse
@@ -270,6 +259,17 @@
                         </dt:ShapeTemplateSelector>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                
+                <!-- Selection overlay layer -->
+                <c:SelectionOverlay 
+                    RenderTransformOrigin="0,0"
+                    TransformMatrix="{Binding Transform.Matrix}"
+                    SelectionBounds="{Binding SelectionManager.SelectionBounds}"
+                    HasSelection="{Binding SelectionManager.HasSelection}"
+                    ResizeStarted="OnResizeHandleDragStarted"
+                    ResizeDelta="OnResizeHandleDragDelta"
+                    ResizeCompleted="OnResizeHandleDragCompleted">
+                </c:SelectionOverlay>
             </Panel>
         </Grid>
         
