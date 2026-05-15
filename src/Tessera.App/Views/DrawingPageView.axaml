@@ -269,6 +269,12 @@
                     ResizeStarted="OnResizeHandleDragStarted"
                     ResizeDelta="OnResizeHandleDragDelta"
                     ResizeCompleted="OnResizeHandleDragCompleted">
+                    <c:SelectionOverlay.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                            <Binding Path="SelectionManager.HasSelection" />
+                            <Binding Path="IsSelectionToolSelected" />
+                        </MultiBinding>
+                    </c:SelectionOverlay.IsVisible>
                 </c:SelectionOverlay>
             </Panel>
         </Grid>
