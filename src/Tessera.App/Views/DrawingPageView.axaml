@@ -7,7 +7,6 @@
              xmlns:dt="clr-namespace:Tessera.App.DataTemplates"
              xmlns:c="clr-namespace:Tessera.App.Controls"
              xmlns:m="clr-namespace:Tessera.App.Models"
-             xmlns:enum="clr-namespace:Tessera.App.Enumerations"
              xmlns:helpers="clr-namespace:Tessera.App.Helpers"
              x:Class="Tessera.App.Views.DrawingPageView"
              x:DataType="vm:DrawingPageViewModel"

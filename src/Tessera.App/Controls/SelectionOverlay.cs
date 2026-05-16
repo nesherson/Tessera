@@ -3,6 +3,7 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Styling;
 using Tessera.App.Enumerations;
+using Tessera.App.Models;
 
 namespace Tessera.App.Controls;
 
@@ -190,16 +191,4 @@ public class SelectionOverlay : Canvas
 
     private void OnThumbDragCompleted(object? sender, VectorEventArgs e)
         => ResizeCompleted?.Invoke(sender, new ResizeEventArgs((ResizePoint)((Thumb)sender!).Tag!, e));
-}
-
-public class ResizeEventArgs
-{
-    public ResizePoint Handle { get; }
-    public VectorEventArgs DragArgs { get; }
-
-    public ResizeEventArgs(ResizePoint handle, VectorEventArgs dragArgs)
-    {
-        Handle = handle;
-        DragArgs = dragArgs;
-    }
 }
