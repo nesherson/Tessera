@@ -43,17 +43,17 @@ public partial class LineShape : ShapeBase
     protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
     {
        var normalizedStartPoint = new Point(
-           (StartPoint.X - oldBounds.X) / oldBounds.Width * 100,
-           (StartPoint.Y - oldBounds.Y) / oldBounds.Height * 100);
+           (StartPoint.X - oldBounds.X) / oldBounds.Width,
+           (StartPoint.Y - oldBounds.Y) / oldBounds.Height);
        var normalizedEndPoint = new Point(
-           (EndPoint.X - oldBounds.X) / oldBounds.Width * 100,
-           (EndPoint.Y - oldBounds.Y) / oldBounds.Height * 100);
+           (EndPoint.X - oldBounds.X) / oldBounds.Width,
+           (EndPoint.Y - oldBounds.Y) / oldBounds.Height);
        var newStartPoint = new Point(
-           newBounds.X + normalizedStartPoint.X / 100 * newBounds.Width,
-           newBounds.Y + normalizedStartPoint.Y / 100 * newBounds.Height);
+           newBounds.X + normalizedStartPoint.X * newBounds.Width,
+           newBounds.Y + normalizedStartPoint.Y * newBounds.Height);
        var newEndPoint = new Point(
-           newBounds.X + normalizedEndPoint.X / 100 * newBounds.Width,
-           newBounds.Y + normalizedEndPoint.Y / 100 * newBounds.Height);
+           newBounds.X + normalizedEndPoint.X * newBounds.Width,
+           newBounds.Y + normalizedEndPoint.Y * newBounds.Height);
        
        StartPoint = newStartPoint;
        EndPoint = newEndPoint;

@@ -55,8 +55,8 @@ public partial class PolylineShape : ShapeBase
         foreach (var originalPoint in originalPoints)
         {
             var normalizedPoint = new Point(
-                (originalPoint.X - oldBounds.X) / oldBounds.Width * 100,
-                (originalPoint.Y - oldBounds.Y) / oldBounds.Height * 100);
+                (originalPoint.X - oldBounds.X) / oldBounds.Width,
+                (originalPoint.Y - oldBounds.Y) / oldBounds.Height);
             
             normalizedPoints.Add(normalizedPoint);
         }
@@ -64,8 +64,8 @@ public partial class PolylineShape : ShapeBase
         foreach (var normalizedPoint in normalizedPoints)
         {
             var newPoint = new Point(
-                newBounds.X + (normalizedPoint.X / 100) * newBounds.Width,
-                newBounds.Y + (normalizedPoint.Y / 100) * newBounds.Height);
+                newBounds.X + normalizedPoint.X * newBounds.Width,
+                newBounds.Y + normalizedPoint.Y * newBounds.Height);
             
             newPoints.Add(newPoint);
         }
