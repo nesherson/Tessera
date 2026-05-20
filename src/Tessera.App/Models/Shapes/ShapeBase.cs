@@ -60,17 +60,16 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
     public abstract void Move(Vector delta);
     public abstract Rect GetBounds();
     
-    public void Scale(ResizePoint resizePoint, Vector delta)
+    public void Scale(Rect originalBounds, ResizePoint resizePoint, Vector delta, double minWidth, double minHeight)
     {
-        var originalBounds = GetBounds();
         Rect newBounds;
 
         switch (resizePoint)
         {
             case ResizePoint.TopLeft:
             {
-                var newHeight = Math.Max(MinHeight, originalBounds.Height - delta.Y);
-                var newWidth = Math.Max(MinWidth, originalBounds.Width - delta.X);
+                var newHeight = Math.Max(minHeight, originalBounds.Height - delta.Y);
+                var newWidth = Math.Max(minWidth, originalBounds.Width - delta.X);
                 var newX = originalBounds.X + (originalBounds.Width - newWidth);
                 var newY = originalBounds.Y + (originalBounds.Height - newHeight);
             
@@ -80,9 +79,9 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.BottomLeft:
             {
-                var newWidth = Math.Max(MinWidth, originalBounds.Width - delta.X);
+                var newWidth = Math.Max(minWidth, originalBounds.Width - delta.X);
                 var newX = originalBounds.X + (originalBounds.Width - newWidth);
-                var newHeight = Math.Max(MinHeight, originalBounds.Height + delta.Y);
+                var newHeight = Math.Max(minHeight, originalBounds.Height + delta.Y);
             
                 newBounds = new Rect(newX, originalBounds.Y, newWidth, newHeight);
             
@@ -90,9 +89,9 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.TopRight:
             {
-                var newHeight = Math.Max(MinHeight, originalBounds.Height - delta.Y);
+                var newHeight = Math.Max(minHeight, originalBounds.Height - delta.Y);
                 var newY = originalBounds.Y + (originalBounds.Height - newHeight);
-                var newWidth = Math.Max(MinWidth, originalBounds.Width + delta.X);
+                var newWidth = Math.Max(minWidth, originalBounds.Width + delta.X);
             
                 newBounds = new Rect(originalBounds.X, newY, newWidth, newHeight);
             
@@ -100,8 +99,8 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.BottomRight:
             {
-                var newWidth = Math.Max(MinWidth, originalBounds.Width + delta.X);
-                var newHeight = Math.Max(MinHeight, originalBounds.Height + delta.Y);
+                var newWidth = Math.Max(minWidth, originalBounds.Width + delta.X);
+                var newHeight = Math.Max(minHeight, originalBounds.Height + delta.Y);
             
                 newBounds = new Rect(originalBounds.X, originalBounds.Y, newWidth, newHeight);
             
@@ -109,7 +108,7 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.Bottom:
             {
-                var newHeight = Math.Max(MinHeight, originalBounds.Height + delta.Y);
+                var newHeight = Math.Max(minHeight, originalBounds.Height + delta.Y);
             
                 newBounds = new Rect(originalBounds.X, originalBounds.Y, originalBounds.Width, newHeight);
             
@@ -117,7 +116,7 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.Left:
             {
-                var newWidth = Math.Max(MinWidth, originalBounds.Width - delta.X);
+                var newWidth = Math.Max(minWidth, originalBounds.Width - delta.X);
                 var newX = originalBounds.X + (originalBounds.Width - newWidth);
             
                 newBounds = new Rect(newX, originalBounds.Y, newWidth, originalBounds.Height);
@@ -126,7 +125,7 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.Right:
             {
-                var newWidth = Math.Max(MinWidth, originalBounds.Width + delta.X);
+                var newWidth = Math.Max(minWidth, originalBounds.Width + delta.X);
 
                 newBounds = new Rect(originalBounds.X, originalBounds.Y, newWidth, originalBounds.Height);
 
@@ -134,7 +133,7 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
             }
             case ResizePoint.Top:
             {
-                var newHeight = Math.Max(MinHeight, originalBounds.Height - delta.Y);
+                var newHeight = Math.Max(minHeight, originalBounds.Height - delta.Y);
                 var newY = originalBounds.Y + (originalBounds.Height - newHeight);
             
                 newBounds = new Rect(originalBounds.X, newY, originalBounds.Width, newHeight);

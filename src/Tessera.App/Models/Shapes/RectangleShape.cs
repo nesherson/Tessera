@@ -20,9 +20,18 @@ public class RectangleShape : ShapeBase
     
     protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
     {
-        Width = newBounds.Width;
-        Height = newBounds.Height;
-        X = newBounds.X;
-        Y = newBounds.Y;
+        var normalizedX = (X - oldBounds.X) / oldBounds.Width;
+        var normalizedY = (Y - oldBounds.Y) / oldBounds.Height;
+        var normalizedXOne = (X + Width - oldBounds.X) / oldBounds.Width;
+        var normalizedYOne = (Y + Height - oldBounds.Y) / oldBounds.Height;
+        var newXPoint = newBounds.X + normalizedX * newBounds.Width;
+        var newYPoint = newBounds.Y + normalizedY * newBounds.Height;
+        var newXOne = newBounds.X + normalizedXOne * newBounds.Width;
+        var newYOne = newBounds.Y + normalizedYOne * newBounds.Height;
+        
+        X = newXPoint;
+        Y = newYPoint;
+        Width = newXOne - newXPoint;
+        Height = newYOne - newYPoint;
     }
 }

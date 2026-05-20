@@ -167,7 +167,9 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     
     public void OnDrag(ResizePoint resizePoint, Vector delta)
     {
-        TransformManager.Scale(resizePoint, delta);
+        var selectionBounds = SelectionManager.SelectionBounds.Deflate(2);
+        
+        TransformManager.Scale(selectionBounds, resizePoint, delta);
     }
     
     public void OnDragCompleted()
