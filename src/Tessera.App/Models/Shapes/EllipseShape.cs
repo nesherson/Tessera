@@ -1,3 +1,5 @@
+using Tessera.App.Helpers;
+
 namespace Tessera.App.Models;
 
 public class EllipseShape : ShapeBase
@@ -18,10 +20,13 @@ public class EllipseShape : ShapeBase
     
     protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
     {
-        Width = newBounds.Width;
-        Height = newBounds.Height;
-        X = newBounds.X;
-        Y = newBounds.Y;
+        var currentRect = new Rect(X, Y, Width, Height);
+        var newRect = Remap(currentRect, oldBounds, newBounds);
+        
+        X = newRect.X;
+        Y = newRect.Y;
+        Width = newRect.Width;
+        Height = newRect.Height;
     }
 
     public override Rect GetBounds() => new(X, Y, Width, Height);

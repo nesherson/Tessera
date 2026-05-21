@@ -154,4 +154,22 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
     }
     
     protected virtual void OnBoundsChanged(Rect oldBounds, Rect newBounds) { }
+
+    protected static Rect Remap(Rect rect, Rect oldBounds, Rect newBounds)
+    {
+        var topLeft = Remap(rect.TopLeft, oldBounds, newBounds);
+        var bottomRight = Remap(rect.BottomRight, oldBounds, newBounds);
+        
+        return new Rect(topLeft, bottomRight);
+    }
+
+    protected static Point Remap(Point point, Rect oldBounds, Rect newBounds)
+    {
+        var tx = oldBounds.Width == 0 ? 0 : (point.X - oldBounds.X) / oldBounds.Width;
+        var ty = oldBounds.Height == 0 ? 0 : (point.Y - oldBounds.Y) / oldBounds.Height;
+
+        return new Point(
+            newBounds.X + tx  * newBounds.Width,
+            newBounds.Y + ty * newBounds.Height);
+    }
 }
