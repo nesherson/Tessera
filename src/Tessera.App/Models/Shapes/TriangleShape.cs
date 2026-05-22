@@ -72,28 +72,7 @@ public partial class TriangleShape : ShapeBase
     
     protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
     {
-        var originalPoints = Points.ToArray();
-        var normalizedPoints = new List<Point>();
-        var newPoints = new List<Point>();
-
-        foreach (var originalPoint in originalPoints)
-        {
-            var normalizedPoint = new Point(
-                (originalPoint.X - oldBounds.X) / oldBounds.Width,
-                (originalPoint.Y - oldBounds.Y) / oldBounds.Height);
-            
-            normalizedPoints.Add(normalizedPoint);
-        }
-
-        foreach (var normalizedPoint in normalizedPoints)
-        {
-            var newPoint = new Point(
-                newBounds.X + normalizedPoint.X * newBounds.Width,
-                newBounds.Y + normalizedPoint.Y * newBounds.Height);
-            
-            newPoints.Add(newPoint);
-        }
-        
-        Points = new ObservableCollection<Point>(newPoints);
+        Points = new ObservableCollection<Point>(Points
+            .Select(x => Remap(x, oldBounds, newBounds)));
     }
 }
