@@ -2,10 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Mime;
-using Avalonia.Skia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Models;
 
@@ -113,7 +110,7 @@ public partial class SelectionManager : ObservableObject
             return;
         }
         
-        var rects = SelectedShapes.Select(s => s.GetBounds())
+        var rects = SelectedShapes.Select(s => s.GetBounds().Inflate(2))
             .ToList();
         var union = rects.First();
         
@@ -151,9 +148,10 @@ public partial class SelectionManager : ObservableObject
         if (e.PropertyName is nameof(LineShape.StartPoint) 
             or nameof(LineShape.EndPoint) 
             or nameof(PolylineShape.Points)
-            or nameof(TriangleShape.Points)
             or nameof(ShapeBase.X)
-            or nameof(ShapeBase.Y))
+            or nameof(ShapeBase.Y)
+            or nameof(ShapeBase.Width)
+            or nameof(ShapeBase.Height))
         {
             UpdateBounds();
         }

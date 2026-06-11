@@ -1,6 +1,4 @@
 ﻿using Avalonia.Input;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using Tessera.App.Constants;
 using Tessera.App.Interfaces;
 

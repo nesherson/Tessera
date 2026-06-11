@@ -48,9 +48,11 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     [ObservableProperty]
     private bool _isToolSettingsOpen;
     
-    
     [ObservableProperty]
     private IShapeProperties? _activeProperties;
+    
+    [ObservableProperty]
+    private Vector _dragVector;
 
     private ICanvasTool CurrentTool => SelectedToolItem.Tool;
     public bool IsSelectionToolSelected => SelectedToolItem.Tool is SelectionTool;
@@ -65,6 +67,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
         PageName = ApplicationPageNames.Drawing;
         Transform = new CanvasTransform();
         SelectionManager = new SelectionManager(Shapes);
+        TransformManager = new TransformManager();
         
         Tools =
         [
@@ -130,6 +133,7 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
 
     public CanvasTransform Transform { get; }
     public SelectionManager SelectionManager { get; }
+    public TransformManager TransformManager { get; }
     public ObservableCollection<ToolItem> Tools { get; }
 
     public void OnPointerPressed(Point screenPoint, KeyModifiers keyModifiers)
@@ -150,6 +154,27 @@ public partial class DrawingPageViewModel : PageViewModel, ICanvasContext
     public void OnPointerWheelChanged(Point screenPoint, double delta)
     {
         Zoom(screenPoint, delta);
+    }
+    
+    public void OnDragStart(ResizePoint resizePoint, Vector delta)
+    {
+        var selectedShapes = Shapes
+            .Where(x => SelectionManager.IsSelected(x))
+            .ToList();
+        
+        TransformManager.ScaleStart(selectedShapes);
+    }
+    
+    public void OnDrag(ResizePoint resizePoint, Vector delta)
+    {
+        var selectionBounds = SelectionManager.SelectionBounds.Deflate(2);
+        
+        TransformManager.Scale(selectionBounds, resizePoint, delta);
+    }
+    
+    public void OnDragCompleted()
+    {
+        TransformManager.ScaleCompleted();
     }
     
     private void OnSelectionChanged(object? sender, EventArgs e)

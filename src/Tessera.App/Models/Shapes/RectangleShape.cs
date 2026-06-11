@@ -1,6 +1,4 @@
-﻿using Avalonia.Controls.Shapes;
-
-namespace Tessera.App.Models;
+﻿namespace Tessera.App.Models;
 
 public class RectangleShape : ShapeBase
 {
@@ -18,6 +16,16 @@ public class RectangleShape : ShapeBase
         Y += delta.Y;
     }
 
-    public override Rect GetBounds() => 
-        InflateForStroke(new Rect(X, Y, Width, Height));
+    public override Rect GetBounds() => new(X, Y, Width, Height);
+    
+    protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
+    {
+        var currentRect = new Rect(X, Y, Width, Height);
+        var newRect = Remap(currentRect, oldBounds, newBounds);
+        
+        X = newRect.X;
+        Y = newRect.Y;
+        Width = newRect.Width;
+        Height = newRect.Height;
+    }
 }

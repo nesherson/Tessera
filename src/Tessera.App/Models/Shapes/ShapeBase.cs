@@ -1,5 +1,4 @@
 using Avalonia.Collections;
-using Avalonia.Controls.Shapes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Enumerations;
 using Tessera.App.Interfaces;
@@ -53,13 +52,124 @@ public abstract partial class ShapeBase : ObservableObject, IShapeProperties
         _ => []
     };
     
+    public virtual double MinWidth => StrokeThickness * 2.15;
+    public virtual double MinHeight => StrokeThickness * 2.15;
+    
     public abstract bool Intersects(Rect rect);
     public abstract bool HitTest(Point worldPoint, double tolerance);
     public abstract void Move(Vector delta);
     public abstract Rect GetBounds();
     
+    public void Scale(Rect originalBounds, ResizePoint resizePoint, Vector delta, double minWidth, double minHeight)
+    {
+        Rect newBounds;
+
+        switch (resizePoint)
+        {
+            case ResizePoint.TopLeft:
+            {
+                var newHeight = Math.Max(minHeight, originalBounds.Height - delta.Y);
+                var newWidth = Math.Max(minWidth, originalBounds.Width - delta.X);
+                var newX = originalBounds.X + (originalBounds.Width - newWidth);
+                var newY = originalBounds.Y + (originalBounds.Height - newHeight);
+            
+                newBounds = new Rect(newX, newY, newWidth, newHeight);
+            
+                break;
+            }
+            case ResizePoint.BottomLeft:
+            {
+                var newWidth = Math.Max(minWidth, originalBounds.Width - delta.X);
+                var newX = originalBounds.X + (originalBounds.Width - newWidth);
+                var newHeight = Math.Max(minHeight, originalBounds.Height + delta.Y);
+            
+                newBounds = new Rect(newX, originalBounds.Y, newWidth, newHeight);
+            
+                break;
+            }
+            case ResizePoint.TopRight:
+            {
+                var newHeight = Math.Max(minHeight, originalBounds.Height - delta.Y);
+                var newY = originalBounds.Y + (originalBounds.Height - newHeight);
+                var newWidth = Math.Max(minWidth, originalBounds.Width + delta.X);
+            
+                newBounds = new Rect(originalBounds.X, newY, newWidth, newHeight);
+            
+                break;
+            }
+            case ResizePoint.BottomRight:
+            {
+                var newWidth = Math.Max(minWidth, originalBounds.Width + delta.X);
+                var newHeight = Math.Max(minHeight, originalBounds.Height + delta.Y);
+            
+                newBounds = new Rect(originalBounds.X, originalBounds.Y, newWidth, newHeight);
+            
+                break;
+            }
+            case ResizePoint.Bottom:
+            {
+                var newHeight = Math.Max(minHeight, originalBounds.Height + delta.Y);
+            
+                newBounds = new Rect(originalBounds.X, originalBounds.Y, originalBounds.Width, newHeight);
+            
+                break;
+            }
+            case ResizePoint.Left:
+            {
+                var newWidth = Math.Max(minWidth, originalBounds.Width - delta.X);
+                var newX = originalBounds.X + (originalBounds.Width - newWidth);
+            
+                newBounds = new Rect(newX, originalBounds.Y, newWidth, originalBounds.Height);
+            
+                break;
+            }
+            case ResizePoint.Right:
+            {
+                var newWidth = Math.Max(minWidth, originalBounds.Width + delta.X);
+
+                newBounds = new Rect(originalBounds.X, originalBounds.Y, newWidth, originalBounds.Height);
+
+                break;
+            }
+            case ResizePoint.Top:
+            {
+                var newHeight = Math.Max(minHeight, originalBounds.Height - delta.Y);
+                var newY = originalBounds.Y + (originalBounds.Height - newHeight);
+            
+                newBounds = new Rect(originalBounds.X, newY, originalBounds.Width, newHeight);
+            
+                break;
+            }
+            default:
+                newBounds = originalBounds;
+                break;
+        }
+        
+        OnBoundsChanged(originalBounds, newBounds);
+    }
+    
     protected Rect InflateForStroke(Rect bounds)
     {
         return bounds.Inflate(StrokeThickness / 2);
+    }
+    
+    protected virtual void OnBoundsChanged(Rect oldBounds, Rect newBounds) { }
+
+    protected static Rect Remap(Rect rect, Rect oldBounds, Rect newBounds)
+    {
+        var topLeft = Remap(rect.TopLeft, oldBounds, newBounds);
+        var bottomRight = Remap(rect.BottomRight, oldBounds, newBounds);
+        
+        return new Rect(topLeft, bottomRight);
+    }
+
+    protected static Point Remap(Point point, Rect oldBounds, Rect newBounds)
+    {
+        var tx = oldBounds.Width == 0 ? 0 : (point.X - oldBounds.X) / oldBounds.Width;
+        var ty = oldBounds.Height == 0 ? 0 : (point.Y - oldBounds.Y) / oldBounds.Height;
+
+        return new Point(
+            newBounds.X + tx  * newBounds.Width,
+            newBounds.Y + ty * newBounds.Height);
     }
 }

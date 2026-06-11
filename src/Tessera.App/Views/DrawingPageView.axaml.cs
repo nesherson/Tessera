@@ -1,9 +1,9 @@
-using System.Diagnostics;
 using System.Linq;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Tessera.App.Controls;
 using Tessera.App.ViewModels;
 using Tessera.App.Models;
 
@@ -16,7 +16,7 @@ public partial class DrawingPageView : UserControl
     public DrawingPageView()
     {
         InitializeComponent();
-        
+
         Loaded += (_, _) => Focus();
     }
 
@@ -75,13 +75,13 @@ public partial class DrawingPageView : UserControl
     private void OnTextBoxLoaded(object? sender, RoutedEventArgs e)
     {
         if (sender is not TextBox tb) return;
-        
+
         if (tb.DataContext is TextShape { IsEditing: true })
         {
             tb.Focus();
             return;
         }
-        
+
         if (tb.DataContext is TextShape shape)
         {
             shape.PropertyChanged += (_, args) =>
@@ -97,7 +97,7 @@ public partial class DrawingPageView : UserControl
     private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
     {
         if (sender is not TextBox { DataContext: TextShape shape }) return;
-        
+
         FinalizeTextShape(shape);
         Focus();
     }
@@ -111,30 +111,23 @@ public partial class DrawingPageView : UserControl
             e.Handled = true;
         }
     }
-    
+
     private void OnTextBoxTextChanged(object? sender, TextChangedEventArgs e)
     {
-        if (sender is not TextBox tb) 
-            return;
-        
-        if (tb.DataContext is not TextShape shape)
-            return;
-        
-        Dispatcher.UIThread.Post(() =>
-        {
-            shape.UpdateBounds();
-        });
+        if (sender is not TextBox tb) return;
+
+        if (tb.DataContext is not TextShape shape) return;
+
+        Dispatcher.UIThread.Post(() => { shape.UpdateBounds(); });
     }
 
     private void OnToolListBoxTapped(object? sender, TappedEventArgs e)
     {
-        if (sender is not ListBox || DataContext is not DrawingPageViewModel vm)
-            return;
+        if (sender is not ListBox || DataContext is not DrawingPageViewModel vm) return;
 
         var clickedItem = (e.Source as Visual)?.FindAncestorOfType<ListBoxItem>();
 
-        if (clickedItem?.DataContext is not ToolItem tappedTool)
-            return;
+        if (clickedItem?.DataContext is not ToolItem tappedTool) return;
 
         if (_previouslySelectedToolItem == tappedTool)
         {
@@ -147,24 +140,21 @@ public partial class DrawingPageView : UserControl
             vm.IsToolSettingsOpen = false;
         }
     }
-    
+
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);
-        
-        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox)
-            return;
-        
+
+        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
+
         var matchingTool = ViewModel?.Tools.FirstOrDefault(t =>
-            t.Shortcut != null &&
-            t.Shortcut.Key == e.Key &&
-            t.Shortcut.KeyModifiers == e.KeyModifiers);
+            t.Shortcut != null && t.Shortcut.Key == e.Key && t.Shortcut.KeyModifiers == e.KeyModifiers);
 
         if (matchingTool != null)
         {
             ViewModel?.SelectedToolItem = matchingTool;
             e.Handled = true;
-            
+
             return;
         }
 
@@ -184,7 +174,7 @@ public partial class DrawingPageView : UserControl
                 break;
         }
     }
-    
+
     private void FinalizeTextShape(TextShape shape)
     {
         shape.IsEditing = false;
@@ -194,4 +184,13 @@ public partial class DrawingPageView : UserControl
             ViewModel?.Shapes.Remove(shape);
         }
     }
+
+    private void OnResizeHandleDragStarted(object? sender, ResizeEventArgs e) =>
+        ViewModel?.OnDragStart(e.Handle, e.DragArgs.Vector);
+
+    private void OnResizeHandleDragDelta(object? sender, ResizeEventArgs e) =>
+        ViewModel?.OnDrag(e.Handle, e.DragArgs.Vector);
+
+    private void OnResizeHandleDragCompleted(object? sender, ResizeEventArgs e) =>
+        ViewModel?.OnDragCompleted();
 }

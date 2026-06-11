@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Helpers;
@@ -13,20 +14,19 @@ public partial class TriangleShape : ShapeBase
     public override bool Intersects(Rect rect)
     {
         if (Points.Any(rect.Contains)) return true;
-        
+
         var a = Points[0];
         var b = Points[1];
         var c = Points[2];
-        
-        if (rect.Contains(a) || rect.Contains(b) || rect.Contains(c))
+
+        if (rect.Contains(a) || rect.Contains(b) || rect.Contains(c)) return true;
+
+        if (GeometryHelpers.PointInTriangle(rect.TopLeft, a, b, c) ||
+            GeometryHelpers.PointInTriangle(rect.TopRight, a, b, c) ||
+            GeometryHelpers.PointInTriangle(rect.BottomLeft, a, b, c) ||
+            GeometryHelpers.PointInTriangle(rect.BottomRight, a, b, c))
             return true;
-        
-        if (GeometryHelpers.PointInTriangle(rect.TopLeft, a, b, c)
-            || GeometryHelpers.PointInTriangle(rect.TopRight, a, b, c)
-            || GeometryHelpers.PointInTriangle(rect.BottomLeft, a, b, c)
-            || GeometryHelpers.PointInTriangle(rect.BottomRight, a, b, c))
-            return true;
-        
+
         Point[] rectCorners = [rect.TopLeft, rect.TopRight, rect.BottomRight, rect.BottomLeft];
         Point[] triEdges = [a, b, c, a];
 
@@ -34,9 +34,8 @@ public partial class TriangleShape : ShapeBase
         {
             for (var j = 0; j < 4; j++)
             {
-                if (GeometryHelpers.SegmentsIntersect(
-                        triEdges[i], triEdges[i + 1],
-                        rectCorners[j], rectCorners[(j + 1) % 4]))
+                if (GeometryHelpers.SegmentsIntersect(triEdges[i], triEdges[i + 1], rectCorners[j],
+                        rectCorners[(j + 1) % 4]))
                     return true;
             }
         }
@@ -50,9 +49,9 @@ public partial class TriangleShape : ShapeBase
         var secondPoint = Points[1];
         var thirdPoint = Points[2];
 
-        return GeometryHelpers.Cross(firstPoint, secondPoint, worldPoint) <= 0
-               && GeometryHelpers.Cross(secondPoint, thirdPoint, worldPoint) <= 0
-               && GeometryHelpers.Cross(thirdPoint, firstPoint, worldPoint) <= 0;
+        return GeometryHelpers.Cross(firstPoint, secondPoint, worldPoint) <= 0 &&
+               GeometryHelpers.Cross(secondPoint, thirdPoint, worldPoint) <= 0 &&
+               GeometryHelpers.Cross(thirdPoint, firstPoint, worldPoint) <= 0;
     }
 
     public override void Move(Vector delta) =>
@@ -61,14 +60,19 @@ public partial class TriangleShape : ShapeBase
 
     public override Rect GetBounds()
     {
-        if (Points.Count == 0)
-            return default;
+        if (Points.Count == 0) return default;
 
         var minX = Points.Min(p => p.X);
         var minY = Points.Min(p => p.Y);
         var maxX = Points.Max(p => p.X);
         var maxY = Points.Max(p => p.Y);
 
-        return InflateForStroke(new Rect(minX, minY, maxX - minX, maxY - minY));
+        return new Rect(minX, minY, maxX - minX, maxY - minY);
+    }
+    
+    protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
+    {
+        Points = new ObservableCollection<Point>(Points
+            .Select(x => Remap(x, oldBounds, newBounds)));
     }
 }

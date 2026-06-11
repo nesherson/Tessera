@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tessera.App.Helpers;
 
@@ -10,7 +10,7 @@ public partial class PolylineShape : ShapeBase
 {
     [ObservableProperty]
     private ObservableCollection<Point> _points = [];
-    
+
     public override bool Intersects(Rect rect)
     {
         return Points.Any(rect.Contains);
@@ -23,15 +23,16 @@ public partial class PolylineShape : ShapeBase
             if (GeometryHelpers.DistanceToSegment(Points[i], Points[i + 1], worldPoint) <= tolerance)
                 return true;
         }
+
         return false;
     }
 
     public override void Move(Vector delta)
     {
-        Points = new ObservableCollection<Point>(Points
-            .Select(point => new Point(point.X + delta.X, point.Y + delta.Y)));
+        Points = new ObservableCollection<Point>(
+            Points.Select(point => new Point(point.X + delta.X, point.Y + delta.Y)));
     }
-
+    
     public override Rect GetBounds()
     {
         if (Points.Count == 0)
@@ -42,6 +43,12 @@ public partial class PolylineShape : ShapeBase
         var maxX = Points.Max(p => p.X);
         var maxY = Points.Max(p => p.Y);
 
-        return InflateForStroke(new Rect(minX, minY, maxX - minX, maxY - minY));
+        return new Rect(minX, minY, maxX - minX, maxY - minY);
+    }
+
+    protected override void OnBoundsChanged(Rect oldBounds, Rect newBounds)
+    {
+        Points = new ObservableCollection<Point>(Points
+            .Select(x => Remap(x, oldBounds, newBounds)));
     }
 }

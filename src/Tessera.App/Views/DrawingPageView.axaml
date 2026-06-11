@@ -15,6 +15,13 @@
         <vm:DrawingPageViewModel />
     </Design.DataContext>
     <UserControl.Styles>
+        <Style Selector="Thumb.EdgeHandle">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Rectangle Fill="Transparent" />
+                </ControlTemplate>
+            </Setter>
+        </Style>
         <Style Selector="Border.Tool">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="1" />
@@ -136,29 +143,7 @@
                         <MatrixTransform Matrix="{Binding Transform.Matrix}" />
                     </c:CanvasGrid.RenderTransform>
                 </c:CanvasGrid>
-
-                <!-- Selection overlay layer -->
-                <Canvas IsHitTestVisible="False" RenderTransformOrigin="0,0">
-                    <Rectangle
-                        Canvas.Left="{Binding SelectionManager.SelectionBounds.X}"
-                        Canvas.Top="{Binding SelectionManager.SelectionBounds.Y}"
-                        Width="{Binding SelectionManager.SelectionBounds.Width}"
-                        Height="{Binding SelectionManager.SelectionBounds.Height}"
-                        Stroke="DodgerBlue"
-                        StrokeThickness="1"
-                        StrokeDashArray="4,2">
-                        <Rectangle.IsVisible>
-                            <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                <Binding Path="SelectionManager.HasSelection" />
-                                <Binding Path="IsSelectionToolSelected" />
-                            </MultiBinding>
-                        </Rectangle.IsVisible>
-                    </Rectangle>
-                    <Canvas.RenderTransform>
-                        <MatrixTransform Matrix="{Binding Transform.Matrix}" />
-                    </Canvas.RenderTransform>
-                </Canvas>
-
+                
                 <!-- Shape layer -->
                 <ItemsControl ItemsSource="{Binding Shapes}" 
                               IsHitTestVisible="False" 
@@ -205,7 +190,7 @@
                                     Stroke="{Binding StrokeColor}"
                                     Fill="{Binding Color}"
                                     StrokeThickness="{Binding StrokeThickness}"
-                                    StrokeDashArray="{Binding StrokeDashArray}" />
+                                    StrokeDashArray="{Binding StrokeDashArray}"/>
                             </DataTemplate>
                             <DataTemplate x:Key="EllipseShape" DataType="{x:Type m:EllipseShape}">
                                 <Ellipse
@@ -274,8 +259,27 @@
                         </dt:ShapeTemplateSelector>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                
+                <!-- Selection overlay layer -->
+                <c:SelectionOverlay 
+                    RenderTransformOrigin="0,0"
+                    TransformMatrix="{Binding Transform.Matrix}"
+                    SelectionBounds="{Binding SelectionManager.SelectionBounds}"
+                    HasSelection="{Binding SelectionManager.HasSelection}"
+                    ResizeStarted="OnResizeHandleDragStarted"
+                    ResizeDelta="OnResizeHandleDragDelta"
+                    ResizeCompleted="OnResizeHandleDragCompleted">
+                    <c:SelectionOverlay.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                            <Binding Path="SelectionManager.HasSelection" />
+                            <Binding Path="IsSelectionToolSelected" />
+                        </MultiBinding>
+                    </c:SelectionOverlay.IsVisible>
+                </c:SelectionOverlay>
             </Panel>
         </Grid>
+        
+        <!-- Tool panel -->
         <StackPanel
             Grid.Column="1"
             Grid.Row="0"
@@ -322,6 +326,8 @@
                 </Border>
             </StackPanel>
         </StackPanel>
+        
+        <!-- Zoom panel -->
         <Border Grid.Column="0"
                 Grid.Row="1" Classes="ToolbarBorder" Margin="15"
                 HorizontalAlignment="Left">
